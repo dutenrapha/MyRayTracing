@@ -42,11 +42,10 @@ $(LIB_PATH)/%.a:
 	@$(CC) -o $@ $(MAIN_O) $(LIB_PATH)/$(LIB_NAME)
 	@rm -f *.o
 
-tester = Unity/unity.c 
 
 test:	fclean all test.x
 
-test.x:	chapter1.c
+test.x:	tests.c
 	@$(CC) $^ $(TESTER) $(LIB_PATH)/$(LIB_NAME)  -o $@
 	@./$@
 	@rm -fR $@

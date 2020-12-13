@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-t_tuple div(t_tuple v1, float a)
+t_tuple divide(t_tuple v1, float a)
 {
         t_tuple v2;
 
