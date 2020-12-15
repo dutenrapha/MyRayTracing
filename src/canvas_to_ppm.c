@@ -16,73 +16,47 @@ static int ft_resizeColor(float a)
         }
 }
 
-static char *header_canvas_to_ppm(t_canvas *cv, char *init, char *final)
-{
-	char *str;
-	char *temp;
-	
-	str = ft_strjoin(init, ft_itoa(cv->width));	
-	temp = ft_strdup(str);
-	free(str);
-	str = ft_strjoin(temp," ");
-        free(temp);
-	temp = ft_strdup(str);
-        free(str);
-        str = ft_strjoin(temp, ft_itoa(cv->height));
-        free(temp);
-	temp = ft_strdup(str);
-        free(str);	
-	str = ft_strjoin(temp, final);
-	free(temp);
-	return (str);
-}
-
 char *canvas_to_ppm(t_canvas *cv)
 {
-	char *header;
-	char *body;
-	char *temp;
+	FILE *fp;
+	char *string;
+	long fsize;
 	int i;
 	int j;
 	
-	header = header_canvas_to_ppm(cv, "P3\n", "\n255");
+	fp = fopen("image.ppm", "w+");
+
+	fprintf(fp, "P3\n%d %d\n255\n",cv->width, cv->height);
 	i = 0;
-	body = ft_strjoin(header, "\n");
-	temp = ft_strdup(body);
-	free(body);
-	free(header);
 	while (i < cv->height)
 	{
 		j = 0;
 		while(j < cv->width)
 		{
-			body = ft_strjoin(temp, ft_itoa(ft_resizeColor(cv->pixel[i][j].red)));	
-			free(temp);
-			temp = ft_strdup(body);
-			free(body);
-			body = ft_strjoin(temp, " ");
-			temp = ft_strdup(body);
-			body = ft_strjoin(temp, ft_itoa(ft_resizeColor(cv->pixel[i][j].green)));
-			free(temp);
-                        temp = ft_strdup(body);
-                        free(body);
-                        body = ft_strjoin(temp, " ");
-                        temp = ft_strdup(body);
-			body = ft_strjoin(temp, ft_itoa(ft_resizeColor(cv->pixel[i][j].blue)));
-			free(temp);
-                        temp = ft_strdup(body);
-                        free(body);
-                        if (((j  == cv->width - 1) || i  == cv->height - 1) && (j  == cv->width - 1))	
-				body = ft_strjoin(temp, "\n");
-                        else
-				body = ft_strjoin(temp, " ");
-			temp = ft_strdup(body);
+			if (((j  == cv->width - 1) || i  == cv->height - 1) && (j  == cv->width - 1))
+			{
+				fprintf(fp, "%d %d %d\n", ft_resizeColor(cv->pixel[i][j].red), ft_resizeColor(cv->pixel[i][j].green), ft_resizeColor(cv->pixel[i][j].blue));
+			}
+			else
+			{
+				fprintf(fp, "%d %d %d ", ft_resizeColor(cv->pixel[i][j].red), ft_resizeColor(cv->pixel[i][j].green), ft_resizeColor(cv->pixel[i][j].blue));	
+			}
 			j++;
 		}
 		i++;
 	}	
+ 	fclose(fp);
+	
+	fp = fopen("image.ppm", "rb");
+	fseek(fp, 0, SEEK_END);
+	fsize = ftell(fp);
+	fseek(fp, 0, SEEK_SET); 
+	string = malloc(fsize + 1);
+	fread(string, 1, fsize, fp);
+	fclose(fp);
+	string[fsize] = 0;
 			
-	return (temp);
+	return (string);
 }
 
 

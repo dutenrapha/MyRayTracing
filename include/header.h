@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #define EPSILON 0.00001
 
 typedef struct s_tuple
@@ -32,8 +33,8 @@ typedef struct s_color
 
 typedef struct s_canvas
 {
-	float width;
-	float height;
+	int width;
+	int height;
 	t_color **pixel;
 } t_canvas;
 
