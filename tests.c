@@ -429,6 +429,689 @@ void test_canvas_to_ppm()
 	TEST_ASSERT_EQUAL_STRING(ppm, canvas_to_ppm(&c));
 }
 
+void test_matrix()
+{
+	t_matrix M4;
+	
+	M4 = matrix(4);
+	writeMatrix(&M4,0,0,1.0);
+	writeMatrix(&M4,0,1,2.0);
+	writeMatrix(&M4,0,2,3.0);
+	writeMatrix(&M4,0,3,4.0);
+
+        writeMatrix(&M4,1,0,5.5);
+        writeMatrix(&M4,1,1,6.5);
+        writeMatrix(&M4,1,2,7.5);
+        writeMatrix(&M4,1,3,8.5);
+
+        writeMatrix(&M4,2,0,9.0);
+        writeMatrix(&M4,2,1,10.0);
+        writeMatrix(&M4,2,2,11.0);
+        writeMatrix(&M4,2,3,12.0);
+
+        writeMatrix(&M4,3,0,13.5);
+        writeMatrix(&M4,3,1,14.5);
+        writeMatrix(&M4,3,2,15.5);
+        writeMatrix(&M4,3,3,16.5);
+
+        TEST_MESSAGE("Function matrix dim 4");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 1, M4.element[0][0]);
+   	TEST_ASSERT_FLOAT_WITHIN(0.01, 4, M4.element[0][3]);	
+   	TEST_ASSERT_FLOAT_WITHIN(0.01, 5.5, M4.element[1][0]);
+   	TEST_ASSERT_FLOAT_WITHIN(0.01, 7.5, M4.element[1][2]);
+   	TEST_ASSERT_FLOAT_WITHIN(0.01, 11, M4.element[2][2]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 13.5, M4.element[3][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 15.5, M4.element[3][2]);
+
+	t_matrix M2;
+
+        M2 = matrix(2);
+        writeMatrix(&M2,0,0,-3.0);
+        writeMatrix(&M2,0,1,5.0);
+        writeMatrix(&M2,1,0,1.0);
+        writeMatrix(&M2,1,1,-2.0);
+
+        TEST_MESSAGE("Function matrix dim 2");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -3.0, M2.element[0][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 5.0, M2.element[0][1]);
+
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 1.0, M2.element[1][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -2.0, M2.element[1][1]);
+	
+       	t_matrix M3;
+
+        M3 = matrix(3);
+        writeMatrix(&M3,0,0,-3.0);
+        writeMatrix(&M3,0,1,5.0);
+        writeMatrix(&M3,0,2,0.0);
+
+        writeMatrix(&M3,1,0,1.0);
+        writeMatrix(&M3,1,1,-2.0);
+        writeMatrix(&M3,1,2,-7.0);
+
+        writeMatrix(&M3,2,0,0.0);
+        writeMatrix(&M3,2,1,1.0);
+        writeMatrix(&M3,2,2,1.0);
+
+        TEST_MESSAGE("Function matrix dim 3");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -3.0, M3.element[0][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -2.0, M3.element[1][1]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 1.0, M3.element[2][2]);
+
+}
+
+void test_isMatrixEqual()
+{
+	t_matrix A;
+	t_matrix B;
+
+	A = matrix(4);
+	B = matrix(4);
+	
+	writeMatrix(&A,0,0,1.0);
+        writeMatrix(&A,0,1,2.0);
+        writeMatrix(&A,0,2,3.0);
+        writeMatrix(&A,0,3,4.0);
+
+        writeMatrix(&A,1,0,5.0);
+        writeMatrix(&A,1,1,6.0);
+        writeMatrix(&A,1,2,7.0);
+        writeMatrix(&A,1,3,8.0);
+
+        writeMatrix(&A,2,0,9.0);
+        writeMatrix(&A,2,1,8.0);
+        writeMatrix(&A,2,2,7.0);
+        writeMatrix(&A,2,3,6.0);
+
+        writeMatrix(&A,3,0,5.0);
+        writeMatrix(&A,3,1,4.0);
+        writeMatrix(&A,3,2,3.0);
+        writeMatrix(&A,3,3,2.0);
+
+        writeMatrix(&B,0,0,2.0);
+        writeMatrix(&B,0,1,3.0);
+        writeMatrix(&B,0,2,4.0);
+        writeMatrix(&B,0,3,5.0);
+
+        writeMatrix(&B,1,0,6.0);
+        writeMatrix(&B,1,1,7.0);
+        writeMatrix(&B,1,2,8.0);
+        writeMatrix(&B,1,3,9.0);
+
+        writeMatrix(&B,2,0,8.0);
+        writeMatrix(&B,2,1,7.0);
+        writeMatrix(&B,2,2,6.0);
+        writeMatrix(&B,2,3,5.0);
+
+        writeMatrix(&B,3,0,4.0);
+        writeMatrix(&B,3,1,3.0);
+        writeMatrix(&B,3,2,2.0);
+        writeMatrix(&B,3,3,1.0);
+	
+        TEST_MESSAGE("Function is matrix multi");
+        TEST_ASSERT_TRUE(isMatrixEqual(A,A));
+        TEST_ASSERT_TRUE(!isMatrixEqual(A,B));
+}
+
+void test_matrixMulti()
+{
+        t_matrix A;
+        t_matrix B;
+	t_matrix AB;
+	
+        A = matrix(4);
+        B = matrix(4);
+
+        writeMatrix(&A,0,0,1.0);
+        writeMatrix(&A,0,1,2.0);
+        writeMatrix(&A,0,2,3.0);
+        writeMatrix(&A,0,3,4.0);
+
+        writeMatrix(&A,1,0,5.0);
+        writeMatrix(&A,1,1,6.0);
+        writeMatrix(&A,1,2,7.0);
+        writeMatrix(&A,1,3,8.0);
+
+        writeMatrix(&A,2,0,9.0);
+        writeMatrix(&A,2,1,8.0);
+        writeMatrix(&A,2,2,7.0);
+        writeMatrix(&A,2,3,6.0);
+
+        writeMatrix(&A,3,0,5.0);
+        writeMatrix(&A,3,1,4.0);
+        writeMatrix(&A,3,2,3.0);
+        writeMatrix(&A,3,3,2.0);
+
+        writeMatrix(&B,0,0,-2.0);
+        writeMatrix(&B,0,1,1.0);
+        writeMatrix(&B,0,2,2.0);
+        writeMatrix(&B,0,3,3.0);
+
+        writeMatrix(&B,1,0,3.0);
+        writeMatrix(&B,1,1,2.0);
+        writeMatrix(&B,1,2,1.0);
+        writeMatrix(&B,1,3,-1.0);
+
+        writeMatrix(&B,2,0,4.0);
+        writeMatrix(&B,2,1,3.0);
+        writeMatrix(&B,2,2,6.0);
+        writeMatrix(&B,2,3,5.0);
+
+        writeMatrix(&B,3,0,1.0);
+        writeMatrix(&B,3,1,2.0);
+        writeMatrix(&B,3,2,7.0);
+        writeMatrix(&B,3,3,8.0);
+
+        AB = matrixMulti(A,B);
+        TEST_MESSAGE("Function is equal matrix");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 20, AB.element[0][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 22, AB.element[0][1]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 50, AB.element[0][2]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 48, AB.element[0][3]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 44, AB.element[1][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 54, AB.element[1][1]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 114, AB.element[1][2]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 108, AB.element[1][3]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 40, AB.element[2][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 58, AB.element[2][1]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 110, AB.element[2][2]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 102, AB.element[2][3]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 16, AB.element[3][0]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 26, AB.element[3][1]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 46, AB.element[3][2]);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 42, AB.element[3][3]);
+}
+
+void test_matrixMultiVec()
+{
+        t_matrix A;
+	t_tuple b;
+	t_tuple Ab;	
+	t_tuple resp;
+
+        A = matrix(4);
+
+        writeMatrix(&A,0,0,1.0);
+        writeMatrix(&A,0,1,2.0);
+        writeMatrix(&A,0,2,3.0);
+        writeMatrix(&A,0,3,4.0);
+
+        writeMatrix(&A,1,0,2.0);
+        writeMatrix(&A,1,1,4.0);
+        writeMatrix(&A,1,2,4.0);
+        writeMatrix(&A,1,3,2.0);
+
+        writeMatrix(&A,2,0,8.0);
+        writeMatrix(&A,2,1,6.0);
+        writeMatrix(&A,2,2,4.0);
+        writeMatrix(&A,2,3,1.0);
+
+        writeMatrix(&A,3,0,0.0);
+        writeMatrix(&A,3,1,0.0);
+        writeMatrix(&A,3,2,0.0);
+        writeMatrix(&A,3,3,1.0);
+
+	b = point(1, 2, 3);
+	Ab = matrixMultiVec(A,b);
+	resp = point(18,24,33);
+	TEST_MESSAGE("Function matrix Multi Vec");
+	TEST_ASSERT_TRUE(isEqual(resp, Ab));
+}
+
+void test_matrixIdenty()
+{
+        t_matrix A;
+	t_matrix B;
+        t_matrix resp;
+
+        A = matrix(4);
+
+        writeMatrix(&A,0,0,1.0);
+        writeMatrix(&A,0,1,0.0);
+        writeMatrix(&A,0,2,0.0);
+        writeMatrix(&A,0,3,0.0);
+
+        writeMatrix(&A,1,0,0.0);
+        writeMatrix(&A,1,1,1.0);
+        writeMatrix(&A,1,2,0.0);
+        writeMatrix(&A,1,3,0.0);
+
+        writeMatrix(&A,2,0,0.0);
+        writeMatrix(&A,2,1,0.0);
+        writeMatrix(&A,2,2,1.0);
+        writeMatrix(&A,2,3,0.0);
+
+        writeMatrix(&A,3,0,0.0);
+        writeMatrix(&A,3,1,0.0);
+        writeMatrix(&A,3,2,0.0);
+        writeMatrix(&A,3,3,1.0);
+	
+	B = matrix(4);
+
+        writeMatrix(&B,0,0,-2.0);
+        writeMatrix(&B,0,1,1.0);
+        writeMatrix(&B,0,2,2.0);
+        writeMatrix(&B,0,3,3.0);
+
+        writeMatrix(&B,1,0,3.0);
+        writeMatrix(&B,1,1,2.0);
+        writeMatrix(&B,1,2,1.0);
+        writeMatrix(&B,1,3,-1.0);
+
+        writeMatrix(&B,2,0,4.0);
+        writeMatrix(&B,2,1,3.0);
+        writeMatrix(&B,2,2,6.0);
+        writeMatrix(&B,2,3,5.0);
+
+        writeMatrix(&B,3,0,1.0);
+        writeMatrix(&B,3,1,2.0);
+        writeMatrix(&B,3,2,7.0);
+        writeMatrix(&B,3,3,8.0);
+	
+
+	resp = identity();
+	TEST_MESSAGE("Function matrix Identy");
+        TEST_ASSERT_TRUE(isMatrixEqual(resp, A));
+	TEST_ASSERT_TRUE(isMatrixEqual(B, matrixMulti(B,resp)));
+}
+
+void test_matrixTranspose()
+{
+        t_matrix A;
+	t_matrix B;
+        t_matrix I;
+
+        A = matrix(4);
+
+        writeMatrix(&A,0,0,0.0);
+        writeMatrix(&A,0,1,9.0);
+        writeMatrix(&A,0,2,3.0);
+        writeMatrix(&A,0,3,0.0);
+
+        writeMatrix(&A,1,0,9.0);
+        writeMatrix(&A,1,1,8.0);
+        writeMatrix(&A,1,2,0.0);
+        writeMatrix(&A,1,3,8.0);
+
+        writeMatrix(&A,2,0,1.0);
+        writeMatrix(&A,2,1,8.0);
+        writeMatrix(&A,2,2,5.0);
+        writeMatrix(&A,2,3,3.0);
+
+        writeMatrix(&A,3,0,0.0);
+        writeMatrix(&A,3,1,0.0);
+        writeMatrix(&A,3,2,5.0);
+        writeMatrix(&A,3,3,8.0);
+
+        B = matrix(4);
+
+        writeMatrix(&B,0,0,0.0);
+        writeMatrix(&B,0,1,9.0);
+        writeMatrix(&B,0,2,1.0);
+        writeMatrix(&B,0,3,0.0);
+
+        writeMatrix(&B,1,0,9.0);
+        writeMatrix(&B,1,1,8.0);
+        writeMatrix(&B,1,2,8.0);
+        writeMatrix(&B,1,3,0.0);
+
+        writeMatrix(&B,2,0,3.0);
+        writeMatrix(&B,2,1,0.0);
+        writeMatrix(&B,2,2,5.0);
+        writeMatrix(&B,2,3,5.0);
+
+        writeMatrix(&B,3,0,0.0);
+        writeMatrix(&B,3,1,8.0);
+        writeMatrix(&B,3,2,3.0);
+        writeMatrix(&B,3,3,8.0);
+
+	I = identity();
+        TEST_MESSAGE("Function matrix transpose");
+        TEST_ASSERT_TRUE(isMatrixEqual(B, transpose(A)));
+        TEST_ASSERT_TRUE(isMatrixEqual(I,transpose(I)));
+}
+
+void test_det2by2()
+{
+        t_matrix A;
+	
+	A = matrix(2);
+	writeMatrix(&A,0,0,1.0);
+        writeMatrix(&A,0,1,5.0);
+        writeMatrix(&A,1,0,-3.0);
+        writeMatrix(&A,1,1,2.0);
+        TEST_MESSAGE("Function determinant 2x2 matrix");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 17, det(A));
+	
+}
+
+void test_submatrix()
+{
+	t_matrix A33;
+	t_matrix A22;
+        t_matrix B44;
+        t_matrix B33;
+
+	A33 = matrix(3);
+        writeMatrix(&A33,0,0,1.0);
+        writeMatrix(&A33,0,1,5.0);
+        writeMatrix(&A33,0,2,0.0);
+
+        writeMatrix(&A33,1,0,-3.0);
+        writeMatrix(&A33,1,1,2.0);
+        writeMatrix(&A33,1,2,7.0);
+
+        writeMatrix(&A33,2,0,0.0);
+        writeMatrix(&A33,2,1,6.0);
+        writeMatrix(&A33,2,2,-3.0);
+
+        A22 = matrix(2);
+        writeMatrix(&A22,0,0,-3.0);
+        writeMatrix(&A22,0,1,2.0);
+        writeMatrix(&A22,1,0,0.0);
+        writeMatrix(&A22,1,1,6.0);
+
+	B44 = matrix(4);
+	writeMatrix(&B44,0,0,-6.0);
+        writeMatrix(&B44,0,1,1.0);
+        writeMatrix(&B44,0,2,1.0);
+        writeMatrix(&B44,0,3,6.0);
+
+        writeMatrix(&B44,1,0,-8.0);
+        writeMatrix(&B44,1,1,5.0);
+        writeMatrix(&B44,1,2,8.0);
+        writeMatrix(&B44,1,3,6.0);
+
+        writeMatrix(&B44,2,0,-1.0);
+        writeMatrix(&B44,2,1,0.0);
+        writeMatrix(&B44,2,2,8.0);
+        writeMatrix(&B44,2,3,2.0);
+
+        writeMatrix(&B44,3,0,-7.0);
+        writeMatrix(&B44,3,1,1.0);
+        writeMatrix(&B44,3,2,-1.0);
+        writeMatrix(&B44,3,3,1.0);
+
+	B33 = matrix(3);
+        writeMatrix(&B33,0,0,-6.0);
+        writeMatrix(&B33,0,1,1.0);
+        writeMatrix(&B33,0,2,6.0);
+
+        writeMatrix(&B33,1,0,-8.0);
+        writeMatrix(&B33,1,1,8.0);
+        writeMatrix(&B33,1,2,6.0);
+
+        writeMatrix(&B33,2,0,-7.0);
+        writeMatrix(&B33,2,1,-1.0);
+        writeMatrix(&B33,2,2,1.0);	
+
+        TEST_MESSAGE("Function submatrix");
+        TEST_ASSERT_TRUE(isMatrixEqual(A22, submatrix(A33,0,2)));
+ 	TEST_ASSERT_TRUE(isMatrixEqual(B33, submatrix(B44,2,1)));
+}
+
+void test_minor()
+{
+        t_matrix A;
+
+	A = matrix(3);
+	writeMatrix(&A,0,0,3.0);
+        writeMatrix(&A,0,1,5.0);
+        writeMatrix(&A,0,2,0.0);
+
+        writeMatrix(&A,1,0,2.0);
+        writeMatrix(&A,1,1,-1.0);
+        writeMatrix(&A,1,2,-7.0);
+
+        writeMatrix(&A,2,0,6.0);
+        writeMatrix(&A,2,1,-1.0);
+        writeMatrix(&A,2,2,5.0);	
+
+	TEST_MESSAGE("Function minor");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 25, minor(A,1,0));
+}
+
+void test_cofactor()
+{
+        t_matrix A;
+
+        A = matrix(3);
+        writeMatrix(&A,0,0,3.0);
+        writeMatrix(&A,0,1,5.0);
+        writeMatrix(&A,0,2,0.0);
+
+        writeMatrix(&A,1,0,2.0);
+        writeMatrix(&A,1,1,-1.0);
+        writeMatrix(&A,1,2,-7.0);
+
+        writeMatrix(&A,2,0,6.0);
+        writeMatrix(&A,2,1,-1.0);
+        writeMatrix(&A,2,2,5.0);
+
+        TEST_MESSAGE("Function cofactor");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -12, minor(A,0,0));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -12, cofactor(A,0,0));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 25, minor(A,1,0));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -25, cofactor(A,1,0));
+
+
+}
+
+void test_det()
+{
+        t_matrix A;
+	t_matrix B;
+	float resp;
+
+        A = matrix(3);
+	writeMatrix(&A,0,0,1.0);
+        writeMatrix(&A,0,1,2.0);
+        writeMatrix(&A,0,2,6.0);
+
+        writeMatrix(&A,1,0,-5.0);
+        writeMatrix(&A,1,1,8.0);
+        writeMatrix(&A,1,2,-4.0);
+
+        writeMatrix(&A,2,0,2.0);
+        writeMatrix(&A,2,1,6.0);
+        writeMatrix(&A,2,2,4.0);
+
+	B = matrix(4);
+        writeMatrix(&B,0,0,-2.0);
+        writeMatrix(&B,0,1,-8.0);
+        writeMatrix(&B,0,2,3.0);
+        writeMatrix(&B,0,3,5.0);
+
+        writeMatrix(&B,1,0,-3.0);
+        writeMatrix(&B,1,1,1.0);
+        writeMatrix(&B,1,2,7.0);
+        writeMatrix(&B,1,3,3.0);
+
+        writeMatrix(&B,2,0,1.0);
+        writeMatrix(&B,2,1,2.0);
+        writeMatrix(&B,2,2,-9.0);
+        writeMatrix(&B,2,3,6.0);
+
+        writeMatrix(&B,3,0,-6.0);
+        writeMatrix(&B,3,1,7.0);
+        writeMatrix(&B,3,2,7.0);
+        writeMatrix(&B,3,3,-9.0);
+
+ 
+	TEST_MESSAGE("Function determinant 3x3  4x4 matrix");
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 56, cofactor(A,0,0));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 12, cofactor(A,0,1));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -46, cofactor(A,0,2));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -196, det(A));
+
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 690, cofactor(B,0,0));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 447, cofactor(B,0,1));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 210, cofactor(B,0,2));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 51, cofactor(B,0,3));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, -4071, det(B));
+}
+
+void test_isInvertible()
+{
+        t_matrix A;
+        t_matrix B;
+
+        A = matrix(4);
+        writeMatrix(&A,0,0,6.0);
+        writeMatrix(&A,0,1,4.0);
+        writeMatrix(&A,0,2,4.0);
+        writeMatrix(&A,0,3,4.0);
+
+        writeMatrix(&A,1,0,5.0);
+        writeMatrix(&A,1,1,5.0);
+        writeMatrix(&A,1,2,7.0);
+        writeMatrix(&A,1,3,6.0);
+
+        writeMatrix(&A,2,0,4.0);
+        writeMatrix(&A,2,1,-9.0);
+        writeMatrix(&A,2,2,3.0);
+        writeMatrix(&A,2,3,-7.0);
+
+        writeMatrix(&A,3,0,9.0);
+        writeMatrix(&A,3,1,1.0);
+        writeMatrix(&A,3,2,7.0);
+        writeMatrix(&A,3,3,-6.0);
+
+        B = matrix(4);
+        writeMatrix(&B,0,0,-4.0);
+        writeMatrix(&B,0,1,2.0);
+        writeMatrix(&B,0,2,-2.0);
+        writeMatrix(&B,0,3,-3.0);
+
+        writeMatrix(&B,1,0,9.0);
+        writeMatrix(&B,1,1,6.0);
+        writeMatrix(&B,1,2,2.0);
+        writeMatrix(&B,1,3,6.0);
+
+        writeMatrix(&B,2,0,0.0);
+        writeMatrix(&B,2,1,-5.0);
+        writeMatrix(&B,2,2,1.0);
+        writeMatrix(&B,2,3,-5.0);
+
+        writeMatrix(&B,3,0,0.0);
+        writeMatrix(&B,3,1,0.0);
+        writeMatrix(&B,3,2,0.0);
+        writeMatrix(&B,3,3,0.0);
+
+        TEST_MESSAGE("Function isInvertible");
+        TEST_ASSERT_TRUE(isInvertible(A));
+        TEST_ASSERT_TRUE(!isInvertible(B));
+}
+
+void test_inverse()
+{
+        t_matrix A;
+        t_matrix B;
+	t_matrix resp;
+	t_matrix C;
+        t_matrix D;
+	t_matrix AC;
+	
+        A = matrix(4);
+        writeMatrix(&A,0,0,-5.0);
+        writeMatrix(&A,0,1,2.0);
+        writeMatrix(&A,0,2,6.0);
+        writeMatrix(&A,0,3,-8.0);
+
+        writeMatrix(&A,1,0,1.0);
+        writeMatrix(&A,1,1,-5.0);
+        writeMatrix(&A,1,2,1.0);
+        writeMatrix(&A,1,3,8.0);
+
+        writeMatrix(&A,2,0,7.0);
+        writeMatrix(&A,2,1,7.0);
+        writeMatrix(&A,2,2,-6.0);
+        writeMatrix(&A,2,3,-7.0);
+
+        writeMatrix(&A,3,0,1.0);
+        writeMatrix(&A,3,1,-3.0);
+        writeMatrix(&A,3,2,7.0);
+        writeMatrix(&A,3,3,4.0);
+
+        B = matrix(4);
+        writeMatrix(&B,0,0,0.21805);
+        writeMatrix(&B,0,1,0.45113);
+        writeMatrix(&B,0,2,0.24060);
+        writeMatrix(&B,0,3,-0.04511);
+
+        writeMatrix(&B,1,0,-0.80827);
+        writeMatrix(&B,1,1,-1.45677);
+        writeMatrix(&B,1,2,-0.44361);
+        writeMatrix(&B,1,3,0.52068);
+
+        writeMatrix(&B,2,0,-0.07895);
+        writeMatrix(&B,2,1,-0.22368);
+        writeMatrix(&B,2,2,-0.05263);
+        writeMatrix(&B,2,3,0.19737);
+
+        writeMatrix(&B,3,0,-0.52256);
+        writeMatrix(&B,3,1,-0.81391);
+        writeMatrix(&B,3,2,-0.30075);
+        writeMatrix(&B,3,3,0.30639);
+
+        C = matrix(4);
+        writeMatrix(&C,0,0,8.0);
+        writeMatrix(&C,0,1,-5.0);
+        writeMatrix(&C,0,2,9.0);
+        writeMatrix(&C,0,3,2.0);
+
+        writeMatrix(&C,1,0,7.0);
+        writeMatrix(&C,1,1,5.0);
+        writeMatrix(&C,1,2,6.0);
+        writeMatrix(&C,1,3,1.0);
+
+        writeMatrix(&C,2,0,-6.0);
+        writeMatrix(&C,2,1,0.0);
+        writeMatrix(&C,2,2,9.0);
+        writeMatrix(&C,2,3,6.0);
+
+        writeMatrix(&C,3,0,-3.0);
+        writeMatrix(&C,3,1,0.0);
+        writeMatrix(&C,3,2,-9.0);
+        writeMatrix(&C,3,3,-4.0);
+
+        D = matrix(4);
+        writeMatrix(&D,0,0,-0.15385);
+        writeMatrix(&D,0,1,-0.15385);
+        writeMatrix(&D,0,2,-0.28205);
+        writeMatrix(&D,0,3,-0.53846);
+
+        writeMatrix(&D,1,0,-0.07692);
+        writeMatrix(&D,1,1,0.12308);
+        writeMatrix(&D,1,2,0.02564);
+        writeMatrix(&D,1,3,0.03077);
+
+        writeMatrix(&D,2,0,0.35897);
+        writeMatrix(&D,2,1,0.35897);
+        writeMatrix(&D,2,2,0.43590);
+        writeMatrix(&D,2,3,0.92308);
+
+        writeMatrix(&D,3,0,-0.69231);
+        writeMatrix(&D,3,1,-0.69231);
+        writeMatrix(&D,3,2,-0.76923);
+        writeMatrix(&D,3,3,-1.92308);
+
+	resp = inverse(A);
+        TEST_MESSAGE("Function inverse");
+	TEST_ASSERT_FLOAT_WITHIN(0.01, 532.0, det(A));
+	TEST_ASSERT_FLOAT_WITHIN(0.01, -160.0, cofactor(A,2,3));
+ 	TEST_ASSERT_FLOAT_WITHIN(0.01, -160.0/532.0, resp.element[3][2]);
+	TEST_ASSERT_FLOAT_WITHIN(0.01, 105.0, cofactor(A,3,2));
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 105.0/532.0, resp.element[2][3]);
+	TEST_ASSERT_TRUE(isMatrixEqual(B,resp));
+	freeMatrix(resp);
+	resp = inverse(C);
+ 	TEST_ASSERT_TRUE(isMatrixEqual(D,resp));
+	freeMatrix(resp);
+	AC = matrixMulti(A,C);
+	TEST_ASSERT_TRUE(isMatrixEqual(A, matrixMulti(AC,inverse(C))));
+}
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -455,5 +1138,18 @@ int main(void)
 	RUN_TEST(test_canvas);
 	RUN_TEST(test_writePixel);
 	RUN_TEST(test_canvas_to_ppm);
+	RUN_TEST(test_matrix);
+	RUN_TEST(test_isMatrixEqual);
+	RUN_TEST(test_matrixMulti);	
+	RUN_TEST(test_matrixMultiVec);
+	RUN_TEST(test_matrixIdenty);
+	RUN_TEST(test_matrixTranspose);
+	RUN_TEST(test_det2by2);
+	RUN_TEST(test_submatrix);
+	RUN_TEST(test_minor);
+	RUN_TEST(test_cofactor);
+	RUN_TEST(test_det);
+	RUN_TEST(test_isInvertible);
+	RUN_TEST(test_inverse);
 	return UNITY_END();
 }

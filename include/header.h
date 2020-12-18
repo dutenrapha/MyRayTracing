@@ -38,6 +38,11 @@ typedef struct s_canvas
 	t_color **pixel;
 } t_canvas;
 
+typedef struct s_matrix
+{
+	float **element;
+	int dim;
+} t_matrix;
 
 t_tuple	point(float x, float y, float z);
 t_tuple vector(float x, float y, float z);
@@ -61,3 +66,17 @@ bool isColorEqual(t_color c1, t_color c2);
 t_canvas canvas(int w, int h);
 void writePixel(t_canvas *cv, int w, int h, t_color c);
 char *canvas_to_ppm(t_canvas *cv);
+t_matrix matrix(int dim);
+void freeMatrix(t_matrix A);
+void writeMatrix(t_matrix *m, int i, int j, float e);
+bool isMatrixEqual(t_matrix A, t_matrix B);
+t_matrix matrixMulti(t_matrix A, t_matrix B);
+t_tuple matrixMultiVec(t_matrix A, t_tuple b);
+t_matrix identity();
+t_matrix transpose(t_matrix A);
+t_matrix submatrix(t_matrix A, int i, int j);
+float minor(t_matrix A, int i, int j);
+float cofactor(t_matrix A, int i, int j);
+float det(t_matrix A);
+bool isInvertible(t_matrix A);
+t_matrix inverse(t_matrix A);
