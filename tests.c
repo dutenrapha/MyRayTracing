@@ -1112,6 +1112,213 @@ void test_inverse()
 	TEST_ASSERT_TRUE(isMatrixEqual(A, matrixMulti(AC,inverse(C))));
 }
 
+void test_translation()
+{
+	t_matrix transform;
+	t_tuple p;
+	t_tuple p2;
+	t_tuple resp;
+	t_tuple v;
+	t_matrix inv;
+	
+	transform = translation(5,-3,2); 
+	p = point(-3,4,5);
+	resp = matrixMultiVec(transform,p);
+	p2 = point(2,1,7);
+	TEST_MESSAGE("Function translation");
+        TEST_ASSERT_TRUE(isEqual(resp, p2));	
+	inv = inverse(transform);
+	resp  = matrixMultiVec(inv, p);
+	p2 = point(-8,7,3); 	
+	TEST_ASSERT_TRUE(isEqual(resp, p2));
+	v = vector(-3,4,5);
+   	resp  = matrixMultiVec(transform, v);
+	TEST_ASSERT_TRUE(isEqual(resp, v));	
+}
+
+void test_scaling()
+{
+        t_matrix transform;
+        t_tuple p;
+        t_tuple p2;
+        t_tuple resp;
+        t_tuple v;
+	t_matrix inv;
+	
+	transform = scaling(2,3,4);	
+	p = point(-4,6,8);	
+	resp = matrixMultiVec(transform,p);
+        p2 = point(-8,18,32);
+        TEST_MESSAGE("Function scaling");
+        TEST_ASSERT_TRUE(isEqual(resp, p2));
+        v = vector(-4,6,8);
+        resp  = matrixMultiVec(transform, v);
+	v = vector(-8,18,32);
+        TEST_ASSERT_TRUE(isEqual(resp, v));
+	inv = inverse(transform);
+	v = vector(-4,6,8);	
+        resp  = matrixMultiVec(inv, v);
+        v = vector(-2,2,2);
+        TEST_ASSERT_TRUE(isEqual(resp, v));
+	TEST_MESSAGE("Function scaling(reflection)");
+	freeMatrix(transform);
+	transform = scaling(-1,1,1);
+        p = point(2,3,4);
+        resp = matrixMultiVec(transform,p);
+        p2 = point(-2,3,4);
+        TEST_ASSERT_TRUE(isEqual(resp, p2));
+
+
+}
+
+void test_rotation_x()
+{
+	t_tuple p;
+	t_matrix half_quarter;
+	t_matrix full_quarter;	
+	t_matrix inv;
+	t_tuple resp;;
+
+	p = point(0,1,0);
+	half_quarter = rotation_x(M_PI_4);
+	full_quarter = rotation_x(M_PI_2);
+	resp = matrixMultiVec(half_quarter,p);
+	p = point(0,sqrt(2.0)/2.0,sqrt(2.0)/2.0);
+	TEST_MESSAGE("Function rotation_x");
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+ 	p = point(0,1,0);
+	resp = matrixMultiVec(full_quarter,p);
+	p = point(0,0,1);
+	TEST_ASSERT_TRUE(isEqual(resp, p));
+ 	p = point(0,1,0);
+	inv = inverse(half_quarter);	
+	resp = matrixMultiVec(inv,p);
+	p = point(0,sqrt(2.0)/2.0,-sqrt(2.0)/2.0);
+	TEST_ASSERT_TRUE(isEqual(resp, p));
+}
+
+void test_rotation_y()
+{
+        t_tuple p;
+        t_matrix half_quarter;
+        t_matrix full_quarter;
+        t_matrix inv;
+        t_tuple resp;;
+
+        p = point(0,0,1);
+        half_quarter = rotation_y(M_PI_4);
+        full_quarter = rotation_y(M_PI_2);
+        resp = matrixMultiVec(half_quarter,p);
+        p = point(sqrt(2.0)/2.0,0,sqrt(2.0)/2.0);
+        TEST_MESSAGE("Function rotation_y");
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+        p = point(0,0,1);
+        resp = matrixMultiVec(full_quarter,p);
+        p = point(1,0,0);
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+}
+
+void test_rotation_z()
+{
+        t_tuple p;
+        t_matrix half_quarter;
+        t_matrix full_quarter;
+        t_matrix inv;
+        t_tuple resp;;
+
+        p = point(0,1,0);
+        half_quarter = rotation_z(M_PI_4);
+        full_quarter = rotation_z(M_PI_2);
+        resp = matrixMultiVec(half_quarter,p);
+        p = point(-sqrt(2.0)/2.0,sqrt(2.0)/2.0,0);
+        TEST_MESSAGE("Function rotation_y");
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+        p = point(0,1,0);
+        resp = matrixMultiVec(full_quarter,p);
+        p = point(-1,0,0);
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+}
+
+void test_shearing()
+{
+	t_matrix transform;
+	t_tuple p;
+	t_tuple resp;
+
+	transform = shearing(1,0,0,0,0,0);	
+	p = point(2,3,4);
+	resp = matrixMultiVec(transform,p);
+	p = point(5,3,4);
+	TEST_MESSAGE("Function shearing");
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+
+	transform = shearing(0,1,0,0,0,0);
+        p = point(2,3,4);
+        resp = matrixMultiVec(transform,p);
+        p = point(6,3,4);
+	TEST_ASSERT_TRUE(isEqual(resp, p));
+
+        transform = shearing(0,0,1,0,0,0);
+        p = point(2,3,4);
+        resp = matrixMultiVec(transform,p);
+        p = point(2,5,4);
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+
+        transform = shearing(0,0,0,1,0,0);
+        p = point(2,3,4);
+        resp = matrixMultiVec(transform,p);
+        p = point(2,7,4);
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+
+        transform = shearing(0,0,0,0,1,0);
+        p = point(2,3,4);
+        resp = matrixMultiVec(transform,p);
+        p = point(2,3,6);
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+
+        transform = shearing(0,0,0,0,0,1);
+        p = point(2,3,4);
+        resp = matrixMultiVec(transform,p);
+        p = point(2,3,7);
+        TEST_ASSERT_TRUE(isEqual(resp, p));
+}
+
+void test_transformation()
+{
+	t_tuple p;
+	t_tuple p2;
+	t_tuple p3;
+	t_tuple p4;
+	t_matrix A;
+	t_matrix B;
+	t_matrix C;
+	t_tuple T;
+
+	A = rotation_x(M_PI_2);
+	B = scaling(5,5,5);
+	C = translation(10,5,7);
+	
+        TEST_MESSAGE("Transformations");
+        
+	p = point(1,0,1);
+	p2 = matrixMultiVec(A,p);
+	p = point(1,-1,0);
+	TEST_ASSERT_TRUE(isEqual(p2, p));
+	
+        p3 = matrixMultiVec(B,p2);
+        p = point(5,-5,0);
+        TEST_ASSERT_TRUE(isEqual(p3, p));
+
+        p4 = matrixMultiVec(C,p3);
+        p = point(15,0,7);
+        TEST_ASSERT_TRUE(isEqual(p4, p));
+
+        p = point(1,0,1);
+	T = matrixMultiVec(matrixMulti(C,matrixMulti(B,A)),p);
+        p = point(15,0,7);
+        TEST_ASSERT_TRUE(isEqual(T, p));
+}
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -1151,5 +1358,12 @@ int main(void)
 	RUN_TEST(test_det);
 	RUN_TEST(test_isInvertible);
 	RUN_TEST(test_inverse);
+	RUN_TEST(test_translation);
+	RUN_TEST(test_scaling);
+	RUN_TEST(test_rotation_x);
+	RUN_TEST(test_rotation_y);
+	RUN_TEST(test_rotation_z);
+	RUN_TEST(test_shearing);
+	RUN_TEST(test_transformation);
 	return UNITY_END();
 }
