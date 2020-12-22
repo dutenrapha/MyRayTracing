@@ -403,7 +403,7 @@ void test_writePixel()
 	red = color(1,0,0);
 	writePixel(&c, 2, 3, red);
 	TEST_MESSAGE("Function writePixel test");
-	TEST_ASSERT_TRUE(isColorEqual(c.pixel[2][3], red));	
+	TEST_ASSERT_TRUE(isColorEqual(c.pixel[3][2], red));	
 }
 
 void test_canvas_to_ppm()
@@ -423,8 +423,8 @@ void test_canvas_to_ppm()
 	h = 3;
 	c = canvas(w, h);
 	writePixel(&c, 0, 0, c1);
-	writePixel(&c, 1, 2, c2);
-	writePixel(&c, 2, 4, c3);
+	writePixel(&c, 2, 1, c2);
+	writePixel(&c, 4, 2, c3);
 	TEST_MESSAGE("Function canvas_to_ppm test");
 	TEST_ASSERT_EQUAL_STRING(ppm, canvas_to_ppm(&c));
 }
