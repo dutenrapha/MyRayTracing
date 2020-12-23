@@ -414,7 +414,7 @@ void test_canvas_to_ppm()
 	t_color c3;	
 	int w;
 	int h;
-
+rotation_y
 	c1 = color(1.5,0,0);
 	c2 = color(0,0.5,0);
 	c3 = color(-0.5,0,1);
