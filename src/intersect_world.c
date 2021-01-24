@@ -3,7 +3,6 @@
 t_intersection  *intersect_world(t_world w, t_ray r, int *lenght)
 {
 	t_intersection	*xs;
-	t_intersection	*resp;
 	t_intersection	*init;
 	int		i;
 	int 	j;
@@ -51,9 +50,7 @@ t_intersection  *intersect_world(t_world w, t_ray r, int *lenght)
 	{
 		xs = NULL;
 	}
-	resp = (t_intersection *)malloc(sizeof(t_intersection)*k);
-	resp = bubbleSort(xs,n_inter*2);
-	free(xs);
+	bubbleSort(xs,n_inter*2);
 	*lenght = n_inter*2;
-	return (resp);
+	return (xs);
 }

@@ -13,10 +13,9 @@ t_intersection *intersect(t_object s, t_ray ray)
 	float discriminant;
 	t_matrix INV;
 
-	INV = matrix(4);
 	INV = inverse(s.transform);
 	ray_t = transform(ray, INV);
-	freeMatrix(INV);
+	freeMatrix(&INV);
 	sphere_to_ray = sub(ray_t.origin,s.center);
 	a =  dot(ray_t.direction, ray_t.direction);
 	b =  2 * dot(ray_t.direction, sphere_to_ray);

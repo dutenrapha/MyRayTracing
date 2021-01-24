@@ -38,7 +38,7 @@ t_matrix view_transform(t_tuple from,t_tuple to,t_tuple up)
 	
 	t = translation(-from.x, -from.y, -from.z);
 	resp = matrixMulti(orientation,t);
-	freeMatrix(orientation);
-	freeMatrix(t);
+	freeMatrix(&orientation);
+	freeMatrix(&t);
 	return (resp);
 }

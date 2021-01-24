@@ -11,13 +11,13 @@ static void swap(t_intersection *xs, int i)
     xs[i + 1] = temp1; 
 } 
 
-t_intersection *bubbleSort(t_intersection *xs, int lenght) 
+void bubbleSort(t_intersection *xs, int lenght) 
 {
 	int	swapped;
     int i;
   
     if (xs == NULL) 
-        return (xs); 
+        return ; 
   
     do
     { 
@@ -33,6 +33,5 @@ t_intersection *bubbleSort(t_intersection *xs, int lenght)
             i++;
         }
     } 
-    while (swapped); 
-    return (xs);
+    while (swapped);
 }

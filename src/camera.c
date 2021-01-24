@@ -5,12 +5,16 @@ t_camera camera(int hsize,int vsize,float field_of_view)
 	t_camera	c;
 	float		half_view;
 	float		aspect;
+	t_matrix	I;
 
 	c.hsize = hsize;
 	c.vsize = vsize;
 	c.field_of_view = field_of_view;
-	c.transform = identity();
-	
+	c.transform = matrix(4);
+	I = identity();
+	copyMatrix(&c.transform,I);
+	freeMatrix(&I);
+
 	half_view = tan(c.field_of_view / 2);
 	aspect =  (float)c.hsize / (float)c.vsize;
 	if (aspect >= 1)
