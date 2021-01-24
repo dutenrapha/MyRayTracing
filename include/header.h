@@ -53,18 +53,18 @@ typedef struct	s_ray
 
 typedef struct s_material
 {
-        t_color color;
-        float   ambient;
-        float   diffuse;
-        float   specular;
-        float   shininess;
+	t_color color;
+	float   ambient;
+	float   diffuse;
+	float   specular;
+	float   shininess;
 } t_material;
 
 typedef struct s_object
 {
-        int		id;
+    int		id;
 	char		*type;
-        t_tuple		center;
+    t_tuple		center;
 	t_matrix	transform;
 	t_material	material;
 } t_object;
@@ -76,24 +76,40 @@ typedef struct s_intersection
 	bool		valid;
 } t_intersection;
 
-typedef struct	s_list
-{
-	t_intersection	content;
-	struct s_list	*next;
-} t_list;
-
 typedef struct s_light
 {
 	t_tuple position;
 	t_color intensity;
 } t_light;
 
-t_list	*ft_lstnew(t_intersection content);
-int	ft_lstsize(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst);
-void	ft_lstclear(t_list **lst);
+typedef struct s_world
+{
+	t_light		light;
+	t_object	*objects;
+	bool		has_light;
+	int		num_objects;
+} t_world;
 
+typedef struct s_comps
+{
+	float		t;
+	t_object	object;
+	t_tuple		point;
+	t_tuple		eyev;
+	t_tuple		normalv;
+	bool		inside;
+} t_comps;
+
+typedef struct s_camera
+{
+	int		hsize;
+	int		vsize;
+	float		field_of_view;
+	t_matrix	transform;
+	float		half_width;
+	float		half_height;
+	float		pixel_size;
+} t_camera;
 
 t_tuple	point(float x, float y, float z);
 t_tuple vector(float x, float y, float z);
@@ -141,10 +157,10 @@ t_ray ray(t_tuple origin, t_tuple direction);
 t_tuple position(t_ray ray,float t);
 t_object sphere(int id);
 t_intersection intersection(float t, t_object o);
-t_list *intersections(int count,...);
-t_list *intersect(t_object s, t_ray ray);
-void bubbleSort(t_list *xs);
-t_intersection hit(t_list *xs);
+t_intersection *intersections(int count,...);
+t_intersection *intersect(t_object s, t_ray ray);
+t_intersection *bubbleSort(t_intersection *xs, int lenght);
+t_intersection hit(t_intersection *xs, int lenght);
 t_ray	transform(t_ray r,t_matrix m);
 void	set_transform(t_object *s,t_matrix m);
 t_tuple	normal_at(t_object o,t_tuple v);
@@ -152,3 +168,13 @@ t_tuple reflect(t_tuple in, t_tuple normal);
 t_light point_light(t_tuple position, t_color intensity);
 t_material material();
 t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv);
+t_world world(int num_objects,...);
+t_world default_world();
+t_intersection	*intersect_world(t_world w, t_ray r, int *lenght);
+t_comps prepare_computations(t_intersection i, t_ray r);
+t_color shade_hit(t_world world, t_comps comps);
+t_color	 color_at(t_world world, t_ray ray);
+t_matrix view_transform(t_tuple from,t_tuple to,t_tuple up);
+t_camera camera(int hsize,int vsize,float field_of_view);
+t_ray ray_for_pixel(t_camera camera,float px,float py);
+t_canvas render(t_camera camera,t_world world);

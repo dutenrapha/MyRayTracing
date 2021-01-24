@@ -1,25 +1,26 @@
 #include "../include/header.h"
 
-t_list *intersections(int count,...)
+t_intersection *intersections(int count,...)
 {
-	t_list	*xs;
-	t_list  *temp;
-	t_intersection intersec;
+	t_intersection	*xs;
 	va_list args;
 	int i;
-	
-	va_start(args, count);
-	intersec = va_arg(args, t_intersection);	
-	xs = ft_lstnew(intersec);
-	i = 1;
-	while (i < count)
+
+	if (count >0)
 	{
-		intersec = va_arg(args, t_intersection);
-		temp = ft_lstnew(intersec);
-		ft_lstadd_back(&xs, temp);
-		ft_lstclear(&temp);
-		i++;	
-	}		
-	va_end(args);	
-	return xs;
+		xs = (t_intersection *)malloc(sizeof(t_intersection)*count);
+		va_start(args, count);
+		i = 0;
+		while (i < count)
+		{
+			xs[i] = va_arg(args, t_intersection);
+			i++;	
+		}		
+		va_end(args);	
+	}
+	else
+	{
+		xs = NULL;
+	}
+	return (xs);
 }

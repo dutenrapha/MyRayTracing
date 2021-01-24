@@ -12,6 +12,6 @@ t_matrix matrix(int dim)
 	{
 		m.element[i] = (float *)malloc(sizeof(float)*dim);
 		i++;
-	}	
+	}		
 	return (m);
 }	

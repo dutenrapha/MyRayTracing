@@ -1370,31 +1370,29 @@ void test_intersections()
         t_intersection i1;
         t_intersection i2;
 	t_intersection i3;
-	t_list *xs;
+	t_intersection *xs;
 
         s = sphere(1);
         i1 = intersection(1,s);
 	i2 = intersection(2,s);
 	xs = intersections(2,i1,i2);        
 	TEST_MESSAGE("Function intersections");
-        TEST_ASSERT_FLOAT_WITHIN(0.01,1.0, xs->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type, xs->content.object.type);
-	TEST_ASSERT_FLOAT_WITHIN(0.01,2.0, xs->next->content.t);
-        TEST_ASSERT_EQUAL_STRING(s.type, xs->next->content.object.type);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,1.0, xs[0].t);
+	TEST_ASSERT_EQUAL_STRING(s.type, xs[0].object.type);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,2.0, xs[1].t);
+        TEST_ASSERT_EQUAL_STRING(s.type, xs[1].object.type);
 	i3 = intersection(3,s);
         
-	ft_lstclear(&xs);
-	
+	free(xs);	
 	xs = intersections(3,i3,i2,i1);
         TEST_MESSAGE("Function intersections");
-        TEST_ASSERT_FLOAT_WITHIN(0.01, 3.0, xs->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type, xs->content.object.type);
-        TEST_ASSERT_FLOAT_WITHIN(0.01,2.0, xs->next->content.t);
-        TEST_ASSERT_EQUAL_STRING(s.type, xs->next->content.object.type);
-        TEST_ASSERT_FLOAT_WITHIN(0.01,1.0,xs->next->next->content.t );
-        TEST_ASSERT_EQUAL_STRING(s.type,xs->next->next->content.object.type );
-	ft_lstclear(&xs);
-	
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 3.0, xs[0].t);
+	TEST_ASSERT_EQUAL_STRING(s.type, xs[0].object.type);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,2.0, xs[1].t);
+        TEST_ASSERT_EQUAL_STRING(s.type, xs[1].object.type);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,1.0, xs[2].t );
+        TEST_ASSERT_EQUAL_STRING(s.type, xs[2].object.type );
+	free(xs);	
 }
 
 
@@ -1402,44 +1400,44 @@ void test_intersect()
 {
         t_ray r;
         t_object s;
-	t_list *xs;
+	t_intersection	*xs;
 
         r = ray(point(0, 0, -5), vector(0, 0, 1));
         s = sphere(1);
         xs = intersect(s,r);
 	TEST_MESSAGE("Function intersect");
-        TEST_ASSERT_FLOAT_WITHIN(0.01, 4.0, xs->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type, xs->content.object.type);
-        TEST_ASSERT_FLOAT_WITHIN(0.01, 6.0, xs->next->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type, xs->next->content.object.type);
-	ft_lstclear(&xs);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 4.0, xs[0].t);
+	TEST_ASSERT_EQUAL_STRING(s.type, xs[0].object.type);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 6.0, xs[1].t);
+	TEST_ASSERT_EQUAL_STRING(s.type, xs[1].object.type);
+	free(xs);
 	r = ray(point(0, 2, -5), vector(0, 0, 1));
         s = sphere(1);
         xs = intersect(s,r);
 	TEST_ASSERT_NULL(xs);
-	ft_lstclear(&xs);
+	free(xs);
 	r = ray(point(0, 1, -5), vector(0, 0, 1));
         s = sphere(1);
         xs = intersect(s,r);
-	TEST_ASSERT_FLOAT_WITHIN(0.01, 5.0,xs->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type, xs->content.object.type);
-        TEST_ASSERT_FLOAT_WITHIN(0.01, 5.0, xs->next->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type, xs->next->content.object.type);
-	ft_lstclear(&xs);
+	TEST_ASSERT_FLOAT_WITHIN(0.01, 5.0,xs[0].t);
+	TEST_ASSERT_EQUAL_STRING(s.type, xs[0].object.type);
+        TEST_ASSERT_FLOAT_WITHIN(0.01, 5.0, xs[1].t);
+	TEST_ASSERT_EQUAL_STRING(s.type, xs[1].object.type);
+	free(xs);
 	r = ray(point(0, 0, 5), vector(0, 0, 1));
         s = sphere(1);
         xs = intersect(s,r);
-	TEST_ASSERT_FLOAT_WITHIN(0.01,-6.0, xs->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type,xs->content.object.type);
-        TEST_ASSERT_FLOAT_WITHIN(0.01,-4.0, xs->next->content.t);
-	TEST_ASSERT_EQUAL_STRING(s.type, xs->next->content.object.type);
-	ft_lstclear(&xs);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,-6.0, xs[0].t);
+	TEST_ASSERT_EQUAL_STRING(s.type,xs[0].object.type);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,-4.0, xs[1].t);
+	TEST_ASSERT_EQUAL_STRING(s.type, xs[1].object.type);
+	free(xs);
 }
 
 void test_hit()
 {
         t_object s;
-        t_list *xs;	
+	t_intersection *xs;	
 	t_intersection i1;
         t_intersection i2;
         t_intersection i3;
@@ -1451,34 +1449,34 @@ void test_hit()
 	i2 = intersection(2,s);
 	xs = intersections(2,i1,i2);
 
-	resp = hit(xs);
+	resp = hit(xs,2);
 	TEST_MESSAGE("Function hit");
         TEST_ASSERT_FLOAT_WITHIN(0.01, i1.t, resp.t);
         TEST_ASSERT_EQUAL_STRING(i1.object.type, resp.object.type);
-	ft_lstclear(&xs);	
+	free(xs);
 	i1 = intersection(-1,s);
         i2 = intersection(1,s);
 	xs = intersections(2,i1,i2);	
-        resp = hit(xs);
+        resp = hit(xs,2);
         TEST_ASSERT_FLOAT_WITHIN(0.01, i2.t, resp.t);
         TEST_ASSERT_EQUAL_STRING(i2.object.type, resp.object.type);
-	ft_lstclear(&xs);	
+	free(xs);
 	i1 = intersection(-2,s);
         i2 = intersection(-1,s);
         xs = intersections(2,i1,i2);
-        resp = hit(xs);
+        resp = hit(xs,2);
 	TEST_ASSERT_TRUE(!resp.valid);
-	ft_lstclear(&xs);	
+	free(xs);
 	i1 = intersection(5,s);
         i2 = intersection(7,s);
         i3 = intersection(-3,s);
         i4 = intersection(2,s);
         xs = intersections(4,i1,i2,i3,i4);
-        resp = hit(xs);
+        resp = hit(xs,4);
         TEST_ASSERT_FLOAT_WITHIN(0.01, i4.t, resp.t);
         TEST_ASSERT_EQUAL_STRING(i4.object.type, resp.object.type);
-	ft_lstclear(&xs);	
-}
+	free(xs);
+}	
 
 void test_transform()
 {
@@ -1517,7 +1515,7 @@ void test_set_transforms()
 void test_intersect_v2()
 {
 	t_ray		r;
-	t_list		*xs;
+	t_intersection	*xs;
 	t_object	s;
 	
 	r = ray(point(0, 0, -5), vector(0, 0, 1));
@@ -1525,14 +1523,13 @@ void test_intersect_v2()
 	set_transform(&s, scaling(2, 2, 2));		
 	xs = intersect(s, r);
         TEST_MESSAGE("Function intersect v2");
-        TEST_ASSERT_EQUAL(2,ft_lstsize(xs));
-	TEST_ASSERT_FLOAT_WITHIN(0.01, 3, xs->content.t);
-	TEST_ASSERT_FLOAT_WITHIN(0.01, 7, xs->next->content.t);		
+	TEST_ASSERT_FLOAT_WITHIN(0.01, 3, xs[0].t);
+	TEST_ASSERT_FLOAT_WITHIN(0.01, 7, xs[1].t);		
 	set_transform(&s, translation(5, 0, 0));
-	ft_lstclear(&xs);
+	free(xs);
 	xs = intersect(s, r);
-	TEST_ASSERT_EQUAL(0,ft_lstsize(xs));
-	ft_lstclear(&xs);
+	TEST_ASSERT_NULL(xs);
+	free(xs);	
 }
 
 void test_normal_at()
@@ -1654,6 +1651,285 @@ void test_lighting()
 	
 }
 
+void test_world()
+{
+	t_world w;
+
+	w = world(0);
+	TEST_MESSAGE("Creating a world");
+	TEST_ASSERT_EQUAL(0,w.num_objects);		
+	TEST_ASSERT_FALSE(w.has_light);
+}
+
+void test_default_world()
+{
+	t_world w;
+	t_light light;
+	t_object s1;
+	t_object s2;
+
+	light = point_light(point(-10,10,-10),color(1,1,1));	
+	s1 = sphere(1);
+	s2 = sphere(2);	
+	s1.material.color = color(0.8,1.0,0.6);
+	s1.material.diffuse = 0.7;
+	s1.material.specular = 0.2;	
+	s2.transform = scaling(0.5,0.5,0.5);
+	w = default_world();	
+        TEST_MESSAGE("The default world");
+        TEST_ASSERT_TRUE(isEqual(w.light.position,light.position));
+	TEST_ASSERT_TRUE(isColorEqual(w.light.intensity,light.intensity));
+	TEST_ASSERT_EQUAL_STRING(w.objects[0].type,s1.type);
+	TEST_ASSERT_TRUE(isEqual(w.objects[0].center,s1.center));
+	TEST_ASSERT_TRUE(isMatrixEqual(w.objects[0].transform,s1.transform));
+	TEST_ASSERT_TRUE(isColorEqual(w.objects[0].material.color,s1.material.color));
+	TEST_ASSERT_FLOAT_WITHIN(0.01,w.objects[0].material.diffuse,s1.material.diffuse);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,w.objects[0].material.specular,s1.material.specular);
+        TEST_ASSERT_EQUAL_STRING(w.objects[1].type,s2.type);
+	TEST_ASSERT_TRUE(isEqual(w.objects[1].center,s2.center));
+        TEST_ASSERT_TRUE(isMatrixEqual(w.objects[1].transform,s2.transform));
+	TEST_ASSERT_TRUE(isColorEqual(w.objects[1].material.color,s2.material.color));
+	TEST_ASSERT_FLOAT_WITHIN(0.01,w.objects[1].material.diffuse,s2.material.diffuse);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,w.objects[1].material.specular,s2.material.specular);	
+}
+
+void test_intersect_world()
+{
+	t_world		word;
+	t_ray		r;		
+	t_intersection	*xs;
+	int		size;
+	int		*p_size;
+
+	size = 0;
+	p_size = &size;
+	word = default_world();	
+	r = ray(point(0, 0, -5),vector(0,0,1));
+	xs = intersect_world(word, r, p_size);
+	TEST_MESSAGE("Intersect a world with a ray");
+	TEST_ASSERT_EQUAL(4,size);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,4.0,xs[0].t);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,4.5,xs[1].t);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,5.5,xs[2].t);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,6.0,xs[3].t);
+}
+
+void test_comps()
+{
+	t_ray r;
+	t_object shape;
+	t_intersection i;
+	t_comps comps;
+
+	r = ray(point(0,0,-5),vector(0,0,1));	
+	shape = sphere(1);
+	i = intersection(4, shape);
+	comps = prepare_computations(i,r);
+	TEST_MESSAGE("Precomputing the state of an intersection");
+	TEST_ASSERT_FLOAT_WITHIN(0.01,i.t,comps.t);
+	TEST_ASSERT_EQUAL_STRING(i.object.type,comps.object.type);
+	TEST_ASSERT_TRUE(isEqual(point(0,0,-1),comps.point));
+	TEST_ASSERT_TRUE(isEqual(vector(0,0,-1),comps.eyev));
+	TEST_ASSERT_TRUE(isEqual(vector(0,0,-1),comps.normalv));
+}
+
+void test_comps_v2()
+{
+	t_ray r;
+        t_object shape;
+        t_intersection i;
+        t_comps comps;
+
+        r = ray(point(0,0,-5),vector(0,0,1));
+        shape = sphere(1);
+        i = intersection(4, shape);
+        comps = prepare_computations(i,r);
+        TEST_MESSAGE("Precomputing the state of an intersection v2");
+	TEST_ASSERT_FALSE(comps.inside);
+	r = ray(point(0,0,0),vector(0,0,1));	
+	i = intersection(1, shape);
+	comps = prepare_computations(i,r);
+        TEST_ASSERT_TRUE(isEqual(point(0,0,1),comps.point));
+        TEST_ASSERT_TRUE(isEqual(vector(0,0,-1),comps.eyev));
+        TEST_ASSERT_TRUE(isEqual(vector(0,0,-1),comps.normalv));
+	TEST_ASSERT_TRUE(comps.inside);
+}
+
+void test_shade_hit()
+{
+	t_world 	w;
+	t_ray		r;
+	t_object 	shape;
+	t_intersection	i;	
+	t_comps 	comps;
+	t_color		c;
+
+	w = default_world();
+	r = ray(point(0,0,-5),vector(0,0,1));
+	shape = w.objects[0];
+	i = intersection(4,shape);
+	comps = prepare_computations(i,r);	
+	c = shade_hit(w, comps);
+	TEST_MESSAGE("Shading an intersection");	
+	TEST_ASSERT_TRUE(isColorEqual(c,color(0.38066,0.47583,0.2855)));
+	
+	w.light = point_light(point(0,0.25,0),color(1,1,1));
+	r = ray(point(0,0,0),vector(0,0,1));
+	shape = w.objects[1];
+	i = intersection(0.5,shape);
+	comps = prepare_computations(i,r);
+	c = shade_hit(w, comps);
+	TEST_ASSERT_TRUE(isColorEqual(c,color(0.90498, 0.90498, 0.90498)));
+}
+
+void test_colar_at()
+{
+	t_world	w;
+	t_ray 	r;
+	t_color	c;
+	t_object inner; 
+	
+	w = default_world();
+	r = ray(point(0, 0, -5), vector(0, 1, 0));
+	c = color_at(w, r);
+	TEST_MESSAGE("The color when a ray misses");
+	TEST_ASSERT_TRUE(isColorEqual(color(0,0,0),c));
+	TEST_MESSAGE("The color when a ray hits");
+	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	c = color_at(w, r);
+	TEST_ASSERT_TRUE(isColorEqual(color(0.38066, 0.47583, 0.2855),c));
+	TEST_MESSAGE("The color with an intersection behind the ray");
+	inner = w.objects[1];
+	inner.material.ambient = 1;
+	w.objects[0].material.ambient = 1;
+	w.objects[1].material.ambient = 1;
+	r =  ray(point(0, 0, 0.75), vector(0, 0, -1));
+	c = color_at(w, r);
+	TEST_ASSERT_TRUE(isColorEqual(inner.material.color,c));
+}
+
+void test_view_transform()
+{
+	t_tuple	from;
+	t_tuple	to;
+	t_tuple	up;
+	t_matrix t;
+
+	from = point(0,0,0);	
+	to = point(0,0,-1);
+	up = vector(0,1,0);
+	TEST_MESSAGE("The transformation matrix for the default orientation");	
+	TEST_ASSERT_TRUE(isMatrixEqual(identity(),view_transform(from,to,up)));
+	TEST_MESSAGE("A view transformation matrix looking in positive z direction");
+	to = point(0,0,1);
+	TEST_ASSERT_TRUE(isMatrixEqual(scaling(-1,1,-1),view_transform(from,to,up)));
+	TEST_MESSAGE("The view transformation moves the world");
+	from = point(0,0,8);
+        to = point(0,0,0);
+	TEST_ASSERT_TRUE(isMatrixEqual(translation(0,0,-8),view_transform(from,to,up)));
+	from = point(1,3,2);
+        to = point(4,-2,8);
+        up = vector(1,1,0);
+	
+        t = matrix(4);
+        writeMatrix(&t,0,0,-0.50709);
+        writeMatrix(&t,0,1,0.50709);
+        writeMatrix(&t,0,2,0.67612);
+        writeMatrix(&t,0,3,-2.36643);
+
+        writeMatrix(&t,1,0,0.76772);
+        writeMatrix(&t,1,1,0.60609);
+        writeMatrix(&t,1,2,0.12122);
+        writeMatrix(&t,1,3,-2.82843);
+
+        writeMatrix(&t,2,0,-0.35857);
+        writeMatrix(&t,2,1,0.59761);
+        writeMatrix(&t,2,2,-0.71714);
+        writeMatrix(&t,2,3,0.00000);
+
+        writeMatrix(&t,3,0,0.00000);
+        writeMatrix(&t,3,1,0.00000);
+        writeMatrix(&t,3,2,0.00000);
+        writeMatrix(&t,3,3,1.00000);
+	TEST_MESSAGE("An arbitrary view transformation");
+        TEST_ASSERT_TRUE(isMatrixEqual(t,view_transform(from,to,up)));	
+}
+
+void test_camera()
+{
+	int		hsize;
+	int		vsize;
+	float 		field_of_view;
+	t_camera	c;
+
+	hsize = 160;
+	vsize = 120;
+	field_of_view = M_PI_2;
+	c = camera(hsize,vsize,field_of_view);
+
+	TEST_MESSAGE("Constructing a camera");
+	TEST_ASSERT_EQUAL(hsize,c.hsize);
+	TEST_ASSERT_EQUAL(vsize,c.vsize);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,field_of_view,c.field_of_view);
+	TEST_ASSERT_TRUE(isMatrixEqual(identity(),c.transform));	
+	
+	TEST_MESSAGE("The pixel size for a horizontal canvas");
+	freeMatrix(c.transform);
+	c = camera(200,125,M_PI_2);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,0.01,c.pixel_size); 
+	
+	TEST_MESSAGE("The pixel size for a vertical canvas");
+	freeMatrix(c.transform);
+        c = camera(125,200,M_PI_2);
+	TEST_ASSERT_FLOAT_WITHIN(0.01,0.01,c.pixel_size);
+}
+
+void test_ray_for_pixel()
+{
+	t_camera	c;
+	t_ray		r;
+
+	TEST_MESSAGE("Constructing a ray through the center of the canvas");
+	c = camera(201, 101, M_PI_2);
+	r = ray_for_pixel(c, 100, 50);
+	TEST_ASSERT_TRUE(isEqual(point(0,0,0),r.origin));
+	TEST_ASSERT_TRUE(isEqual(vector(0,0,-1),r.direction));
+
+	TEST_MESSAGE("Constructing a ray through a corner of the canvas");
+	c = camera(201, 101, M_PI_2);
+	r = ray_for_pixel(c, 0, 0);
+	TEST_ASSERT_TRUE(isEqual(point(0,0,0),r.origin));
+        TEST_ASSERT_TRUE(isEqual(vector(0.66519,0.33259,-0.66851),r.direction));
+	
+	TEST_MESSAGE("Constructing a ray when the camera is transformed");
+	c = camera(201, 101, M_PI_2);
+	c.transform = matrixMulti(rotation_y(M_PI/4),translation(0,-2,5));
+	r = ray_for_pixel(c, 100, 50);
+	TEST_ASSERT_TRUE(isEqual(point(0,2,-5),r.origin));
+        TEST_ASSERT_TRUE(isEqual(vector(sqrt(2)/2,0,-sqrt(2)/2),r.direction));
+}
+
+void test_render()
+{
+	t_world w;
+	t_camera c;
+	t_tuple from;
+	t_tuple to;
+	t_tuple up;
+	t_canvas image;
+
+	w = default_world();
+	c = camera(11,11,M_PI_2);
+	from = point(0,0,-5);
+	to = point(0, 0, 0);
+	up = vector(0,1,0);
+	c.transform = view_transform(from,to,up);
+	image = render(c,w);
+	
+        TEST_MESSAGE("Rendering a world with a camera");
+        TEST_ASSERT_TRUE(isColorEqual(image.pixel[5][5],color(0.38066,0.47583,0.2855)));
+}
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -1714,5 +1990,16 @@ int main(void)
 	RUN_TEST(test_point_light);
 	RUN_TEST(test_material);
 	RUN_TEST(test_lighting);
+	RUN_TEST(test_world);
+	RUN_TEST(test_default_world);
+	RUN_TEST(test_intersect_world);
+	RUN_TEST(test_comps);
+	RUN_TEST(test_comps_v2);
+	RUN_TEST(test_shade_hit);
+	RUN_TEST(test_colar_at);
+	RUN_TEST(test_view_transform);
+	RUN_TEST(test_camera);
+	RUN_TEST(test_ray_for_pixel);
+	RUN_TEST(test_render);
 	return UNITY_END();
 }

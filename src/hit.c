@@ -1,23 +1,23 @@
 #include "../include/header.h"
 
-t_intersection hit(t_list *xs)
+t_intersection hit(t_intersection *xs, int lenght)
 {
 	t_intersection	it;
-	t_list		*temp;
-	
+	int i;
+
+	i = 0;
 	it.valid = false;
-	bubbleSort(xs);
-	while (xs != NULL)
+	bubbleSort(xs,lenght);
+	while (i < lenght)
 	{
-		temp = xs;
-		if (temp->content.t >= 0)
+		if(xs[i].t > 0)
 		{
-			it.t = temp->content.t ;
-			it.object = temp->content.object;
+			it.t = xs[i].t ;
+			it.object = xs[i].object;
 			it.valid = true;
 			break;
 		}
-		xs = temp->next;
+		i++;
 	}
 	return (it);
 }

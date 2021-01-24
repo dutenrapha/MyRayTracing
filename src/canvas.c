@@ -14,19 +14,19 @@ t_canvas canvas(int w, int h)
 	c.pixel = (t_color**)malloc(sizeof(t_color*) * h);
 	while (i < h)
 	{
-		c.pixel[i] = malloc(sizeof(t_color) * w);
+		c.pixel[i] = (t_color *)malloc(sizeof(t_color) * w);
 		i++;
 	}
 	i = 0;
         while (i < h)
         {
-		j = 0;
-		while (j < w)
-        	{
-			c.pixel[i][j] = black; 
-			j++;
-        	}
-                i++;
-        }
+			j = 0;
+			while (j < w)
+			{
+				c.pixel[i][j] = black; 
+				j++;
+			}
+			i++;
+    	}
 	return c;
 }

@@ -1,36 +1,38 @@
 #include "../include/header.h"
 
-static void swap(t_list *a, t_list *b) 
+static void swap(t_intersection *xs, int i) 
 { 
-    int temp = a->content.t; 
-    a->content.t = b->content.t; 
-    b->content.t = temp; 
+    t_intersection temp1;
+    t_intersection temp2;
+
+    temp1 = xs[i];
+    temp2 = xs[i + 1];
+    xs[i] = temp2;
+    xs[i + 1] = temp1; 
 } 
 
-void bubbleSort(t_list *xs) 
+t_intersection *bubbleSort(t_intersection *xs, int lenght) 
 {
 	int	swapped;
-	t_list	*ptr1;
-	t_list	*lptr = NULL; 
+    int i;
   
     if (xs == NULL) 
-        return; 
+        return (xs); 
   
     do
     { 
         swapped = 0; 
-        ptr1 = xs; 
-  
-        while (ptr1->next != lptr) 
+        i = 0;
+        while (i < lenght -1) 
         { 
-            if (ptr1->content.t > ptr1->next->content.t) 
+            if (xs[i].t > xs[i + 1].t) 
             {  
-                swap(ptr1, ptr1->next); 
+                swap(xs,i); 
                 swapped = 1; 
             } 
-            ptr1 = ptr1->next; 
-        } 
-        lptr = ptr1; 
+            i++;
+        }
     } 
     while (swapped); 
+    return (xs);
 }
