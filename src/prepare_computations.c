@@ -9,7 +9,7 @@ t_comps prepare_computations(t_intersection i, t_ray r)
 	comps.point = position(r, comps.t);
 	comps.eyev = multi(r.direction,-1);
 	comps.normalv = normal_at(comps.object, comps.point);	
-	
+	comps.over_point = add(comps.point,multi(comps.normalv,0.01));
 
 	if (dot(comps.normalv,comps.eyev) < 0)
 	{

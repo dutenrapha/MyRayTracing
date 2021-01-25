@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv)
+t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv, bool in_shadow)
 {
 	t_color ambient;
 	t_color diffuse;
@@ -37,6 +37,11 @@ t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev
 			factor  =  pow(reflect_dot_eye, material.shininess);
 			specular = multicolorS(light.intensity,material.specular*factor);
 		}
-	}	
+	}
+	if (in_shadow == true)
+	{
+		diffuse = black;
+		specular = black;
+	}
 	return (addcolor(ambient,addcolor(diffuse,specular)));
 }

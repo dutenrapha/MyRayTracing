@@ -98,6 +98,7 @@ typedef struct s_comps
 	t_tuple		eyev;
 	t_tuple		normalv;
 	bool		inside;
+	t_tuple		over_point;
 } t_comps;
 
 typedef struct s_camera
@@ -167,7 +168,7 @@ t_tuple	normal_at(t_object o,t_tuple v);
 t_tuple reflect(t_tuple in, t_tuple normal);
 t_light point_light(t_tuple position, t_color intensity);
 t_material material();
-t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv);
+t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv, bool in_shadow);
 t_world world(int num_objects,...);
 t_world default_world();
 t_intersection	*intersect_world(t_world w, t_ray r, int *lenght);
@@ -179,3 +180,4 @@ t_camera camera(int hsize,int vsize,float field_of_view);
 t_ray ray_for_pixel(t_camera camera,float px,float py);
 t_canvas render(t_camera camera,t_world world);
 void copyMatrix(t_matrix *d, t_matrix o);
+bool is_shadowed(t_world world, t_tuple point);
