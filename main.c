@@ -41,6 +41,7 @@ int main(void)
 	C = matrixMulti(B,A);
 	copyMatrix(&left_wall.transform,C);
 	freeMatrix(&A);
+	freeMatrix(&B);
     freeMatrix(&C);
 	left_wall.material = floor.material;
 
@@ -117,5 +118,9 @@ int main(void)
 	freeMatrix(&c.transform);
 	free(w.objects);
 	freeMatrix(&floor.transform);
+	freeMatrix(&left_wall.transform);
+	freeMatrix(&right_wall.transform);
+	freeMatrix(&right.transform);
+	freeMatrix(&left.transform);
 	return (0);
 }
