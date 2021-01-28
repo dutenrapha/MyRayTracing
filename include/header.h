@@ -112,6 +112,13 @@ typedef struct s_camera
 	float		pixel_size;
 } t_camera;
 
+typedef struct shape
+{
+	t_matrix	transform;
+	t_material	material;
+	t_ray		saved_ray;
+} t_shape;
+
 t_tuple	point(float x, float y, float z);
 t_tuple vector(float x, float y, float z);
 bool isEqual(t_tuple v1, t_tuple v2);
@@ -181,3 +188,12 @@ t_ray ray_for_pixel(t_camera camera,float px,float py);
 t_canvas render(t_camera camera,t_world world);
 void copyMatrix(t_matrix *d, t_matrix o);
 bool is_shadowed(t_world world, t_tuple point);
+t_shape	test_shape();
+void    set_transform_2(t_shape *s,t_matrix m);
+void	intersect_2(t_shape *s,t_ray ray);
+t_tuple	normal_at_2(t_shape s, t_tuple p);
+t_tuple local_normal_at(t_object o,t_tuple local_point);
+t_object plan();
+int	ft_memcmp(const void *str1, const void *str2);
+t_object cube(int id);
+void	check_axis(float origin, float direction, float *tmin,float *tmax);

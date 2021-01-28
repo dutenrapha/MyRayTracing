@@ -7,12 +7,17 @@ t_canvas render(t_camera camera,t_world world)
 	int		y;
 	t_ray		ray;
 	t_color		color;
+	char 		a;
 
 	image = canvas(camera.hsize, camera.vsize);
 	y = 0;
 	while (y < camera.vsize - 1)
 	{
 		x = 0;
+		if (x == 25)
+		{
+			a = 'a';
+		}
 		while (x < camera.hsize - 1)
 		{
 			ray = ray_for_pixel(camera, x, y);
