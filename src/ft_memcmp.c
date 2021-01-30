@@ -5,6 +5,8 @@ static	int	ft_strlen(const char *s)
 	int len;
 
 	len = 0;
+	if (s == NULL)
+		return (len);
 	while (*s++)
 	{
 		len++;
