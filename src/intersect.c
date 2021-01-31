@@ -103,6 +103,7 @@ t_intersection *intersect(t_object s, t_ray ray)
 {
 	t_intersection *xs;
 	t_ray local_ray;
+        t_matrix        A;
 
 	
 	if (ft_memcmp("sphere",s.type) == 0)
@@ -115,7 +116,9 @@ t_intersection *intersect(t_object s, t_ray ray)
 	}
         else if (ft_memcmp("cube",s.type) == 0)
         {
-                local_ray = transform(ray,inverse(s.transform));
+                A = inverse(s.transform);
+                local_ray = transform(ray,A);
+                freeMatrix(&A);
                 xs  = intersect_cube(s,local_ray);
         }
         else
