@@ -25,7 +25,7 @@ int main(void)
 	floor.material = material();
 	floor.material.color = color(1, 0.9, 0.9);
 	floor.material.specular = 0;
-	
+
 	middle = sphere(2);
 	C = translation(-0.5, 1, 0.5);
 	copyMatrix(&middle.transform,C);
@@ -48,6 +48,7 @@ int main(void)
 	right.material.diffuse = 0.7;
 	right.material.specular = 0.3;
 
+
 	left = sphere(4);
 	A = translation(-1.5, 0.33, -0.75);
 	B = scaling(0.33,0.33,0.33);
@@ -62,9 +63,10 @@ int main(void)
 	left.material.specular = 0.3;
 
 	w = world(4,floor,middle,right,left); 
+	//w = world(1,middle);
 	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
 
-	c = camera(100,150,M_PI/3);
+	c = camera(1000,1000,M_PI/3);
 	C = view_transform(point(0,1.5,-5),point(0,1,0),vector(0,1,0));
 	copyMatrix(&c.transform,C);
 	freeMatrix(&C);

@@ -94,5 +94,6 @@ t_intersection  *intersect_world(t_world w, t_ray r, int *lenght)
 	}
 	bubbleSort(xs,k);
 	*lenght = k;
+	free(status);
 	return (xs);
 }

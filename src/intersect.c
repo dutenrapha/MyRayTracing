@@ -102,18 +102,21 @@ static t_intersection *intersect_cube(t_object c, t_ray ray)
 t_intersection *intersect(t_object s, t_ray ray)
 {
 	t_intersection *xs;
+	t_ray local_ray;
+
 	
-	if (ft_memcmp(s.type,"sphere") == 0)
+	if (ft_memcmp("sphere",s.type) == 0)
         {
 		xs  = intersect_sphere(s,ray);
         }
-        else if (ft_memcmp(s.type,"plan") == 0)
+        else if (ft_memcmp("plan",s.type) == 0)
         {
 		xs = intersect_plan(s,ray);
 	}
-        else if (ft_memcmp(s.type,"cubes") == 0)
+        else if (ft_memcmp("cube",s.type) == 0)
         {
-                xs  = intersect_cube(s,ray);
+                local_ray = transform(ray,inverse(s.transform));
+                xs  = intersect_cube(s,local_ray);
         }
         else
         {
