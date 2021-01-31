@@ -35,7 +35,7 @@ int main(void)
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
 
-	right = sphere(3);
+	right = cube(3);
 	A = translation(1.5,0.5,-0.5);
 	B = scaling(0.5,0.5,0.5);
 	C = matrixMulti(A,B);
@@ -48,7 +48,7 @@ int main(void)
 	right.material.diffuse = 0.7;
 	right.material.specular = 0.3;
 
-	left = cube(4);
+	left = sphere(4);
 	A = translation(-1.5, 0.33, -0.75);
 	B = scaling(0.33,0.33,0.33);
 	C = matrixMulti(A,B);

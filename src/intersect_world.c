@@ -6,6 +6,7 @@ static	int size_xs(t_object *objects, int *status, int n)
 	int i;
 
 	i = 0;
+	resp = 0;
 	while (i < n)
 	{
 		if (status[i] == 1)
@@ -30,14 +31,12 @@ t_intersection  *intersect_world(t_world w, t_ray r, int *lenght)
 	t_intersection	*init;
 	int		i;
 	int 	j;
-	int		n_inter;
 	int 	k;
 	int		*status;
 
 	status = NULL;
 	status = (int *)malloc(sizeof(int)*w.num_objects);
 	k = 0;
-	n_inter = 0;
 	i = 0;
 	while(i < w.num_objects)
 	{
@@ -46,13 +45,12 @@ t_intersection  *intersect_world(t_world w, t_ray r, int *lenght)
 		if (init != NULL)
 		{
 			status[i] = 1;
-			n_inter++;
 			free(init);
 			init = NULL;
 		}
 		i++;
 	}
-	k = size_xs(w.objects,status,n_inter);
+	k = size_xs(w.objects,status,w.num_objects);
 	if (k > 0)
 	{
 		xs = (t_intersection *)malloc(sizeof(t_intersection)*k);
@@ -65,20 +63,26 @@ t_intersection  *intersect_world(t_world w, t_ray r, int *lenght)
 				if(ft_memcmp(w.objects[i].type,"plan") == 0)
 				{
 					init = intersect(w.objects[i],r);
-					xs[j] = init[0];
-					j++;
-					free(init);
-					init = NULL;
+					if (init != NULL)
+					{
+						xs[j] = init[0];
+						j++;
+						free(init);
+						init = NULL;
+					}
 				}
 				else
 				{
 					init = intersect(w.objects[i],r);
-					xs[j] = init[0];
-					j++;
-					xs[j] = init[1];
-					j++;
-					free(init);
-					init = NULL;
+					if (init != NULL)
+					{
+						xs[j] = init[0];
+						j++;
+						xs[j] = init[1];
+						j++;
+						free(init);
+						init = NULL;
+					}
 				}
 			}
 			i++;
