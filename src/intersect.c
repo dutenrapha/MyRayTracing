@@ -38,7 +38,7 @@ static t_intersection *intersect_sphere(t_object s, t_ray ray, int *num)
 	return (xs);
 }
 
-static t_intersection *intersect_plan(t_object p, t_ray ray)
+static t_intersection *intersect_plan(t_object p, t_ray ray,int *num)
 {
 	t_intersection *xs;
 	t_intersection i;
@@ -47,12 +47,14 @@ static t_intersection *intersect_plan(t_object p, t_ray ray)
 	if (fabs(ray.direction.y) < EPSILON)
 	{
 		xs = NULL;
+                *num = 0;
 		return (xs);
 	}
 
 	t = -ray.origin.y / ray.direction.y;
 	i = intersection(t, p);	
 	xs = intersections(1,i);
+        *num = 1;
 	return (xs);
 }
 
@@ -92,6 +94,7 @@ static t_intersection *intersect_cube(t_object c, t_ray ray, int *num)
         if (tmin > tmax)
         {
                 xs = NULL;
+                *num = 0;
         }
         else
         {
@@ -124,6 +127,7 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
         if (fabs(a) < EPSILON)
         {
                 xs = NULL;
+                *num = 0;
                 return (xs);
         }
 
@@ -133,6 +137,7 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
         if (discriminant < 0)
         {
                 xs = NULL;
+                *num = 0;
                 return (xs);
         }
         t0 =  (-b - sqrt(discriminant)) / (2 * a);
@@ -177,6 +182,7 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
         else
         {
                 xs = NULL;
+                *num = 0;
         }
 
         return (xs);
@@ -195,7 +201,7 @@ t_intersection *intersect(t_object s, t_ray ray, int *num)
         }
         else if (ft_memcmp("plan",s.type) == 0)
         {
-		xs = intersect_plan(s,ray);
+		xs = intersect_plan(s,ray, num);
 	}
         else if (ft_memcmp("cylinder",s.type) == 0)
         {
@@ -211,6 +217,7 @@ t_intersection *intersect(t_object s, t_ray ray, int *num)
         else
         {
 		xs = NULL;
+                *num = 0;
         }
 
 	return (xs);

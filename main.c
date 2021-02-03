@@ -55,7 +55,9 @@ int main(void)
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
 
-	right = cube(3);
+	right = cylinder(3);
+	right.maximum = 2;
+	right.minimum = 1;
 	A = translation(1.5,0.5,-0.5);
 	B = scaling(0.5,0.5,0.5);
 	C = matrixMulti(A,B);
@@ -69,9 +71,7 @@ int main(void)
 	right.material.specular = 0.3;
 
 
-	left = cylinder(4);
-	left.maximum = 2;
-	left.minimum = 1;
+	left = cube(4);
 	A = translation(-1.5, 0.33, -0.75);
 	B = scaling(0.33,0.33,0.33);
 	C = matrixMulti(A,B);
@@ -84,11 +84,11 @@ int main(void)
 	left.material.diffuse = 0.7;
 	left.material.specular = 0.3;
 
-	w = world(4,floor,middle,right,left); 
-	//w = world(1,middle);
+	//w = world(4,floor,middle,right,left); 
+	w = world(2,floor,right);
 	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
 
-	c = camera(100,150,M_PI/3);
+	c = camera(150,100,M_PI/3);
 	C = view_transform(point(0,1.5,-5),point(0,1,0),vector(0,1,0));
 	copyMatrix(&c.transform,C);
 	freeMatrix(&C);
