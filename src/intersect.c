@@ -99,6 +99,85 @@ static t_intersection *intersect_cube(t_object c, t_ray ray)
         return (xs);
 }
 
+static t_intersection *intersect_cylinder(t_object cyl, t_ray ray)
+{
+        float           a;
+        float           b;
+        float           c;
+        float           t0;
+        float           t1;
+        float           temp;
+        float           y0;
+        float           y1;
+        float           discriminant;
+        t_intersection *xs;
+        t_intersection i1;
+        t_intersection i2;
+        int             aa;
+        int             bb;
+
+        aa = 0;
+        bb = 0;
+        a = ray.direction.x*ray.direction.x + ray.direction.z*ray.direction.z;
+        if (fabs(a) < EPSILON)
+        {
+                xs = NULL;
+                return (xs);
+        }
+
+        b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
+        c = ray.origin.x*ray.origin.x + ray.origin.z*ray.origin.z - 1;
+        discriminant = b*b - 4 * a * c;
+        if (discriminant < 0)
+        {
+                xs = NULL;
+                return (xs);
+        }
+        t0 =  (-b - sqrt(discriminant)) / (2 * a);
+        t1 =  (-b + sqrt(discriminant)) / (2 * a);
+       
+        if (t0 > t1)
+        {
+                temp = t0;
+                t1 = t0;
+                t0 = temp;
+        }
+
+        y0 = ray.origin.y + t0 * ray.direction.y;
+        if ((cyl.minimum < y0) && (y0 < cyl.maximum))
+        {
+                i1 = intersection(t0, cyl);
+                aa = 1;
+        }
+
+        y1 = ray.origin.y + t1 * ray.direction.y;
+        if ((cyl.minimum < y1) && (y1 < cyl.maximum))
+        {
+                i2 = intersection(t1, cyl);
+                bb = 1;
+        }
+
+        if ((aa == 1) && (bb == 1))
+        {
+                xs = intersections(2, i1, i2);
+        }
+        else if (aa == 1)
+        {
+                xs = intersections(1, i1);
+        }
+        else if (bb == 1)
+        {
+                xs = intersections(1, i2);
+        }
+        else
+        {
+                xs = NULL;
+        }
+
+        //xs = intersections(2, intersection(t0, cyl), intersection(t1, cyl));
+        return (xs);
+}
+
 t_intersection *intersect(t_object s, t_ray ray)
 {
 	t_intersection *xs;
@@ -113,6 +192,10 @@ t_intersection *intersect(t_object s, t_ray ray)
         else if (ft_memcmp("plan",s.type) == 0)
         {
 		xs = intersect_plan(s,ray);
+	}
+        else if (ft_memcmp("cylinder",s.type) == 0)
+        {
+		xs = intersect_cylinder(s,ray);
 	}
         else if (ft_memcmp("cube",s.type) == 0)
         {

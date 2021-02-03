@@ -64,6 +64,8 @@ typedef struct s_object
 {
     int		id;
 	char		*type;
+	float		minimum;
+    float		maximum;
     t_tuple		center;
 	t_matrix	transform;
 	t_material	material;
@@ -197,3 +199,4 @@ t_object plan();
 int	ft_memcmp(const void *str1, const void *str2);
 t_object cube(int id);
 void	check_axis(float origin, float direction, float *tmin,float *tmax);
+t_object cylinder(int id);

@@ -37,6 +37,10 @@ t_tuple local_normal_at(t_object o,t_tuple local_point)
 	{
 		local_normal = cub_norm(local_point);
 	}
+	else if (ft_memcmp(o.type,"cylinder") == 0)
+	{
+		local_normal = vector(local_point.x, 0, local_point.z);
+	}
 	else
 	{
 		local_normal = vector(0,0,0);

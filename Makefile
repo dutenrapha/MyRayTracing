@@ -39,7 +39,7 @@ $(LIB_PATH)/%.a:
 
 %.x:
 	@$(CC) $(INC_PATH) -g -c $(MAIN) 
-	@$(CC)  -o $@ $(MAIN_O) -g $(LIB_PATH)/$(LIB_NAME) 
+	@$(CC)  -o $@ $(MAIN_O) -g $(LIB_PATH)/$(LIB_NAME)
 	@rm -f *.o
 
 test:	fclean all test.x

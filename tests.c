@@ -2010,9 +2010,10 @@ void	test_shade_hit_v2()
 	TEST_ASSERT_LESS_THAN(0,floor(comps.over_point.z + EPSILON/2));
 	TEST_ASSERT_LESS_THAN(0,floor(comps.over_point.z - comps.point.z));
 }
-
+/*
 void	test_test_shape()
 {
+        
 	t_shape		s;
 	t_material	m;
 	t_ray		r;
@@ -2082,7 +2083,7 @@ void	test_test_shape()
 	TEST_ASSERT_TRUE(isEqual(n,vector(0,0.97014,-0.24254)));
 
 }
-
+*/
 void	test_local_intersect()
 {
 	t_object	p;
@@ -2272,10 +2273,126 @@ void    test_cube()
         p = point(-1, -1, -1);
         n =  local_normal_at(c, p);
         TEST_ASSERT_TRUE(isEqual(n,vector(-1, 0, 0)));
-
-
-
 }       
+
+void    test_cylinder()
+{
+        t_object	cyl;
+	t_tuple         direction;
+	t_ray		r;
+        t_intersection  *xs;
+        t_tuple         n;
+
+        cyl = cylinder(1); 
+        TEST_MESSAGE("A ray misses a cylinder 1");
+        direction = normalize(vector(0, 1, 0));
+        r = ray(point(1,0,0), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("A ray misses a cylinder 2");
+        direction = normalize(vector(0, 1, 0));
+        r = ray(point(0,0,0), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("A ray misses a cylinder 3");
+        direction = normalize(vector(1, 1, 1));
+        r = ray(point(0,0,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("A ray strikes a cylinder 1");
+        direction = normalize(vector(0, 0, 1));
+        r = ray(point(1,0,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,5,xs[0].t);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,5,xs[1].t);
+        free(xs);
+
+        TEST_MESSAGE("A ray strikes a cylinder 2");
+        direction = normalize(vector(0, 0, 1));
+        r = ray(point(0,0,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
+        free(xs);
+
+        TEST_MESSAGE("A ray strikes a cylinder 3");
+        direction = normalize(vector(0.1, 1, 1));
+        r = ray(point(0.5,0,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,6.80798,xs[0].t);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,7.08872,xs[1].t);
+        free(xs);
+
+        TEST_MESSAGE("Normal vector on a cylinder 1");
+        n =  local_normal_at(cyl, point(1,0,0));
+        TEST_ASSERT_TRUE(isEqual(n,vector(1,0,0))); 
+
+        TEST_MESSAGE("Normal vector on a cylinder 2");
+        n =  local_normal_at(cyl, point(0,5,-1));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0,0,-1))); 
+
+        TEST_MESSAGE("Normal vector on a cylinder 3");
+        n =  local_normal_at(cyl, point(0,-2,1));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0,0,1))); 
+
+        TEST_MESSAGE("Normal vector on a cylinder 4");
+        n =  local_normal_at(cyl, point(-1,1,0));
+        TEST_ASSERT_TRUE(isEqual(n,vector(-1,0,0))); 
+
+        cyl.maximum = 2;
+        cyl.minimum = 1;
+        TEST_MESSAGE("Intersecting a constrained cylinder 1");
+        direction = normalize(vector(0.1,1,0));
+        r = ray(point(0,1.5,0), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("Intersecting a constrained cylinder 2");
+        direction = normalize(vector(0,0,1));
+        r = ray(point(0,3,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("Intersecting a constrained cylinder 3");
+        direction = normalize(vector(0,0,1));
+        r = ray(point(0,0,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("Intersecting a constrained cylinder 4");
+        direction = normalize(vector(0,0,1));
+        r = ray(point(0,2,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("Intersecting a constrained cylinder 5");
+        direction = normalize(vector(0,0,1));
+        r = ray(point(0,1,-5), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NULL(xs);
+        free(xs);
+
+        TEST_MESSAGE("Intersecting a constrained cylinder 6");
+        direction = normalize(vector(0,0,1));
+        r = ray(point(0,1.5,-2), direction);
+        xs = intersect(cyl,r);
+        TEST_ASSERT_NOT_NULL(xs);
+        free(xs);
+
+
+
+
+}
 
 int main(void)
 {
@@ -2351,8 +2468,9 @@ int main(void)
 	RUN_TEST(test_lighting_v2);
 	RUN_TEST(test_is_shadowed);
 	RUN_TEST(test_shade_hit_v2);
-        RUN_TEST(test_test_shape);
+        //RUN_TEST(test_test_shape);
 	RUN_TEST(test_local_intersect);
         RUN_TEST(test_cube);
+        RUN_TEST(test_cylinder);
 	return UNITY_END();
 }
