@@ -1401,10 +1401,14 @@ void test_intersect()
         t_ray r;
         t_object s;
 	t_intersection	*xs;
+        int             num_iter;
+        int             *num;
 
+        num_iter = 0;
+        num = &num_iter;
         r = ray(point(0, 0, -5), vector(0, 0, 1));
         s = sphere(1);
-        xs = intersect(s,r);
+        xs = intersect(s,r,num);
 	TEST_MESSAGE("Function intersect");
         TEST_ASSERT_FLOAT_WITHIN(0.01, 4.0, xs[0].t);
 	TEST_ASSERT_EQUAL_STRING(s.type, xs[0].object.type);
@@ -1413,12 +1417,12 @@ void test_intersect()
 	free(xs);
 	r = ray(point(0, 2, -5), vector(0, 0, 1));
         s = sphere(1);
-        xs = intersect(s,r);
+        xs = intersect(s,r,num);
 	TEST_ASSERT_NULL(xs);
 	free(xs);
 	r = ray(point(0, 1, -5), vector(0, 0, 1));
         s = sphere(1);
-        xs = intersect(s,r);
+        xs = intersect(s,r,num);
 	TEST_ASSERT_FLOAT_WITHIN(0.01, 5.0,xs[0].t);
 	TEST_ASSERT_EQUAL_STRING(s.type, xs[0].object.type);
         TEST_ASSERT_FLOAT_WITHIN(0.01, 5.0, xs[1].t);
@@ -1426,7 +1430,7 @@ void test_intersect()
 	free(xs);
 	r = ray(point(0, 0, 5), vector(0, 0, 1));
         s = sphere(1);
-        xs = intersect(s,r);
+        xs = intersect(s,r,num);
 	TEST_ASSERT_FLOAT_WITHIN(0.01,-6.0, xs[0].t);
 	TEST_ASSERT_EQUAL_STRING(s.type,xs[0].object.type);
         TEST_ASSERT_FLOAT_WITHIN(0.01,-4.0, xs[1].t);
@@ -1517,17 +1521,22 @@ void test_intersect_v2()
 	t_ray		r;
 	t_intersection	*xs;
 	t_object	s;
+        int             num_iter;
+        int             *num;
+
+        num_iter = 0;
+        num = &num_iter;
 	
 	r = ray(point(0, 0, -5), vector(0, 0, 1));
 	s = sphere(1);
 	set_transform(&s, scaling(2, 2, 2));		
-	xs = intersect(s, r);
+	xs = intersect(s, r, num);
         TEST_MESSAGE("Function intersect v2");
 	TEST_ASSERT_FLOAT_WITHIN(0.01, 3, xs[0].t);
 	TEST_ASSERT_FLOAT_WITHIN(0.01, 7, xs[1].t);		
 	set_transform(&s, translation(5, 0, 0));
 	free(xs);
-	xs = intersect(s, r);
+	xs = intersect(s, r,num);
 	TEST_ASSERT_NULL(xs);
 	free(xs);	
 }
@@ -2092,6 +2101,11 @@ void	test_local_intersect()
 	t_tuple         n3;
 	t_ray		r;	
 	t_intersection *xs;
+        int             num_iter;
+        int             *num;
+
+        num_iter = 0;
+        num = &num_iter;
 
 	p = plan(1);
 	n1 = normal_at(p, point(0, 0, 0));
@@ -2106,21 +2120,21 @@ void	test_local_intersect()
 	TEST_MESSAGE("Intersect with a ray parallel to the plane");
 	p = plan(2);
 	r = ray(point(0,10,0),vector(0,0,1));
-	xs = intersect(p,r);	
+	xs = intersect(p,r,num);	
 	TEST_ASSERT_NULL(xs);
         free(xs);
 
 	TEST_MESSAGE("Intersect with a coplanar ray");
 	p = plan(3);
         r = ray(point(0,0,0),vector(0,0,1));
-        xs = intersect(p,r);
+        xs = intersect(p,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
 	TEST_MESSAGE("A ray intersecting a plane from above");
 	p = plan(4);
         r = ray(point(0,1,0),vector(0,-1,0));
-	xs = intersect(p,r);
+	xs = intersect(p,r,num);
 	TEST_ASSERT_FLOAT_WITHIN(0.01,1,xs[0].t);
 	TEST_ASSERT_EQUAL_STRING("plan",xs[0].object.type);
         free(xs);
@@ -2128,7 +2142,7 @@ void	test_local_intersect()
 	TEST_MESSAGE("A ray intersecting a plane from below");
 	p = plan(5);
         r = ray(point(0,-1,0),vector(0,1,0));
-        xs = intersect(p,r);
+        xs = intersect(p,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,1,xs[0].t);
         TEST_ASSERT_EQUAL_STRING("plan",xs[0].object.type);
 	free(xs);
@@ -2141,96 +2155,113 @@ void    test_cube()
         t_intersection *xs;
         t_tuple         p;
         t_tuple         n;
+        int             num_iter;
+        int             *num;
 
+        num_iter = 0;
+        num = &num_iter;
         c = cube(1);
         TEST_MESSAGE("A ray intersects a cube +x");
         r = ray(point(5,0.5,0),vector(-1,0,0));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray intersects a cube -x");
         r = ray(point(-5,0.5,0),vector(1,0,0));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray intersects a cube +y");
         r = ray(point(0.5,5,0),vector(0,-1,0));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray intersects a cube -y");
         r = ray(point(0.5,-5,0),vector(0,1,0));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray intersects a cube +z");
         r = ray(point(0.5,0,5),vector(0,0,-1));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray intersects a cube +z");
         r = ray(point(0.5,0,-5),vector(0,0,1));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray intersects a cube insede");
         r = ray(point(0,0.5,0),vector(0,0,1));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,-1,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,1,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cube 1");
         r = ray(point(-2, 0, 0),vector(0.2673, 0.5345, 0.8018));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cube 1");
         r = ray(point(-2, 0, 0),vector(0.2673, 0.5345, 0.8018));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cube 2");
         r = ray(point(0, -2, 0),vector(0.8018, 0.2673, 0.5345));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cube 3");
         r = ray(point(0, 0, -2),vector(0.5345, 0.8018, 0.2673));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cube 4");
         r = ray(point(2, 0, 2),vector(0, 0, -1));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cube 5");
         r = ray(point(0, 2, 2),vector(0, -1, 0));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cube 6");
         r = ray(point(2, 2, 0),vector(-1, 0, 0));
-        xs = intersect(c,r);
+        xs = intersect(c,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
@@ -2282,49 +2313,59 @@ void    test_cylinder()
 	t_ray		r;
         t_intersection  *xs;
         t_tuple         n;
+        int             num_iter;
+        int             *num;
+
+        num_iter = 0;
+        num = &num_iter;
 
         cyl = cylinder(1); 
         TEST_MESSAGE("A ray misses a cylinder 1");
         direction = normalize(vector(0, 1, 0));
         r = ray(point(1,0,0), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cylinder 2");
         direction = normalize(vector(0, 1, 0));
         r = ray(point(0,0,0), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray misses a cylinder 3");
         direction = normalize(vector(1, 1, 1));
         r = ray(point(0,0,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray strikes a cylinder 1");
         direction = normalize(vector(0, 0, 1));
         r = ray(point(1,0,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,5,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,5,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray strikes a cylinder 2");
         direction = normalize(vector(0, 0, 1));
         r = ray(point(0,0,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,4,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6,xs[1].t);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("A ray strikes a cylinder 3");
         direction = normalize(vector(0.1, 1, 1));
         r = ray(point(0.5,0,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_FLOAT_WITHIN(0.01,6.80798,xs[0].t);
         TEST_ASSERT_FLOAT_WITHIN(0.01,7.08872,xs[1].t);
         free(xs);
@@ -2345,53 +2386,61 @@ void    test_cylinder()
         n =  local_normal_at(cyl, point(-1,1,0));
         TEST_ASSERT_TRUE(isEqual(n,vector(-1,0,0))); 
 
+        num_iter = 0;
         cyl.maximum = 2;
         cyl.minimum = 1;
         TEST_MESSAGE("Intersecting a constrained cylinder 1");
         direction = normalize(vector(0.1,1,0));
         r = ray(point(0,1.5,0), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
+        TEST_ASSERT_EQUAL(0,num_iter);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("Intersecting a constrained cylinder 2");
         direction = normalize(vector(0,0,1));
         r = ray(point(0,3,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
+        TEST_ASSERT_EQUAL(0,num_iter);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("Intersecting a constrained cylinder 3");
         direction = normalize(vector(0,0,1));
         r = ray(point(0,0,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
+        TEST_ASSERT_EQUAL(0,num_iter);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("Intersecting a constrained cylinder 4");
         direction = normalize(vector(0,0,1));
         r = ray(point(0,2,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
+        TEST_ASSERT_EQUAL(0,num_iter);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("Intersecting a constrained cylinder 5");
         direction = normalize(vector(0,0,1));
         r = ray(point(0,1,-5), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NULL(xs);
+        TEST_ASSERT_EQUAL(0,num_iter);
         free(xs);
 
+        num_iter = 0;
         TEST_MESSAGE("Intersecting a constrained cylinder 6");
         direction = normalize(vector(0,0,1));
         r = ray(point(0,1.5,-2), direction);
-        xs = intersect(cyl,r);
+        xs = intersect(cyl,r,num);
         TEST_ASSERT_NOT_NULL(xs);
+        TEST_ASSERT_EQUAL(2,num_iter);
         free(xs);
-
-
-
-
 }
 
 int main(void)

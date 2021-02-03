@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-static t_intersection *intersect_sphere(t_object s, t_ray ray)
+static t_intersection *intersect_sphere(t_object s, t_ray ray, int *num)
 {
         t_intersection *xs;
         t_ray ray_t;
@@ -33,6 +33,7 @@ static t_intersection *intersect_sphere(t_object s, t_ray ray)
                 i2.t = (-b + sqrt(discriminant)) / (2 * a);
                 i2.object = s;
                 xs = intersections(2,i1,i2);
+                *num = 2;
         }
 	return (xs);
 }
@@ -55,7 +56,7 @@ static t_intersection *intersect_plan(t_object p, t_ray ray)
 	return (xs);
 }
 
-static t_intersection *intersect_cube(t_object c, t_ray ray)
+static t_intersection *intersect_cube(t_object c, t_ray ray, int *num)
 {
         float   xtmin;
 	float   xtmax;
@@ -94,12 +95,13 @@ static t_intersection *intersect_cube(t_object c, t_ray ray)
         }
         else
         {
-                xs = intersections(2,intersection(tmin, c), intersection(tmax, c));                
+                xs = intersections(2,intersection(tmin, c), intersection(tmax, c));
+                *num = 1;              
         }
         return (xs);
 }
 
-static t_intersection *intersect_cylinder(t_object cyl, t_ray ray)
+static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
 {
         float           a;
         float           b;
@@ -160,25 +162,27 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray)
         if ((aa == 1) && (bb == 1))
         {
                 xs = intersections(2, i1, i2);
+                *num = 2;
         }
         else if (aa == 1)
         {
                 xs = intersections(1, i1);
+                *num = 1;
         }
         else if (bb == 1)
         {
                 xs = intersections(1, i2);
+                *num = 1;
         }
         else
         {
                 xs = NULL;
         }
 
-        //xs = intersections(2, intersection(t0, cyl), intersection(t1, cyl));
         return (xs);
 }
 
-t_intersection *intersect(t_object s, t_ray ray)
+t_intersection *intersect(t_object s, t_ray ray, int *num)
 {
 	t_intersection *xs;
 	t_ray local_ray;
@@ -187,7 +191,7 @@ t_intersection *intersect(t_object s, t_ray ray)
 	
 	if (ft_memcmp("sphere",s.type) == 0)
         {
-		xs  = intersect_sphere(s,ray);
+		xs  = intersect_sphere(s,ray, num);
         }
         else if (ft_memcmp("plan",s.type) == 0)
         {
@@ -195,14 +199,14 @@ t_intersection *intersect(t_object s, t_ray ray)
 	}
         else if (ft_memcmp("cylinder",s.type) == 0)
         {
-		xs = intersect_cylinder(s,ray);
+		xs = intersect_cylinder(s,ray,num);
 	}
         else if (ft_memcmp("cube",s.type) == 0)
         {
                 A = inverse(s.transform);
                 local_ray = transform(ray,A);
                 freeMatrix(&A);
-                xs  = intersect_cube(s,local_ray);
+                xs  = intersect_cube(s,local_ray, num);
         }
         else
         {

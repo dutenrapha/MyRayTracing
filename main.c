@@ -1,6 +1,27 @@
 #include "include/header.h"
 #include <stdio.h>
 
+// int main(void)
+// {
+// 	t_object		cyl;
+// 	t_tuple         direction;
+// 	t_ray			r;
+// 	t_intersection  *xs;
+// 	int             num_iter;
+// 	int             *num;
+
+//     num_iter = 0;
+//     num = &num_iter;
+// 	cyl = cylinder(4);
+//     cyl.maximum = 2;
+// 	cyl.minimum = 1;
+//     direction = normalize(vector(0.1,1,0));
+//     r = ray(point(0,1.5,0), direction);
+//     xs = intersect(cyl,r,num);
+// 	printf("%d\n",num_iter);
+// 	return (0);
+// }
+
 int main(void)
 {
 	t_object	floor;

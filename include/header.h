@@ -168,7 +168,7 @@ t_tuple position(t_ray ray,float t);
 t_object sphere(int id);
 t_intersection intersection(float t, t_object o);
 t_intersection *intersections(int count,...);
-t_intersection *intersect(t_object s, t_ray ray);
+t_intersection *intersect(t_object s, t_ray ray, int *num);
 void bubbleSort(t_intersection *xs, int lenght); 
 t_intersection hit(t_intersection *xs, int lenght);
 t_ray	transform(t_ray r,t_matrix m);
