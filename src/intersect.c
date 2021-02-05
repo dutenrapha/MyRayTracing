@@ -131,6 +131,8 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
         i = 0;
         j = 0;
         xs_ret = NULL;
+        xs = NULL;
+        xs_cap = NULL;
         n_cap = 0;
         p_n_cap = &n_cap;
         aa = 0;
@@ -152,6 +154,16 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
                 {
                         xs = NULL;
                         *num = 0;
+                        if (xs_ret != NULL)
+                        {
+                                free(xs_ret);
+                                xs_ret = NULL;
+                        }
+                        if (xs_cap != NULL)
+                        {
+                                free(xs_cap);
+                                xs_cap = NULL;
+                        }
                         return (xs);
                 }
                 t0 =  (-b - sqrt(discriminant)) / (2 * a);
@@ -204,11 +216,31 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
         if (cc == 1)
         {
                 *num = n_cap;
+                if (xs_ret != NULL)
+                {
+                        free(xs_ret);
+                        xs_ret = NULL;
+                }
+                if (xs != NULL)
+                {
+                        free(xs);
+                        xs = NULL;
+                }
                 return (xs_cap);
         }
         else if (n_cap == 0)
         {
-              return (xs);  
+                if (xs_ret != NULL)
+                {
+                        free(xs_ret);
+                        xs_ret = NULL;
+                }
+                if (xs_cap != NULL)
+                {
+                        free(xs_cap);
+                        xs_cap = NULL;
+                }
+                return (xs);  
         }
         else
         {
@@ -226,6 +258,17 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
                 }
                 *num = n_cap + *num;
         }
+        if (xs != NULL)
+        {
+                free(xs);
+                xs = NULL;
+        }
+        if (xs_cap != NULL)
+        {
+                free(xs_cap);
+                xs_cap = NULL;
+        }
+
         return(xs_ret);
 }
 

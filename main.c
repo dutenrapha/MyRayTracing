@@ -66,7 +66,7 @@ int main(void)
 	w = world(4,floor,left,right,middle);
 	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
 
-	c = camera(1000,1000,M_PI/2.5);
+	c = camera(100,100,M_PI/2.5);
 	C = view_transform(point(0,1.5,-5),point(0,1,0),vector(0,1,0));
 	copyMatrix(&c.transform,C);
 	freeMatrix(&C);
