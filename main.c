@@ -73,10 +73,9 @@ int main(void)
 	right.material.specular = 0.3;
 
 	w = world(5,floor,left,right,middle,top_left);
-	//w = world(2,floor,top_left);
 	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
 
-	c = camera(100,100,M_PI/2.5);
+	c = camera(999,999,M_PI/2.5);
 	C = view_transform(point(0,1.5,-5),point(0,1,0),vector(0,1,0));
 	copyMatrix(&c.transform,C);
 	freeMatrix(&C);
