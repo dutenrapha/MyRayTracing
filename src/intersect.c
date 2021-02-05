@@ -116,76 +116,117 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
         float           y1;
         float           discriminant;
         t_intersection *xs;
+        t_intersection *xs_cap;
+        t_intersection *xs_ret;
         t_intersection i1;
         t_intersection i2;
         int             aa;
         int             bb;
+        int             cc;
+        int             n_cap;
+        int             *p_n_cap;
+        int             i;
+        int             j;
 
+        i = 0;
+        j = 0;
+        xs_ret = NULL;
+        n_cap = 0;
+        p_n_cap = &n_cap;
         aa = 0;
         bb = 0;
+        cc = 0;
         a = ray.direction.x*ray.direction.x + ray.direction.z*ray.direction.z;
         if (fabs(a) < EPSILON)
         {
-                xs = NULL;
-                *num = 0;
-                return (xs);
+                cc = 1;
+                xs_cap = intersect_caps(cyl,ray,p_n_cap);
         }
 
-        b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
-        c = ray.origin.x*ray.origin.x + ray.origin.z*ray.origin.z - 1;
-        discriminant = b*b - 4 * a * c;
-        if (discriminant < 0)
+        if (cc == 0)
         {
-                xs = NULL;
-                *num = 0;
-                return (xs);
-        }
-        t0 =  (-b - sqrt(discriminant)) / (2 * a);
-        t1 =  (-b + sqrt(discriminant)) / (2 * a);
-       
-        if (t0 > t1)
-        {
-                temp = t0;
-                t1 = t0;
-                t0 = temp;
+                b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
+                c = ray.origin.x*ray.origin.x + ray.origin.z*ray.origin.z - 1;
+                discriminant = b*b - 4 * a * c;
+                if (discriminant < 0)
+                {
+                        xs = NULL;
+                        *num = 0;
+                        return (xs);
+                }
+                t0 =  (-b - sqrt(discriminant)) / (2 * a);
+                t1 =  (-b + sqrt(discriminant)) / (2 * a);
+        
+                if (t0 > t1)
+                {
+                        temp = t0;
+                        t1 = t0;
+                        t0 = temp;
+                }
+
+                y0 = ray.origin.y + t0 * ray.direction.y;
+                if ((cyl.minimum < y0) && (y0 < cyl.maximum))
+                {
+                        i1 = intersection(t0, cyl);
+                        aa = 1;
+                }
+
+                y1 = ray.origin.y + t1 * ray.direction.y;
+                if ((cyl.minimum < y1) && (y1 < cyl.maximum))
+                {
+                        i2 = intersection(t1, cyl);
+                        bb = 1;
+                }
+
+                if ((aa == 1) && (bb == 1))
+                {
+                        xs = intersections(2, i1, i2);
+                        *num = 2;
+                }
+                else if (aa == 1)
+                {
+                        xs = intersections(1, i1);
+                        *num = 1;
+                }
+                else if (bb == 1)
+                {
+                        xs = intersections(1, i2);
+                        *num = 1;
+                }
+                else
+                {
+                        xs = NULL;
+                        *num = 0;
+                }
+                xs_cap = intersect_caps(cyl,ray,p_n_cap);
         }
 
-        y0 = ray.origin.y + t0 * ray.direction.y;
-        if ((cyl.minimum < y0) && (y0 < cyl.maximum))
+        if (cc == 1)
         {
-                i1 = intersection(t0, cyl);
-                aa = 1;
+                *num = n_cap;
+                return (xs_cap);
         }
-
-        y1 = ray.origin.y + t1 * ray.direction.y;
-        if ((cyl.minimum < y1) && (y1 < cyl.maximum))
+        else if (n_cap == 0)
         {
-                i2 = intersection(t1, cyl);
-                bb = 1;
-        }
-
-        if ((aa == 1) && (bb == 1))
-        {
-                xs = intersections(2, i1, i2);
-                *num = 2;
-        }
-        else if (aa == 1)
-        {
-                xs = intersections(1, i1);
-                *num = 1;
-        }
-        else if (bb == 1)
-        {
-                xs = intersections(1, i2);
-                *num = 1;
+              return (xs);  
         }
         else
         {
-                xs = NULL;
-                *num = 0;
+                xs_ret = (t_intersection *)malloc(sizeof(t_intersection)*(*num + n_cap));
+                while (i < *num)
+                {
+                        xs_ret[i] = xs[i];
+                        i++;
+                }
+                while (j < n_cap)
+                {
+                        xs_ret[i] = xs_cap[j];
+                        i++;
+                        j++;
+                }
+                *num = n_cap + *num;
         }
-
-        return (xs);
+        return(xs_ret);
 }
 
 t_intersection *intersect(t_object s, t_ray ray, int *num)
@@ -205,14 +246,17 @@ t_intersection *intersect(t_object s, t_ray ray, int *num)
 	}
         else if (ft_memcmp("cylinder",s.type) == 0)
         {
-		xs = intersect_cylinder(s,ray,num);
+                A = inverse(s.transform);
+                local_ray = transform(ray,A);
+                freeMatrix(&A);
+		xs = intersect_cylinder(s,local_ray,num);
 	}
         else if (ft_memcmp("cube",s.type) == 0)
         {
                 A = inverse(s.transform);
                 local_ray = transform(ray,A);
                 freeMatrix(&A);
-                xs  = intersect_cube(s,local_ray, num);
+                xs  = intersect_cube(s,local_ray,num);
         }
         else
         {

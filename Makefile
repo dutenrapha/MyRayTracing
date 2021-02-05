@@ -17,7 +17,7 @@ OBJ=$(addprefix $(OBJ_PATH)/, $(SRC:.c=.o))
 
 all:	$(OBJ) $(LIB)
 
-run:	$(EXEC)
+run:  $(EXEC)
 	@./$<
 
 clean:
@@ -29,7 +29,8 @@ fclean:	clean
 	@rm -f *.o
 	@rm -fR *.dSYM
 
-re: fclean all
+re: fclean all run
+	@open image.ppm
 
 $(OBJ_PATH)/%.o:	$(SRC_PATH)/%.c
 	@$(CC) $(FLAGS) -c $< -o $@  		

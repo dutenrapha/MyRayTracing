@@ -62,13 +62,14 @@ typedef struct s_material
 
 typedef struct s_object
 {
-    int		id;
+    int			id;
 	char		*type;
 	float		minimum;
     float		maximum;
     t_tuple		center;
 	t_matrix	transform;
 	t_material	material;
+	bool		closed;
 } t_object;
 
 typedef struct s_intersection
@@ -200,3 +201,4 @@ int	ft_memcmp(const void *str1, const void *str2);
 t_object cube(int id);
 void	check_axis(float origin, float direction, float *tmin,float *tmax);
 t_object cylinder(int id);
+t_intersection *intersect_caps(t_object cyl, t_ray r, int *num);

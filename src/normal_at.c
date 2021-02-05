@@ -9,6 +9,9 @@ t_tuple normal_at(t_object o,t_tuple v)
 	t_matrix m1;
 	t_matrix m2;
 	
+	if (o.id == 2)
+		world_normal.w = 0;
+
 	m1 = inverse(o.transform);
 	object_point  = matrixMultiVec(m1,v);
 	object_normal = local_normal_at(o,object_point);

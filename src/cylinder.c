@@ -15,5 +15,6 @@ t_object cylinder(int id)
         p.material.shininess = 200;
         p.minimum = -INFINITY;
         p.maximum = INFINITY;
+        p.closed = false;
         return p;
 }

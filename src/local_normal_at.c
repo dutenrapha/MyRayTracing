@@ -21,6 +21,26 @@ static t_tuple cub_norm(t_tuple point)
 	}
 }
 
+static t_tuple cyl_norm(t_object cyl, t_tuple point)
+{
+	float	dist;
+
+	dist =  point.x*point.x + point.z*point.z;
+	
+	if (dist < 1 && point.y >= cyl.maximum - EPSILON)
+	{
+		return vector(0, 1, 0);
+	}
+	else if (dist < 1 && point.y <= cyl.minimum + EPSILON)
+	{
+		return vector(0, -1, 0);
+	}
+	else
+	{
+		 return vector(point.x, 0, point.z);
+	}
+}
+
 t_tuple local_normal_at(t_object o,t_tuple local_point)
 {
 	t_tuple		local_normal;
@@ -39,7 +59,7 @@ t_tuple local_normal_at(t_object o,t_tuple local_point)
 	}
 	else if (ft_memcmp(o.type,"cylinder") == 0)
 	{
-		local_normal = vector(local_point.x, 0, local_point.z);
+		local_normal = cyl_norm(o,local_point);
 	}
 	else
 	{

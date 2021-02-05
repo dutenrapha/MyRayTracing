@@ -1,27 +1,6 @@
 #include "include/header.h"
 #include <stdio.h>
 
-// int main(void)
-// {
-// 	t_object		cyl;
-// 	t_tuple         direction;
-// 	t_ray			r;
-// 	t_intersection  *xs;
-// 	int             num_iter;
-// 	int             *num;
-
-//     num_iter = 0;
-//     num = &num_iter;
-// 	cyl = cylinder(4);
-//     cyl.maximum = 2;
-// 	cyl.minimum = 1;
-//     direction = normalize(vector(0.1,1,0));
-//     r = ray(point(0,1.5,0), direction);
-//     xs = intersect(cyl,r,num);
-// 	printf("%d\n",num_iter);
-// 	return (0);
-// }
-
 int main(void)
 {
 	t_object	floor;
@@ -46,33 +25,8 @@ int main(void)
 	floor.material.color = color(1, 0.9, 0.9);
 	floor.material.specular = 0;
 
-	middle = sphere(2);
-	C = translation(-0.5, 1, 0.5);
-	copyMatrix(&middle.transform,C);
-	freeMatrix(&C);
-	middle.material = material();
-	middle.material.color = color(0.1, 1, 0.5);
-	middle.material.diffuse = 0.7;
-	middle.material.specular = 0.3;
-
-	right = cylinder(3);
-	right.maximum = 2;
-	right.minimum = 1;
-	A = translation(1.5,0.5,-0.5);
-	B = scaling(0.5,0.5,0.5);
-	C = matrixMulti(A,B);
-	copyMatrix(&right.transform,C);
-	freeMatrix(&A);
-    freeMatrix(&B);
-	freeMatrix(&C);
-	right.material = material();
-	right.material.color = color(0.5,1,0.1);
-	right.material.diffuse = 0.7;
-	right.material.specular = 0.3;
-
-
-	left = cube(4);
-	A = translation(-1.5, 0.33, -0.75);
+	left = cube(2);
+	A = translation(-2.5, 0.33, -0.75);
 	B = scaling(0.33,0.33,0.33);
 	C = matrixMulti(A,B);
 	copyMatrix(&left.transform,C);
@@ -84,11 +38,35 @@ int main(void)
 	left.material.diffuse = 0.7;
 	left.material.specular = 0.3;
 
-	//w = world(4,floor,middle,right,left); 
-	w = world(2,floor,right);
+	middle = sphere(3);
+	C = translation(-1, 1, 0.5);
+	copyMatrix(&middle.transform,C);
+	freeMatrix(&C);
+	middle.material = material();
+	middle.material.color = color(0.1, 1, 0.5);
+	middle.material.diffuse = 0.7;
+	middle.material.specular = 0.3;
+
+	right = cylinder(4);
+	right.closed = true;
+	right.minimum = 1;
+	right.maximum = 2;
+	A = translation(1.5,0,-2);
+	B = rotation_x(M_PI/4);
+	C = matrixMulti(A,B);
+	copyMatrix(&right.transform,C);
+	freeMatrix(&A);
+	freeMatrix(&B);
+	freeMatrix(&C);
+	right.material = material();
+	right.material.color = color(0.1, 1, 0.5);
+	right.material.diffuse = 0.7;
+	right.material.specular = 0.3;
+
+	w = world(4,floor,left,right,middle);
 	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
 
-	c = camera(150,100,M_PI/3);
+	c = camera(1000,1000,M_PI/2.5);
 	C = view_transform(point(0,1.5,-5),point(0,1,0),vector(0,1,0));
 	copyMatrix(&c.transform,C);
 	freeMatrix(&C);
@@ -106,8 +84,8 @@ int main(void)
 	freeMatrix(&c.transform);
 	free(w.objects);
 	freeMatrix(&floor.transform);
-	freeMatrix(&middle.transform);
-	freeMatrix(&right.transform);
 	freeMatrix(&left.transform);
+	freeMatrix(&right.transform);
+	freeMatrix(&middle.transform);
 	return (0);
 }

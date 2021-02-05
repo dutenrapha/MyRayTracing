@@ -2441,6 +2441,92 @@ void    test_cylinder()
         TEST_ASSERT_NOT_NULL(xs);
         TEST_ASSERT_EQUAL(2,num_iter);
         free(xs);
+
+        TEST_MESSAGE("Scenario: The default closed value for a cylinder");
+        TEST_ASSERT_FALSE(cyl.closed);
+
+        num_iter = 0;
+        TEST_MESSAGE("Intersecting the caps of a closed cylinder 1");
+        cyl.closed = true;
+        direction = normalize(vector(0,-1,0));
+        r = ray(point(0,3,0), direction);
+        xs = intersect(cyl,r,num);
+        TEST_ASSERT_EQUAL(2,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("Intersecting the caps of a closed cylinder 2");
+        cyl.closed = true;
+        direction = normalize(vector(0,-1,2));
+        r = ray(point(0,3,-2), direction);
+        xs = intersect(cyl,r,num);
+        TEST_ASSERT_EQUAL(2,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("Intersecting the caps of a closed cylinder 3");
+        cyl.closed = true;
+        direction = normalize(vector(0,-1,2));
+        r = ray(point(0,3,-2), direction);
+        xs = intersect(cyl,r,num);
+        TEST_ASSERT_EQUAL(2,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("Intersecting the caps of a closed cylinder 4");
+        cyl.closed = true;
+        direction = normalize(vector(0,-1,1));
+        r = ray(point(0,4,-2), direction);
+        xs = intersect(cyl,r,num);
+        TEST_ASSERT_EQUAL(2,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("Intersecting the caps of a closed cylinder 5");
+        cyl.closed = true;
+        direction = normalize(vector(0,1,2));
+        r = ray(point(0,0,-2), direction);
+        xs = intersect(cyl,r,num);
+        TEST_ASSERT_EQUAL(2,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("Intersecting the caps of a closed cylinder 6");
+        cyl.closed = true;
+        direction = normalize(vector(0,1,1));
+        r = ray(point(0,-1,-2), direction);
+        xs = intersect(cyl,r,num);
+        TEST_ASSERT_EQUAL(2,num_iter);
+        free(xs);
+
+        cyl.minimum = 1;
+        cyl.maximum = 2;
+        cyl.closed = true;
+        TEST_MESSAGE("The normal vector on a cylinder's end caps 1");
+        n =  local_normal_at(cyl, point(0, 1, 0));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0, -1, 0)));
+
+        TEST_MESSAGE("The normal vector on a cylinder's end caps 2");
+        n =  local_normal_at(cyl, point(0.5, 1, 0));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0, -1, 0))); 
+
+        TEST_MESSAGE("The normal vector on a cylinder's end caps 3");
+        n =  local_normal_at(cyl, point(0, 1, 0.5));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0, -1, 0))); 
+
+
+        TEST_MESSAGE("The normal vector on a cylinder's end caps 4");
+        n =  local_normal_at(cyl, point(0, 2, 0));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0, 1, 0))); 
+
+
+        TEST_MESSAGE("The normal vector on a cylinder's end caps 5");
+        n =  local_normal_at(cyl, point(0.5, 2, 0));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0, 1, 0))); 
+
+        TEST_MESSAGE("The normal vector on a cylinder's end caps 6");
+        n =  local_normal_at(cyl, point(0, 2, 0.5));
+        TEST_ASSERT_TRUE(isEqual(n,vector(0, 1, 0))); 
 }
 
 int main(void)

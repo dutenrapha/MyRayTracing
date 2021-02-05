@@ -13,5 +13,8 @@ t_object cube(int id)
         p.material.diffuse = 0.9;
         p.material.specular = 0.9;
         p.material.shininess = 200;
+        p.minimum = -INFINITY;
+        p.maximum = INFINITY;
+        p.closed = false;
         return p;
 }
