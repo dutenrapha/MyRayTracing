@@ -272,6 +272,49 @@ static t_intersection *intersect_cylinder(t_object cyl, t_ray ray, int *num)
         return(xs_ret);
 }
 
+static  t_intersection *intersect_triangle(t_object triangle, t_ray ray, int *num)
+{
+        t_tuple dir_cross_e2;
+        t_tuple p1_to_origin;
+        t_tuple origin_cross_e1;
+        t_intersection *xs;
+        float   det;
+        float   f;
+        float   u;
+        float   v;
+        float   t;
+
+        xs = NULL;
+        dir_cross_e2 = cross(ray.direction, triangle.e2);
+        det = dot(triangle.e1, dir_cross_e2);
+        if (fabs(det) < EPSILON)
+        {
+                *num = 0;
+                return(xs);
+        }
+
+        f = 1.0 / det;
+        p1_to_origin = sub(ray.origin,triangle.p1);
+        u = f * dot(p1_to_origin, dir_cross_e2);
+        if (u < 0 || u > 1)
+        {
+                *num = 0;
+                return(xs);     
+        }
+
+        origin_cross_e1 = cross(p1_to_origin, triangle.e1);
+        v = f * dot(ray.direction, origin_cross_e1);
+        if (v < 0 || (u + v) > 1)
+        {
+                *num = 0;
+                return(xs);       
+        }
+
+        t = f * dot(triangle.e2, origin_cross_e1);
+        *num = 1;
+        return (intersections(1,intersection(t, triangle)));
+}
+
 t_intersection *intersect(t_object s, t_ray ray, int *num)
 {
 	t_intersection *xs;
@@ -300,6 +343,13 @@ t_intersection *intersect(t_object s, t_ray ray, int *num)
                 local_ray = transform(ray,A);
                 freeMatrix(&A);
                 xs  = intersect_cube(s,local_ray,num);
+        }
+        else if (ft_memcmp("triangle",s.type) == 0)
+        {
+                A = inverse(s.transform);
+                local_ray = transform(ray,A);
+                freeMatrix(&A);
+                xs = intersect_triangle(s,local_ray, num);
         }
         else
         {

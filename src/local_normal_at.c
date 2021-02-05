@@ -61,6 +61,10 @@ t_tuple local_normal_at(t_object o,t_tuple local_point)
 	{
 		local_normal = cyl_norm(o,local_point);
 	}
+	else if (ft_memcmp(o.type,"triangle") == 0)
+	{
+		local_normal = o.normal;
+	}
 	else
 	{
 		local_normal = vector(0,0,0);

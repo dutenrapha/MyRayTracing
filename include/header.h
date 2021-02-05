@@ -70,6 +70,12 @@ typedef struct s_object
 	t_matrix	transform;
 	t_material	material;
 	bool		closed;
+	t_tuple 	p1;
+	t_tuple 	p2;
+	t_tuple 	p3;
+	t_tuple 	e1;
+	t_tuple 	e2;
+	t_tuple normal;
 } t_object;
 
 typedef struct s_intersection
@@ -202,3 +208,4 @@ t_object cube(int id);
 void	check_axis(float origin, float direction, float *tmin,float *tmax);
 t_object cylinder(int id);
 t_intersection *intersect_caps(t_object cyl, t_ray r, int *num);
+t_object	triangle(int id, t_tuple p1,t_tuple p2,t_tuple p3);

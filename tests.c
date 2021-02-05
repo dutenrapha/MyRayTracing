@@ -2529,6 +2529,86 @@ void    test_cylinder()
         TEST_ASSERT_TRUE(isEqual(n,vector(0, 1, 0))); 
 }
 
+void    test_triangle()
+{
+        t_tuple p1;
+        t_tuple p2;
+        t_tuple p3;
+        t_tuple n1;
+        t_tuple n2;
+        t_tuple n3;
+        t_object t;
+        int             num_iter;
+        int             *num;
+        t_ray           r;
+        t_intersection  *xs;
+
+        num_iter = 0;
+        num = &num_iter;
+        TEST_MESSAGE("Constructing a triangle");
+        p1 = point(0, 1, 0);
+        p2 = point(-1, 0, 0);
+        p3 = point(1, 0, 0);
+        t = triangle(1, p1, p2, p3);
+        TEST_ASSERT_TRUE(isEqual(t.p1,point(0, 1, 0)));
+        TEST_ASSERT_TRUE(isEqual(t.p2,point(-1, 0, 0))); 
+        TEST_ASSERT_TRUE(isEqual(t.p3,point(1, 0, 0)));
+        TEST_ASSERT_TRUE(isEqual(t.e1,vector(-1, -1, 0)));
+        TEST_ASSERT_TRUE(isEqual(t.e2,vector(1, -1, 0))); 
+        TEST_ASSERT_TRUE(isEqual(t.normal,vector(0, 0, -1))); 
+
+        TEST_MESSAGE("Finding the normal on a triangle");
+        t = triangle(1,point(0, 1, 0), point(-1, 0, 0), point(1, 0, 0));
+        n1 = local_normal_at(t, point(0, 0.5, 0));
+        n2 = local_normal_at(t, point(-0.5, 0.75, 0));
+        n3 = local_normal_at(t, point(0.5, 0.25, 0));
+        TEST_ASSERT_TRUE(isEqual(t.normal,n1));
+        TEST_ASSERT_TRUE(isEqual(t.normal,n2));
+        TEST_ASSERT_TRUE(isEqual(t.normal,n3));
+
+        num_iter = 0;
+        TEST_MESSAGE("Intersecting a ray parallel to the triangle");
+        t = triangle(1,point(0, 1, 0), point(-1, 0, 0), point(1, 0, 0));
+        r = ray(point(0, -1, -2), vector(0, 1, 0));
+        xs = intersect(t,r,num);
+        TEST_ASSERT_EQUAL(0,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("A ray misses the p1-p3 edge");
+        t = triangle(1,point(0, 1, 0), point(-1, 0, 0), point(1, 0, 0));
+        r = ray(point(1, 1, -2), vector(0, 0, 1));
+        xs = intersect(t,r,num);
+        TEST_ASSERT_EQUAL(0,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("A ray misses the p1-p2 edge");
+        t = triangle(1,point(0, 1, 0), point(-1, 0, 0), point(1, 0, 0));
+        r = ray(point(-1, 1, -2), vector(0, 0, 1));
+        xs = intersect(t,r,num);
+        TEST_ASSERT_EQUAL(0,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("A ray misses the p2-p3 edge");
+        t = triangle(1,point(0, 1, 0), point(-1, 0, 0), point(1, 0, 0));
+        r = ray(point(0, -1, -2), vector(0, 0, 1));
+        xs = intersect(t,r,num);
+        TEST_ASSERT_EQUAL(0,num_iter);
+        free(xs);
+
+        num_iter = 0;
+        TEST_MESSAGE("A ray strikes a triangle");
+        t = triangle(1,point(0, 1, 0), point(-1, 0, 0), point(1, 0, 0));
+        r = ray(point(0, 0.5, -2), vector(0, 0, 1));
+        xs = intersect(t,r,num);
+        TEST_ASSERT_EQUAL(1,num_iter);
+        TEST_ASSERT_FLOAT_WITHIN(0.01,2,xs[0].t);
+        free(xs);
+}
+
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -2607,5 +2687,6 @@ int main(void)
 	RUN_TEST(test_local_intersect);
         RUN_TEST(test_cube);
         RUN_TEST(test_cylinder);
+        RUN_TEST(test_triangle);
 	return UNITY_END();
 }

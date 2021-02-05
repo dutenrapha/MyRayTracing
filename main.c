@@ -7,6 +7,7 @@ int main(void)
 	t_object	middle;
 	t_object	right;
 	t_object	left;
+	t_object	top_left;
 	t_world		w;
 	t_matrix	A;
 	t_matrix        B;
@@ -25,7 +26,15 @@ int main(void)
 	floor.material.color = color(1, 0.9, 0.9);
 	floor.material.specular = 0;
 
-	left = cube(2);
+	top_left = triangle(2,point(0, 2, 0), point(-1, 1, 0), point(1, 1, 0));
+	C = translation(-2,2,0);
+	copyMatrix(&top_left.transform,C);
+	freeMatrix(&C);
+	top_left.material = material();
+	top_left.material.color = color(1, 0.2, 1);
+
+
+	left = cube(3);
 	A = translation(-2.5, 0.33, -0.75);
 	B = scaling(0.33,0.33,0.33);
 	C = matrixMulti(A,B);
@@ -38,7 +47,7 @@ int main(void)
 	left.material.diffuse = 0.7;
 	left.material.specular = 0.3;
 
-	middle = sphere(3);
+	middle = sphere(4);
 	C = translation(-1, 1, 0.5);
 	copyMatrix(&middle.transform,C);
 	freeMatrix(&C);
@@ -47,7 +56,7 @@ int main(void)
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
 
-	right = cylinder(4);
+	right = cylinder(5);
 	right.closed = true;
 	right.minimum = 1;
 	right.maximum = 2;
@@ -63,7 +72,8 @@ int main(void)
 	right.material.diffuse = 0.7;
 	right.material.specular = 0.3;
 
-	w = world(4,floor,left,right,middle);
+	w = world(5,floor,left,right,middle,top_left);
+	//w = world(2,floor,top_left);
 	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
 
 	c = camera(100,100,M_PI/2.5);
@@ -87,5 +97,6 @@ int main(void)
 	freeMatrix(&left.transform);
 	freeMatrix(&right.transform);
 	freeMatrix(&middle.transform);
+	freeMatrix(&top_left.transform);
 	return (0);
 }
