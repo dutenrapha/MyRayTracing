@@ -29,9 +29,10 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
             i1.object = s;
             i2.t = (-b + sqrt(discriminant)) / (2 * a);
             i2.object = s;
-            ii = ft_lstnew(i1);
-            ft_lstadd_back(&xs, ii);
-            ft_lstclear(&ii);
+            // ii = ft_lstnew(i1);
+            // ft_lstadd_back(&xs, ii);
+            // ft_lstclear(&ii);
+            xs = ft_lstnew(i1);
             ii = ft_lstnew(i2);
             ft_lstadd_back(&xs, ii);
             ft_lstclear(&ii);
@@ -42,6 +43,7 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
 static t_list *intersect_plan(t_object p, t_ray ray)
 {
 	t_list *xs;
+    //t_list *ii;
 	t_intersection i1;
 	float		t;	
 
@@ -51,8 +53,11 @@ static t_list *intersect_plan(t_object p, t_ray ray)
 		return (xs);
 	}
 	t = -ray.origin.y / ray.direction.y;
-	i1 = intersection(t, p);	
+	i1 = intersection(t, p);
     xs = ft_lstnew(i1);
+    // ii = ft_lstnew(i1);
+    // ft_lstadd_back(&xs, ii);
+    // ft_lstclear(&ii);
 	return (xs);
 }
 
@@ -94,9 +99,11 @@ static t_list *intersect_cube(t_object c, t_ray ray)
     if (tmin < tmax)
     {
         i1 = intersection(tmin, c);
-        ii = ft_lstnew(i1);
-        ft_lstadd_back(&xs, ii);
-        ft_lstclear(&ii);
+        xs = ft_lstnew(i1);
+        // ii = ft_lstnew(i1);
+        // ft_lstadd_back(&xs, ii);
+        // ft_lstclear(&ii);
+
         i1 = intersection(tmax, c);
         ii = ft_lstnew(i1);
         ft_lstadd_back(&xs, ii);
@@ -121,11 +128,7 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
     t_list *xs_cap;
     t_intersection i1;
     int             cc;
-    int             i;
-    int             j;
 
-    i = 0;
-    j = 0;
     xs = NULL;
     xs_cap = NULL;
     cc = 0;
@@ -163,17 +166,26 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
         if ((cyl.minimum < y0) && (y0 < cyl.maximum))
         {
             i1 = intersection(t0, cyl);
-            ii = ft_lstnew(i1);
-            ft_lstadd_back(&xs, ii);
-            ft_lstclear(&ii);
+            xs = ft_lstnew(i1);
+            // ii = ft_lstnew(i1);
+            // ft_lstadd_back(&xs, ii);
+            // ft_lstclear(&ii);
         }
         y1 = ray.origin.y + t1 * ray.direction.y;
         if ((cyl.minimum < y1) && (y1 < cyl.maximum))
         {
-            i1 = intersection(t1, cyl);
-            ii = ft_lstnew(i1);
-            ft_lstadd_back(&xs, ii);
-            ft_lstclear(&ii);
+            if (ft_lstsize(xs) == 1)
+            {
+                i1 = intersection(t1, cyl);
+                ii = ft_lstnew(i1);
+                ft_lstadd_back(&xs, ii);
+                ft_lstclear(&ii);
+            }
+            else
+            {
+                i1 = intersection(t1, cyl);
+                xs = ft_lstnew(i1);
+            }
         }
         xs_cap = intersect_caps2(cyl,ray);
     }
@@ -209,7 +221,7 @@ static  t_list *intersect_triangle(t_object triangle, t_ray ray)
     t_tuple p1_to_origin;
     t_tuple origin_cross_e1;
     t_list *xs;
-    t_list *ii;
+    //t_list *ii;
     t_intersection i1;
     float   det;
     float   f;
@@ -239,9 +251,10 @@ static  t_list *intersect_triangle(t_object triangle, t_ray ray)
     }
     t = f * dot(triangle.e2, origin_cross_e1);
     i1 = intersection(t, triangle);
-    ii = ft_lstnew(i1);
-    ft_lstadd_back(&xs, ii);
-    ft_lstclear(&ii);
+    xs = ft_lstnew(i1);
+    // ii = ft_lstnew(i1);
+    // ft_lstadd_back(&xs, ii);
+    // ft_lstclear(&ii);
     return (xs);
 }
 
