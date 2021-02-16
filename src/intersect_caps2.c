@@ -20,8 +20,7 @@ t_list *intersect_caps2(t_object cyl, t_ray ray)
 {
     t_intersection i1;
     t_list *xs;
-    t_list *ii;
-    t_intersection *it;
+    t_list *i;
     float           t;
 
     xs = NULL;
@@ -34,19 +33,17 @@ t_list *intersect_caps2(t_object cyl, t_ray ray)
     if (check_cap(ray, t))
     {
         i1 = intersection(t, cyl);
-        it = &i1;
-        ii = ft_lstnew(it);
-        ft_lstadd_back(&xs, ii);
-        ft_lstclear(&ii);
+        i = ft_lstnew(i1);
+        ft_lstadd_back(&xs, i);
+        ft_lstclear(&i);
     }
     t = (cyl.maximum - ray.origin.y) / ray.direction.y;
     if (check_cap(ray, t))
     {
         i1 = intersection(t, cyl);
-        it = &i1;
-        ii = ft_lstnew(it);
-        ft_lstadd_back(&xs, ii);
-        ft_lstclear(&ii);
+        i = ft_lstnew(i1);
+        ft_lstadd_back(&xs, i);
+        ft_lstclear(&i);
     }
     return (xs);
 }

@@ -12,10 +12,10 @@ t_intersection hit2(t_list *xs)
 	bubbleSort2(xs);
 	while (i < lenght)
 	{
-        if (xs->content->t > 0)
+        if (xs->content.t > 0)
         {
-            it.t = xs->content->t ;
-			it.object = xs->content->object;
+            it.t = xs->content.t ;
+			it.object = xs->content.object;
 			it.valid = true;
 			break;
         }

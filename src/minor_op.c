@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-float minor(t_matrix A, int i, int j)
+float minor_op(t_matrix A, int i, int j)
 {
 	t_matrix B;
 	float d;

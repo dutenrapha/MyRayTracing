@@ -4,7 +4,6 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
 {
         t_list *xs;
         t_list *ii;
-        t_intersection *it;
         t_ray ray_t;
         t_intersection i1;
         t_intersection i2;
@@ -15,6 +14,7 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
         float discriminant;
         t_matrix INV;
 
+        xs = NULL;
         INV = inverse(s.transform);
         ray_t = transform(ray, INV);
         freeMatrix(&INV);
@@ -23,22 +23,16 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
         b =  2 * dot(ray_t.direction, sphere_to_ray);
         c = dot(sphere_to_ray, sphere_to_ray) - 1;
         discriminant =  b*b - 4 * a * c;
-        if (discriminant < 0)
-        {
-            xs = NULL;
-        }
-        else
+        if (discriminant > 0)
         {
             i1.t = (-b - sqrt(discriminant)) / (2 * a);
             i1.object = s;
             i2.t = (-b + sqrt(discriminant)) / (2 * a);
             i2.object = s;
-            it = &i1;
-            ii = ft_lstnew(it);
+            ii = ft_lstnew(i1);
             ft_lstadd_back(&xs, ii);
             ft_lstclear(&ii);
-            it = &i2;
-            ii = ft_lstnew(it);
+            ii = ft_lstnew(i2);
             ft_lstadd_back(&xs, ii);
             ft_lstclear(&ii);
         }
@@ -48,24 +42,17 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
 static t_list *intersect_plan(t_object p, t_ray ray)
 {
 	t_list *xs;
-    t_list *ii;
-    t_intersection *it;
 	t_intersection i1;
 	float		t;	
 
+    xs = NULL;
 	if (fabs(ray.direction.y) < EPSILON)
 	{
-		xs = NULL;
 		return (xs);
 	}
-
 	t = -ray.origin.y / ray.direction.y;
 	i1 = intersection(t, p);	
-
-    it = &i1;
-    ii = ft_lstnew(it);
-    ft_lstadd_back(&xs, ii);
-    ft_lstclear(&ii);
+    xs = ft_lstnew(i1);
 	return (xs);
 }
 
@@ -87,8 +74,7 @@ static t_list *intersect_cube(t_object c, t_ray ray)
     float   tmax; 
     t_list *xs;
     t_list *ii;
-    t_intersection  i1;
-    t_intersection  *it;      
+    t_intersection  i1;    
 
     p_xtmin =&xtmin;
     p_xtmax =&xtmax;
@@ -104,21 +90,15 @@ static t_list *intersect_cube(t_object c, t_ray ray)
     tmin = fmax(tmin, ztmin);
     tmax = fmin(xtmax, ytmax);
     tmax = fmin(tmax, ztmax);
-
-    if (tmin > tmax)
-    {
-        xs = NULL;
-    }
-    else
+    xs = NULL;
+    if (tmin < tmax)
     {
         i1 = intersection(tmin, c);
-        it = &i1;
-        ii = ft_lstnew(it);
+        ii = ft_lstnew(i1);
         ft_lstadd_back(&xs, ii);
         ft_lstclear(&ii);
         i1 = intersection(tmax, c);
-        it = &i1;
-        ii = ft_lstnew(it);
+        ii = ft_lstnew(i1);
         ft_lstadd_back(&xs, ii);
         ft_lstclear(&ii);         
     }
@@ -139,7 +119,6 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
     t_list *xs;
     t_list *ii;
     t_list *xs_cap;
-    t_intersection *it;
     t_intersection i1;
     int             cc;
     int             i;
@@ -184,8 +163,7 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
         if ((cyl.minimum < y0) && (y0 < cyl.maximum))
         {
             i1 = intersection(t0, cyl);
-            it = &i1;
-            ii = ft_lstnew(it);
+            ii = ft_lstnew(i1);
             ft_lstadd_back(&xs, ii);
             ft_lstclear(&ii);
         }
@@ -193,8 +171,7 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
         if ((cyl.minimum < y1) && (y1 < cyl.maximum))
         {
             i1 = intersection(t1, cyl);
-            it = &i1;
-            ii = ft_lstnew(it);
+            ii = ft_lstnew(i1);
             ft_lstadd_back(&xs, ii);
             ft_lstclear(&ii);
         }
@@ -223,7 +200,7 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
         ft_lstadd_back(&xs, xs_cap);
         ft_lstclear(&xs_cap);
     }
-     return(xs);
+    return(xs);
 }
 
 static  t_list *intersect_triangle(t_object triangle, t_ray ray)
@@ -233,7 +210,6 @@ static  t_list *intersect_triangle(t_object triangle, t_ray ray)
     t_tuple origin_cross_e1;
     t_list *xs;
     t_list *ii;
-    t_intersection *it;
     t_intersection i1;
     float   det;
     float   f;
@@ -263,11 +239,9 @@ static  t_list *intersect_triangle(t_object triangle, t_ray ray)
     }
     t = f * dot(triangle.e2, origin_cross_e1);
     i1 = intersection(t, triangle);
-    it = &i1;
-    ii = ft_lstnew(it);
+    ii = ft_lstnew(i1);
     ft_lstadd_back(&xs, ii);
     ft_lstclear(&ii);
-
     return (xs);
 }
 
@@ -307,6 +281,5 @@ t_list *intersect2(t_object s, t_ray ray)
         freeMatrix(&A);
         xs = intersect_triangle(s,local_ray);
     }
-
 	return (xs);
 }

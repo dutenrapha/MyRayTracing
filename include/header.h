@@ -128,15 +128,13 @@ typedef struct shape
 	t_ray		saved_ray;
 } t_shape;
 
-
 typedef struct	s_list
 {
-	t_intersection			*content;
+	t_intersection			content;
 	struct s_list	*next;
 }				t_list;
 
-
-t_list	*ft_lstnew(void *content);
+t_list	*ft_lstnew(t_intersection content);
 void	ft_lstclear(t_list **lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
@@ -145,7 +143,9 @@ t_color  color_at2(t_world world, t_ray ray);
 t_list	*intersect_world2(t_world w, t_ray r);
 t_list	*intersect2(t_object s, t_ray ray);
 t_list	*intersect_caps2(t_object cyl, t_ray r);
-void bubbleSort2(t_list *xs); 
+void bubbleSort2(t_list *xs);
+bool is_shadowed2(t_world world, t_tuple point);
+t_color shade_hit2(t_world world,t_comps comps);
 
 t_tuple	point(float x, float y, float z);
 t_tuple vector(float x, float y, float z);
@@ -178,7 +178,7 @@ t_tuple matrixMultiVec(t_matrix A, t_tuple b);
 t_matrix identity();
 t_matrix transpose(t_matrix A);
 t_matrix submatrix(t_matrix A, int i, int j);
-float minor(t_matrix A, int i, int j);
+float minor_op(t_matrix A, int i, int j);
 float cofactor(t_matrix A, int i, int j);
 float det(t_matrix A);
 bool isInvertible(t_matrix A);

@@ -9,7 +9,10 @@ t_color  color_at2(t_world world, t_ray ray)
 
 	inter_world = intersect_world2(world, ray);
 	in = hit2(inter_world);
-	free(inter_world);
+    if (inter_world != NULL)
+    {
+        ft_lstclear(&inter_world);
+    }
 	if (in.valid == false)
 	{
 		c = color(0,0,0);
@@ -18,7 +21,7 @@ t_color  color_at2(t_world world, t_ray ray)
 	else
 	{
 		comps = prepare_computations(in, ray);
-		c = shade_hit(world,comps);			
+		c = shade_hit2(world,comps);			
 		return(c);
 	}
 }
