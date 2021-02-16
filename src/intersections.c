@@ -3,6 +3,7 @@
 t_intersection *intersections(int count,...)
 {
 	t_intersection	*xs;
+
 	va_list args;
 	int i;
 

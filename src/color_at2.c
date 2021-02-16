@@ -1,18 +1,14 @@
 #include "../include/header.h"
 
-t_color  color_at(t_world world, t_ray ray)
+t_color  color_at2(t_world world, t_ray ray)
 {
-	t_intersection  *inter_world;
+	t_list  *inter_world;
 	t_color c;
 	t_intersection in;
 	t_comps comps;
-	int lenght;
-	int *p_lenght;
 
-	lenght = 0;
-	p_lenght = &lenght;
-	inter_world = intersect_world(world, ray, p_lenght);
-	in = hit(inter_world, lenght);
+	inter_world = intersect_world2(world, ray);
+	in = hit2(inter_world);
 	free(inter_world);
 	if (in.valid == false)
 	{

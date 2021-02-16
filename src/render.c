@@ -16,7 +16,7 @@ t_canvas render(t_camera camera,t_world world)
 		while (x < camera.hsize - 1)
 		{
 			ray = ray_for_pixel(camera, x, y);
- 			color = color_at(world, ray);
+ 			color = color_at2(world, ray);
  			writePixel(&image, x, y, color);	
 			x++;
 		}

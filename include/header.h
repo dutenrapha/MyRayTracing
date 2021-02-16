@@ -128,6 +128,25 @@ typedef struct shape
 	t_ray		saved_ray;
 } t_shape;
 
+
+typedef struct	s_list
+{
+	t_intersection			*content;
+	struct s_list	*next;
+}				t_list;
+
+
+t_list	*ft_lstnew(void *content);
+void	ft_lstclear(t_list **lst);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+int		ft_lstsize(t_list *lst);
+t_intersection hit2(t_list *xs);
+t_color  color_at2(t_world world, t_ray ray);
+t_list	*intersect_world2(t_world w, t_ray r);
+t_list	*intersect2(t_object s, t_ray ray);
+t_list	*intersect_caps2(t_object cyl, t_ray r);
+void bubbleSort2(t_list *xs); 
+
 t_tuple	point(float x, float y, float z);
 t_tuple vector(float x, float y, float z);
 bool isEqual(t_tuple v1, t_tuple v2);
