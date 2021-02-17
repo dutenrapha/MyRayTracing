@@ -27,6 +27,6 @@ t_list  *intersect_world2(t_world w, t_ray r)
         }
         i++;
     }
-    bubbleSort2(xs);
+    bubbleSort2(&xs);
 	return (xs);
 }

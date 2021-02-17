@@ -144,7 +144,7 @@ t_color  color_at2(t_world world, t_ray ray);
 t_list	*intersect_world2(t_world w, t_ray r);
 t_list	*intersect2(t_object s, t_ray ray);
 t_list	*intersect_caps2(t_object cyl, t_ray r);
-void bubbleSort2(t_list *xs);
+void bubbleSort2(t_list **xs);
 bool is_shadowed2(t_world world, t_tuple point);
 t_color shade_hit2(t_world world,t_comps comps);
 
