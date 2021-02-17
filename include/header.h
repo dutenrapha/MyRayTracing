@@ -137,6 +137,7 @@ typedef struct	s_list
 t_list	*ft_lstnew(t_intersection content);
 void	ft_lstclear(t_list **lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list *ft_lstcopy(t_list *new);
 int		ft_lstsize(t_list *lst);
 t_intersection hit2(t_list *xs);
 t_color  color_at2(t_world world, t_ray ray);

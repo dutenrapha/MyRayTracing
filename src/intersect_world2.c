@@ -14,8 +14,16 @@ t_list  *intersect_world2(t_world w, t_ray r)
         init = intersect2(w.objects[i],r);
         if (init != NULL)
         {
-            ft_lstadd_back(&xs, init);
-            ft_lstclear(&init);
+            if (xs == NULL)
+            {
+                xs = ft_lstcopy(init);
+                ft_lstclear(&init);
+            }
+            else
+            {
+                ft_lstadd_back(&xs, init);
+                ft_lstclear(&init);
+            }
         }
         i++;
     }
