@@ -46,7 +46,7 @@ t_list *intersect_caps2(t_object cyl, t_ray ray)
             i1 = intersection(t, cyl);
             ii = ft_lstnew(i1);
             ft_lstadd_back(&xs, ii);
-            ft_lstclear(&ii);
+            //ft_lstclear(&ii);
         }
         else
         {

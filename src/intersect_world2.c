@@ -16,13 +16,14 @@ t_list  *intersect_world2(t_world w, t_ray r)
         {
             if (xs == NULL)
             {
-                xs = ft_lstcopy(init);
-                ft_lstclear(&init);
+                //xs = ft_lstcopy(init);
+                xs = init;
+                //ft_lstclear(&init);
             }
             else
             {
                 ft_lstadd_back(&xs, init);
-                ft_lstclear(&init);
+                //ft_lstclear(&init);
             }
         }
         i++;

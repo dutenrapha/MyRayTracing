@@ -35,7 +35,7 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
             xs = ft_lstnew(i1);
             ii = ft_lstnew(i2);
             ft_lstadd_back(&xs, ii);
-            ft_lstclear(&ii);
+            //ft_lstclear(&ii);
         }
 	return (xs);
 }
@@ -107,7 +107,7 @@ static t_list *intersect_cube(t_object c, t_ray ray)
         i1 = intersection(tmax, c);
         ii = ft_lstnew(i1);
         ft_lstadd_back(&xs, ii);
-        ft_lstclear(&ii);         
+        //ft_lstclear(&ii);         
     }
     return (xs);
 }
@@ -179,7 +179,7 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
                 i1 = intersection(t1, cyl);
                 ii = ft_lstnew(i1);
                 ft_lstadd_back(&xs, ii);
-                ft_lstclear(&ii);
+                //ft_lstclear(&ii);
             }
             else
             {
@@ -210,7 +210,7 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
     else
     {
         ft_lstadd_back(&xs, xs_cap);
-        ft_lstclear(&xs_cap);
+        //ft_lstclear(&xs_cap);
     }
     return(xs);
 }

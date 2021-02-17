@@ -16,7 +16,9 @@ bool is_shadowed2(t_world world, t_tuple point)
 	intersections = intersect_world2(world, r);
 	h  = hit2(intersections);
 	if (intersections != NULL)
+	{
 		ft_lstclear(&intersections);
+	}
 	if (h.valid == true && h.t < distance)
 	{
 		return(true);
