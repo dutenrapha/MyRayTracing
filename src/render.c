@@ -20,7 +20,7 @@ t_canvas render(t_camera camera,t_world world)
 			{
 				y =7;
 			}
- 			color = color_at2(world, ray);
+ 			color = color_at(world, ray);
  			writePixel(&image, x, y, color);	
 			x++;
 		}

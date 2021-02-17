@@ -9,6 +9,7 @@ int main(void)
 	t_object	left;
 	t_object	top_left;
 	t_world		w;
+	t_world		*p_w;
 	t_matrix	A;
 	t_matrix        B;
 	t_matrix        C;
@@ -72,7 +73,14 @@ int main(void)
 	right.material.diffuse = 0.7;
 	right.material.specular = 0.3;
 
-	w = world(5,floor,left,right,middle,top_left);
+	p_w = &w;
+	w.objects = NULL;
+	world(p_w,floor);
+	world(p_w,left);
+	world(p_w,right);
+	world(p_w,middle);
+	world(p_w,top_left);
+
 	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
 
 
@@ -81,7 +89,7 @@ int main(void)
 	copyMatrix(&c.transform,C);
 	freeMatrix(&C);
 	canvas = render(c,w);
-	
+
 	s = canvas_to_ppm(&canvas);
 	i = 0;
 	while (i <c.vsize)
@@ -89,6 +97,7 @@ int main(void)
 		free(canvas.pixel[i]);
 		i++;
 	}
+	ft_lstclear_w(&w.objects);
 	free(canvas.pixel);
 	free(s);
 	freeMatrix(&c.transform);
@@ -99,4 +108,5 @@ int main(void)
 	freeMatrix(&middle.transform);
 	freeMatrix(&top_left.transform);
 	return (0);
+
 }

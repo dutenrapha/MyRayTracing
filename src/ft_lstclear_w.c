@@ -1,9 +1,9 @@
 #include "../include/header.h"
 
-void	ft_lstclear(t_list **lst)
+void	ft_lstclear_w(t_objects **lst)
 {
-	t_list *current;
-	t_list *next;
+	t_objects *current;
+	t_objects *next;
 
 	current = *lst;
 	while (current != NULL)

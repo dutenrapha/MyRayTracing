@@ -1,27 +1,21 @@
 #include "../include/header.h"
 
-t_world world(int num_objects,...)
+void world(t_world *w, t_object content)
 {
-	t_world		w;
-	int 		i;
-	t_object	obj;
-	va_list		args;
-
-	w.num_objects = num_objects;
-	w.objects = NULL;
-        w.has_light = false;
-	if (w.num_objects > 0)
-	{
-		va_start(args, num_objects);
-		w.objects = (t_object *)malloc(sizeof(t_object)*num_objects);
-		i = 0;
-		while (i < num_objects)
+    t_objects *temp;
+    w->has_light = false;
+    if(ft_lstsize_w(w->objects) == 0)
+    {
+        w->objects = ft_lstnew_w(content);
+    }
+    else
+    {
+		temp = w->objects;
+		while (temp->next)
 		{
-			obj = va_arg(args, t_object);
-			w.objects[i] = obj;
-			i++;
-		}	
-		va_end(args);
-	}
-	return (w);
+			temp = temp->next;
+		}
+        temp->next = ft_lstnew_w(content);
+    }
+    w->num_objects = ft_lstsize_w(w->objects);
 }

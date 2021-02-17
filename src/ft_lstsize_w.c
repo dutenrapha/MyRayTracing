@@ -1,9 +1,9 @@
 #include "../include/header.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize_w(t_objects *lst)
 {
 	int		i;
-	t_list	*temp;
+	t_objects	*temp;
 
 	if (lst)
 	{
