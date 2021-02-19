@@ -30,10 +30,11 @@ int main(void)
 	while ((ii = get_next_line(fd, &line)) > 0)
 	{	
 		ft_printf("%s\n", line);
+		free(line);
 	}
 	ft_printf("%s\n", line);
 	test = ft_printf("%s\n","Hello World");
-
+	free(line);
 	t_object	floor;
 	t_object	middle;
 	t_object	right;
