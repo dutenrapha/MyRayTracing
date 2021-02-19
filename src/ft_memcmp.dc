@@ -1,18 +1,18 @@
 #include "../include/header.h"
 
-static	int	ft_strlen(const char *s)
-{
-	int len;
+// static	int	ft_strlen(const char *s)
+// {
+// 	int len;
 
-	len = 0;
-	if (s == NULL)
-		return (len);
-	while (*s++)
-	{
-		len++;
-	}
-	return (len);
-}
+// 	len = 0;
+// 	if (s == NULL)
+// 		return (len);
+// 	while (*s++)
+// 	{
+// 		len++;
+// 	}
+// 	return (len);
+// }
 
 
 

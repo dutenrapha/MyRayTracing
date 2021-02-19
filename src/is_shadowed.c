@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-bool is_shadowed(t_world world, t_tuple point)
+bool is_shadowed(t_light light, t_world world, t_tuple point)
 {
 	t_tuple		v;
 	float		distance;
@@ -9,7 +9,7 @@ bool is_shadowed(t_world world, t_tuple point)
 	t_list	*intersections;
 	t_intersection	h;
 
-	v = sub(world.light.position,point);
+	v = sub(light.position,point);
 	distance = magnitude(v);
 	direction = normalize(v);
 	r = ray(point, direction);

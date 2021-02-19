@@ -4,6 +4,7 @@ void world(t_world *w, t_object content)
 {
     t_objects *temp;
     w->has_light = false;
+    w->lights = NULL;
     if(ft_lstsize_w(w->objects) == 0)
     {
         w->objects = ft_lstnew_w(content);

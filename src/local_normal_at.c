@@ -45,23 +45,23 @@ t_tuple local_normal_at(t_object o,t_tuple local_point)
 {
 	t_tuple		local_normal;
 
-	if (ft_memcmp(o.type,"sphere") == 0)
+	if (ft_memcmp(o.type,"sphere",7) == 0)
 	{
 		local_normal = sub(local_point,point(0,0,0));
 	}
-	else if (ft_memcmp(o.type,"plan") == 0)
+	else if (ft_memcmp(o.type,"plan",5) == 0)
 	{
 		local_normal = vector(0,1,0);
 	}
-	else if (ft_memcmp(o.type,"cube") == 0)
+	else if (ft_memcmp(o.type,"cube",5) == 0)
 	{
 		local_normal = cub_norm(local_point);
 	}
-	else if (ft_memcmp(o.type,"cylinder") == 0)
+	else if (ft_memcmp(o.type,"cylinder",9) == 0)
 	{
 		local_normal = cyl_norm(o,local_point);
 	}
-	else if (ft_memcmp(o.type,"triangle") == 0)
+	else if (ft_memcmp(o.type,"triangle",9) == 0)
 	{
 		local_normal = o.normal;
 	}

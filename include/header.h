@@ -2,7 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdarg.h>
+#include "../libft/libft.h"
+
 #define EPSILON 0.00001
 
 typedef struct s_tuple
@@ -85,12 +86,6 @@ typedef struct s_intersection
 	bool		valid;
 } t_intersection;
 
-typedef struct s_light
-{
-	t_tuple position;
-	t_color intensity;
-} t_light;
-
 typedef struct s_comps
 {
 	float		t;
@@ -132,13 +127,27 @@ typedef struct s_objects
 	struct s_objects *next;
 } t_objects;
 
+typedef struct s_light
+{
+	t_tuple position;
+	t_color intensity;
+} t_light;
+
+typedef struct s_lights
+{
+	t_light	content;
+	struct s_lights *next;
+} t_lights;
+
 typedef struct s_world
 {
-	t_light		light;
+	t_lights	*lights;
 	t_objects	*objects;
 	bool		has_light;
 	int		num_objects;
 } t_world;
+
+void	ft_error(char* error);
 
 t_list	*ft_lstnew(t_intersection content);
 void	ft_lstclear(t_list **lst);
@@ -151,7 +160,6 @@ t_list	*intersect_world(t_world w, t_ray r);
 t_list	*intersect(t_object s, t_ray ray);
 t_list	*intersect_caps(t_object cyl, t_ray r);
 void bubbleSort(t_list **xs);
-bool is_shadowed(t_world world, t_tuple point);
 t_color shade_hit(t_world world,t_comps comps);
 
 t_objects	*ft_lstnew_w(t_object content);
@@ -159,6 +167,15 @@ int	ft_lstsize_w(t_objects *lst);
 void	ft_lstclear_w(t_objects **lst);
 
 void world(t_world *w, t_object content);
+
+t_lights	*ft_lstnew_l(t_light content);
+int	ft_lstsize_l(t_lights *lst);
+void	ft_lstclear_l(t_lights **lst);
+
+void light(t_lights **l, t_light light);
+
+
+bool is_shadowed(t_light light, t_world world, t_tuple point);
 
 t_tuple	point(float x, float y, float z);
 t_tuple vector(float x, float y, float z);
@@ -206,7 +223,6 @@ t_ray ray(t_tuple origin, t_tuple direction);
 t_tuple position(t_ray ray,float t);
 t_object sphere(int id);
 t_intersection intersection(float t, t_object o);
-t_intersection *intersections(int count,...);
 t_ray	transform(t_ray r,t_matrix m);
 void	set_transform(t_object *s,t_matrix m);
 t_tuple	normal_at(t_object o,t_tuple v);
@@ -226,7 +242,7 @@ void	intersect_2(t_shape *s,t_ray ray);
 t_tuple	normal_at_2(t_shape s, t_tuple p);
 t_tuple local_normal_at(t_object o,t_tuple local_point);
 t_object plan();
-int	ft_memcmp(const void *str1, const void *str2);
+//int	ft_memcmp(const void *str1, const void *str2);
 t_object cube(int id);
 void	check_axis(float origin, float direction, float *tmin,float *tmax);
 t_object cylinder(int id);

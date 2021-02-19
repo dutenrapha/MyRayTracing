@@ -244,29 +244,29 @@ t_list *intersect(t_object s, t_ray ray)
     t_matrix        A;
 
 	xs = NULL;
-	if (ft_memcmp("sphere",s.type) == 0)
+	if (ft_memcmp("sphere",s.type,7) == 0)
     {
         xs  = intersect_sphere(s,ray);
     }
-    else if (ft_memcmp("plan",s.type) == 0)
+    else if (ft_memcmp("plan",s.type,5) == 0)
     {
         xs = intersect_plan(s,ray);
 	}
-    else if (ft_memcmp("cylinder",s.type) == 0)
+    else if (ft_memcmp("cylinder",s.type,9) == 0)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);
         freeMatrix(&A);
         xs = intersect_cylinder(s,local_ray);
 	}
-    else if (ft_memcmp("cube",s.type) == 0)
+    else if (ft_memcmp("cube",s.type,5) == 0)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);
         freeMatrix(&A);
         xs  = intersect_cube(s,local_ray);
     }
-    else if (ft_memcmp("triangle",s.type) == 0)
+    else if (ft_memcmp("triangle",s.type,9) == 0)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);

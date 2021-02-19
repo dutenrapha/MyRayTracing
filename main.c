@@ -1,8 +1,39 @@
 #include "include/header.h"
-#include <stdio.h>
 
 int main(void)
 {
+
+	// if (argc < 2)
+	// {
+	// 	ft_error("001");
+	// }
+	// if (argc > 3)
+	// {
+	// 	ft_error("002");
+	// }
+	// if (argc == 3 && ft_strncmp(argv[2], "--save", 7) != 0)
+	// {
+	// 	ft_error("003");
+	// }
+	int test;
+	int             fd;
+	int				ii;
+	char    		*line;
+
+	line = NULL;
+	test = ft_printf("%s\n","Hello World");
+	if (!(fd = open("minimalist.rt", O_RDONLY)))
+	{
+		ft_printf("\nError in open\n");
+		return (0);
+	}
+	while ((ii = get_next_line(fd, &line)) > 0)
+	{	
+		ft_printf("%s\n", line);
+	}
+	ft_printf("%s\n", line);
+	test = ft_printf("%s\n","Hello World");
+
 	t_object	floor;
 	t_object	middle;
 	t_object	right;
@@ -17,7 +48,7 @@ int main(void)
 	t_canvas	canvas;
 	char		*s;
 	int			i;
-	int			j;
+
 
 	floor = plan(1);
 	C = scaling(10, 0.01, 10);
@@ -53,7 +84,7 @@ int main(void)
 	copyMatrix(&middle.transform,C);
 	freeMatrix(&C);
 	middle.material = material();
-	middle.material.color = color(0.1, 1, 0.5);
+	middle.material.color = color(0.63, 0.19, 0.57);
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
 
@@ -62,7 +93,7 @@ int main(void)
 	right.minimum = 1;
 	right.maximum = 2;
 	A = translation(1.5,0,-2);
-	B = rotation_x(M_PI/4);
+	B = rotation_x(M_PI/12);
 	C = matrixMulti(A,B);
 	copyMatrix(&right.transform,C);
 	freeMatrix(&A);
@@ -81,10 +112,12 @@ int main(void)
 	world(p_w,middle);
 	world(p_w,top_left);
 
-	w.light = point_light(point(-10, 10, -10), color(1, 1, 1));	
+	light(&w.lights,point_light(point(-10, 10, -10), color(1, 1, 1)));
+	light(&w.lights,point_light(point(10, 10, -10), color(0, 0.1, 0.35)));	
+	//light(&w.lights,point_light(point(0, 10, -10), color(0.1, 0.1, 0.1)));
 
 
-	c = camera(100,100,M_PI/2.5);
+	c = camera(200,200,M_PI/2.5);
 	C = view_transform(point(0,1.5,-5),point(0,1,0),vector(0,1,0));
 	copyMatrix(&c.transform,C);
 	freeMatrix(&C);
@@ -98,6 +131,7 @@ int main(void)
 		i++;
 	}
 	ft_lstclear_w(&w.objects);
+	ft_lstclear_l(&w.lights);
 	free(canvas.pixel);
 	free(s);
 	freeMatrix(&c.transform);
@@ -107,6 +141,7 @@ int main(void)
 	freeMatrix(&right.transform);
 	freeMatrix(&middle.transform);
 	freeMatrix(&top_left.transform);
+	test = ft_printf("%s\n","Bey World");
 	return (0);
 
 }
