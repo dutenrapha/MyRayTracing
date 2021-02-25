@@ -1,0 +1,16 @@
+#include "libft.h"
+
+void    ft_split_free(char ***split)
+{
+    char    **temp; 
+    int     i;
+
+    i = 0;
+    temp = *split;
+    while (temp[i] != NULL)
+    {
+        free(temp[i]);
+        i++;
+    }
+    free(temp);
+}

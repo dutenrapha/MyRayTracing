@@ -67,6 +67,7 @@ typedef struct s_object
 	char		*type;
 	float		minimum;
     float		maximum;
+	float		side;
     t_tuple		center;
 	t_matrix	transform;
 	t_material	material;
@@ -139,15 +140,61 @@ typedef struct s_lights
 	struct s_lights *next;
 } t_lights;
 
+typedef struct s_cameras
+{
+	t_camera	content;
+	struct s_cameras *next;
+} t_cameras;
+
 typedef struct s_world
 {
 	t_lights	*lights;
 	t_objects	*objects;
+	t_color		ambient;
 	bool		has_light;
 	int		num_objects;
 } t_world;
 
-void	ft_error(char* error);
+typedef struct s_config
+{
+	int			R_x;
+	int			R_y;
+	t_color		A_color;
+	t_cameras	*c_cameras;
+	t_lights	*l_lights;
+	t_objects	*o_objects;
+} t_config;
+
+t_matrix rotation(t_tuple normal);
+t_object square(int id);
+void light_a(t_world *w, t_light light);
+
+
+float	ft_atof(const char *nptr);
+
+t_matrix view_transform(t_tuple from,t_tuple forward,t_tuple up);
+
+char	*ft_error(char* error);
+void	ft_conf(t_config *config, char *line,int tag);
+void	ft_assign_R(t_config *config, char *R_x, char *R_y);
+void	ft_assign_A(t_config *config, char *A_ratio, char *A_light);
+void	ft_assign_l(t_config *config, char *position, char *brightness, char *cor);
+void	ft_assign_c(t_config *config, char *position, char *normal, char *FOV);
+void	ft_assign_pl(t_config *config, char *position, char *normal, char *cor,int tag);
+void	ft_assign_sp(t_config *config, char *position, char *diameter, char *cor,int tag);
+void	ft_assign_sq(t_config *config, char *position, char *normal, char *size, char *cor,int tag);
+void	ft_assign_cy(t_config *config, char *position, char *normal, char *diameter, char *height, char *cor,int tag);
+void	ft_assign_tr(t_config *config, char *p1, char *p2, char *p3, char *cor);
+
+t_objects	*ft_lstnew_o(t_object content);
+int	ft_lstsize_o(t_objects *lst);
+void	ft_lstclear_o(t_objects **lst);
+void objects(t_objects **l, t_object light);
+
+t_cameras	*ft_lstnew_c(t_camera content);
+int	ft_lstsize_c(t_cameras *lst);
+void	ft_lstclear_c(t_cameras **lst);
+void cameras(t_cameras **l, t_camera c);
 
 t_list	*ft_lstnew(t_intersection content);
 void	ft_lstclear(t_list **lst);
@@ -229,9 +276,9 @@ t_tuple	normal_at(t_object o,t_tuple v);
 t_tuple reflect(t_tuple in, t_tuple normal);
 t_light point_light(t_tuple position, t_color intensity);
 t_material material();
-t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv, bool in_shadow);
+t_color lighting(t_color a,t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv, bool in_shadow);
 t_comps prepare_computations(t_intersection i, t_ray r);
-t_matrix view_transform(t_tuple from,t_tuple to,t_tuple up);
+//t_matrix view_transform(t_tuple from,t_tuple to,t_tuple up);
 t_camera camera(int hsize,int vsize,float field_of_view);
 t_ray ray_for_pixel(t_camera camera,float px,float py);
 t_canvas render(t_camera camera,t_world world);
@@ -242,8 +289,9 @@ void	intersect_2(t_shape *s,t_ray ray);
 t_tuple	normal_at_2(t_shape s, t_tuple p);
 t_tuple local_normal_at(t_object o,t_tuple local_point);
 t_object plan();
-//int	ft_memcmp(const void *str1, const void *str2);
 t_object cube(int id);
 void	check_axis(float origin, float direction, float *tmin,float *tmax);
 t_object cylinder(int id);
 t_object	triangle(int id, t_tuple p1,t_tuple p2,t_tuple p3);
+
+void    ft_split_free(char ***split);

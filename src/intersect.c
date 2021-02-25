@@ -31,6 +31,10 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
             i2.object = s;
             xs = ft_lstnew(i1);
             ii = ft_lstnew(i2);
+            if (i1.t > 0 || i2.t > 0)
+            {
+                c  = 1;
+            }
             ft_lstadd_back(&xs, ii);
         }
 	return (xs);
@@ -47,12 +51,43 @@ static t_list *intersect_plan(t_object p, t_ray ray)
 	{
 		return (xs);
 	}
+    
 	t = -ray.origin.y / ray.direction.y;
 	i1 = intersection(t, p);
     xs = ft_lstnew(i1);
 
 	return (xs);
 }
+
+
+static t_list *intersect_square(t_object p, t_ray ray)
+{
+	t_list          *xs;
+	t_intersection i1;
+	float		    t;
+    t_tuple         point;
+    float           border;
+
+    xs = NULL;
+	if (fabs(ray.direction.y) < EPSILON)
+	{
+		return (xs);
+	}
+	t = -ray.origin.y / ray.direction.y;
+    if (t > 0)
+    {
+        point = sub(add(ray.origin,multi(ray.direction, t)),p.center);
+        border = p.side * 0.5;
+
+        if ((fabs(point.x) <= border) && (fabs(point.y) <= border) && (fabs(point.z) <= border))
+		{
+            i1 = intersection(t, p);
+            xs = ft_lstnew(i1);
+		}
+    }
+	return (xs);
+}
+
 
 static t_list *intersect_cube(t_object c, t_ray ray)
 {
@@ -250,7 +285,17 @@ t_list *intersect(t_object s, t_ray ray)
     }
     else if (ft_memcmp("plan",s.type,5) == 0)
     {
-        xs = intersect_plan(s,ray);
+        A = inverse(s.transform);
+        local_ray = transform(ray,A);
+        freeMatrix(&A);
+        xs = intersect_plan(s,local_ray);
+	}
+    else if (ft_memcmp("square",s.type,7) == 0)
+    {
+        A = inverse(s.transform);
+        local_ray = transform(ray,A);
+        freeMatrix(&A);
+        xs = intersect_square(s,local_ray);
 	}
     else if (ft_memcmp("cylinder",s.type,9) == 0)
     {

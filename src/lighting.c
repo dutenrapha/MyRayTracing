@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv, bool in_shadow)
+t_color lighting(t_color a, t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv, bool in_shadow)
 {
 	t_color ambient;
 	t_color diffuse;
@@ -17,6 +17,7 @@ t_color lighting(t_material material,t_light light,t_tuple position,t_tuple eyev
 	effective_color = multicolorV(material.color,light.intensity);	
 	lightv = normalize(sub(light.position,position));
 	ambient = multicolorS(effective_color,material.ambient);
+	ambient = addcolor(ambient,a);
 	light_dot_normal = dot(lightv, normalv);
 	if(light_dot_normal < 0)
 	{

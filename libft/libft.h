@@ -141,6 +141,8 @@ void			ft_print_padding(int size, char c);
 
 int		get_next_line(int fd, char **line);
 int	ft_memcmp(const void *str1, const void *str2, size_t n);
+
+//void    ft_split_free(char ***split);
 #endif
 
 

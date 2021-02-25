@@ -13,7 +13,7 @@ t_matrix inverse(t_matrix A)
 	B = matrix(A.dim);
 	if (!isInvertible(A))
 	{
-		printf("Not invertible matrix");
+		ft_printf("Not invertible matrix");
 		return (B);
 	}
 	else

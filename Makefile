@@ -9,6 +9,7 @@ LIB_NAME = libvectors.a
 LIBFT_NAME = libft.a
 NAME = miniRT
 MAIN = main.c
+FILE = minimalist.rt
 
 LIB = $(LIB_PATH)/$(LIB_NAME)
 LIBFT = $(LIBFT_PATH)/$(LIBFT_NAME)
@@ -18,7 +19,7 @@ OBJ=$(addprefix $(OBJ_PATH)/, $(SRC:.c=.o))
 all: $(NAME)	
 
 run:  
-	@./$(NAME)
+	./$(NAME) $(FILE)
 
 clean:
 	@make clean -C $(LIBFT_PATH)
@@ -35,13 +36,13 @@ re: fclean all run
 	@open image.ppm
 
 $(NAME):	$(LIBFT) $(LIB)	
-	$(CC) $(FLAGS) $(MAIN) -g $(LIB) $(LIBFT)  -o $@
+	@$(CC) $(FLAGS) $(MAIN) -g $(LIB) $(LIBFT)  -o $@
 
 $(LIB): $(OBJ)
 	@ar rcs $@ $(OBJ) 
 
 $(OBJ_PATH)/%.o:	$(SRC_PATH)/%.c
-	@$(CC) $(FLAGS) -c $< -o $@  	
+	@$(CC) -g $(FLAGS) -c $< -o $@  	
 
 $(LIBFT):
 	@make -C $(LIBFT_PATH)

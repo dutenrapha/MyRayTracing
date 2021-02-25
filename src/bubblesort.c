@@ -27,7 +27,7 @@ void bubbleSort(t_list **xs)
         j = 0;
         temp = xs; 
         swapped = 0;
-        while (j < n - i -1)
+        while (j < n -1)
         {
             p1 = *temp;
             p2 = (*temp)->next;
