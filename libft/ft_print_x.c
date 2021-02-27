@@ -45,7 +45,7 @@ void		ft_print_x(t_ptf *parms)
 	p = 0;
 	temp = NULL;
 	parms->v_p = va_arg(parms->ap, void *);
-	parms->v_str = ft_itoa_hex((int32_t)parms->v_p, HEX_BASE_L);
+	parms->v_str = ft_itoa_hex((uintmax_t)parms->v_p, HEX_BASE_L);
 	parms->len_c = ft_strlen(parms->v_str);
 	ft_aux(parms, temp);
 	p = parms->precision;

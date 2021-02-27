@@ -1,5 +1,26 @@
 #include "include/header.h"
 
+// int main(int argc, char *argv[])
+// {
+// 	t_config	config;
+// 	t_canvas 	c;
+	
+// 	c =  canvas(1,1);
+
+// 	c.pixel[0][0].red = 0;
+// 	c.pixel[0][0].green = 1;
+// 	c.pixel[0][0].blue = 0;
+
+// 	config.R_x = 1;
+// 	config.R_y = 1;
+
+// 	ft_printf("File %d filename %s\n", argc, argv[1]);
+// 	ft_save(config,c, 001);
+
+// 	return (0);
+// }
+
+
 int main(int argc, char *argv[])
 {
 	char		*erro;
@@ -84,22 +105,14 @@ int main(int argc, char *argv[])
 	w.ambient = config.A_color;
 
 
-	// // light(&w.lights,point_light(point(-10, 10, -10), color(1, 1, 1)));
-	// // light(&w.lights,point_light(point(10, 10, -10), color(0, 0.1, 0.35)));	
-
-	// // c = camera(200,200,M_PI/2.5);
-	// // C = view_transform(point(0,1.5,-5),point(0,1,0),vector(0,1,0));
-	// // copyMatrix(&c.transform,C);
-	// // freeMatrix(&C);
-
-
 	t_canvas canvas;
 	t_camera c;
-	char *s;
+	// char *s;
 	int i;
 	c = config.c_cameras->content;
 	canvas = render(c,w);
-	s = canvas_to_ppm(&canvas);
+	//s = canvas_to_ppm(&canvas);
+	ft_save(config,canvas, 001);
 	i = 0;
 	while (i <c.vsize)
 	{

@@ -5,6 +5,26 @@
 #include "../libft/libft.h"
 
 #define EPSILON 0.00001
+#define HEX_BASE		"0123456789abcdef"
+
+typedef struct		s_bmpheader
+{
+	uint16_t		type;
+	uint32_t		size;
+	uint16_t		reserved;
+	uint32_t		offset;
+	uint32_t		dib_header_size;
+	int32_t			width_px;
+	int32_t			height_px;
+	uint16_t		num_planes;
+	uint16_t		bpp;
+	uint32_t		compression;
+	uint32_t		img_size_bytes;
+	int32_t			x_resolution_ppm;
+	int32_t			y_resolution_ppm;
+	uint32_t		num_colors;
+	uint32_t		important_colors;
+}					t_bmpheader;
 
 typedef struct s_tuple
 {
@@ -164,6 +184,8 @@ typedef struct s_config
 	t_lights	*l_lights;
 	t_objects	*o_objects;
 } t_config;
+
+void	ft_save(t_config	config, t_canvas canvas, int tag);
 
 t_matrix rotation(t_tuple normal);
 t_object square(int id);

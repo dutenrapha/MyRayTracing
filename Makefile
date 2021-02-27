@@ -19,7 +19,7 @@ OBJ=$(addprefix $(OBJ_PATH)/, $(SRC:.c=.o))
 all: $(NAME)	
 
 run:  
-	./$(NAME) $(FILE)
+	@./$(NAME) $(FILE)
 
 clean:
 	@make clean -C $(LIBFT_PATH)
@@ -33,7 +33,7 @@ fclean:	clean
 	@rm -fR *.dSYM
 
 re: fclean all run
-	@open image.ppm
+	@open camera_1.bmp
 
 $(NAME):	$(LIBFT) $(LIB)	
 	@$(CC) $(FLAGS) $(MAIN) -g $(LIB) $(LIBFT)  -o $@

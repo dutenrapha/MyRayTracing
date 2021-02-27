@@ -54,9 +54,7 @@ void		ft_print_int(t_ptf *parms)
 {
 	char	*temp;
 	int		diff;
-	int		i;
 
-	i = 0;
 	diff = 0;
 	temp = NULL;
 	parms->v_int = va_arg(parms->ap, int);
