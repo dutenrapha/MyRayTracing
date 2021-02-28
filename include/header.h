@@ -2,6 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "../lib/mlx_linux/mlx.h"
+#include "../lib/mlx_linux/mlx_int.h"
 #include "../libft/libft.h"
 
 #define EPSILON 0.00001
@@ -179,13 +181,26 @@ typedef struct s_config
 {
 	int			R_x;
 	int			R_y;
+	bool		save;
 	t_color		A_color;
 	t_cameras	*c_cameras;
 	t_lights	*l_lights;
 	t_objects	*o_objects;
+	t_canvas	*c_canvas;
 } t_config;
 
-void	ft_save(t_config	config, t_canvas canvas, int tag);
+typedef struct  s_data {
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+}               t_data;
+
+int ft_resizeColor(float a);
+unsigned long createRGB(int r, int g, int b);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	ft_save(t_config	config, t_data mlx, int tag);
 
 t_matrix rotation(t_tuple normal);
 t_object square(int id);
@@ -267,7 +282,7 @@ t_color multicolorV(t_color c1, t_color c2);
 bool isColorEqual(t_color c1, t_color c2);
 t_canvas canvas(int w, int h);
 void writePixel(t_canvas *cv, int w, int h, t_color c);
-char *canvas_to_ppm(t_canvas *cv);
+//char *canvas_to_ppm(t_canvas *cv);
 t_matrix matrix(int dim);
 void freeMatrix(t_matrix *A);
 void writeMatrix(t_matrix *m, int i, int j, float e);

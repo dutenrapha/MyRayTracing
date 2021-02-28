@@ -1,41 +1,19 @@
 #include "include/header.h"
 
-// int main(int argc, char *argv[])
-// {
-// 	t_config	config;
-// 	t_canvas 	c;
-	
-// 	c =  canvas(1,1);
-
-// 	c.pixel[0][0].red = 0;
-// 	c.pixel[0][0].green = 1;
-// 	c.pixel[0][0].blue = 0;
-
-// 	config.R_x = 1;
-// 	config.R_y = 1;
-
-// 	ft_printf("File %d filename %s\n", argc, argv[1]);
-// 	ft_save(config,c, 001);
-
-// 	return (0);
-// }
-
-
 int main(int argc, char *argv[])
 {
-	char		*erro;
-	int			fd;
-	int			ii;
-	char    	*line;
-	int			tag;
+
+
+
+
 	t_config	config;
 	t_world		w;
-	t_objects *temp;
-	t_lights *temp_l;
 
-	config.c_cameras = NULL;
-	config.l_lights = NULL;
-	config.o_objects = NULL;
+
+
+
+//void ft_prevalidation(int argc, char *argv[])
+	char		*erro;
 	erro = NULL;
 	if (argc < 2)
 	{
@@ -55,6 +33,21 @@ int main(int argc, char *argv[])
 		ft_printf("%s\n", erro);
 		return (0);
 	}
+//void ft_prevalidation(int argc, char *argv[])//
+
+//bool ft_checkSave(int argc, char *argv[])
+//config.save = ft_checkSave(int argc, char *argv[])
+//bool ft_checkSave(int argc, char *argv[])//
+
+//void ft_readfile(t_config *c);
+	int			fd;
+	int			ii;
+	int			tag;
+	char    	*line;
+	config.c_cameras = NULL;
+	config.l_lights = NULL;
+	config.o_objects = NULL;
+	config.c_canvas = NULL;
 	line = NULL;
 	if (!(fd = open(argv[1], O_RDONLY)))
 	{
@@ -80,6 +73,11 @@ int main(int argc, char *argv[])
 		free(line);
 	}
 
+//void ft_readfile(t_config *c);//
+
+//ft_init_world(t_world *w, t_config c);
+	t_objects *temp;
+	t_lights *temp_l;
 	w.objects = NULL;
 	w.lights = NULL;
 	temp = config.o_objects;
@@ -103,23 +101,76 @@ int main(int argc, char *argv[])
 
 
 	w.ambient = config.A_color;
+//ft_init_world(t_world *w, t_config c);//
 
-
+//ft_canvas(t_canvas *canvas);
 	t_canvas canvas;
 	t_camera c;
-	// char *s;
-	int i;
+
+
 	c = config.c_cameras->content;
 	canvas = render(c,w);
-	//s = canvas_to_ppm(&canvas);
-	ft_save(config,canvas, 001);
+//ft_canvas(t_canvas *canvas)//
+
+
+//void ft_renderCamera(t_canvas *canvas, bool save)
+	int		x;
+	int		y;
+
+
+    void    *mlx;
+    void    *mlx_win;
+    t_data  img;
+
+    mlx = mlx_init();
+    mlx_win = mlx_new_window(mlx, config.R_x, config.R_y, "Hello world!");
+    img.img = mlx_new_image(mlx, config.R_x, config.R_y);
+    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+                                 &img.endian);
+
+	t_color cor;
+	int R;
+	int G;
+	int B;
+	y = 0;
+	while (y < c.vsize - 1)
+	{
+		x = 0;
+		while (x < c.hsize - 1)
+		{
+			cor = canvas.pixel[y][x];
+			R = ft_resizeColor(cor.red);
+			G = ft_resizeColor(cor.green);
+			B = ft_resizeColor(cor.blue);
+			my_mlx_pixel_put(&img, x, y, createRGB(R,G,B));
+			x++;
+		}
+		y++;
+	}
+    
+	// if (save)
+	//{
+	//ft_save(config,img, 42);
+	//}
+	//else
+	//{
+		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+		mlx_loop(mlx);
+	//}
+//void ft_renderCamera(t_canvas *canvas)//
+
+
+
+
+//void ft_freeCanvas(t_canvas *canvas)
+	int i;
 	i = 0;
 	while (i <c.vsize)
 	{
 		free(canvas.pixel[i]);
 		i++;
 	}
-
+//void ft_freeCanvas(t_canvas *canvas)//
 
 
 	// free(s);

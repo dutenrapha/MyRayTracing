@@ -1,10 +1,10 @@
-R 100    100
+R   200  200
 A   0.05 255,255,255
 
 #camera cima
 #c 0,10,-5 -3,7,0               45
 #camera frontal Direita
-#c 9,1,-10 0,1,0               45
+# c 9,1,-10 0,1,0               45
 #camera frontal Esquerda
   c -9,1,-10 0,1,0               45
 l   9,10,-11 0.7          255,255,255
