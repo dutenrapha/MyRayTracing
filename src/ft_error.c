@@ -2,6 +2,10 @@
 
 char	*ft_error(char* error)
 {
+    if (ft_memcmp("000",error,4) == 0)
+    {
+        return("Nao foi possivel abrir o arquivo");
+    }
     if (ft_memcmp("001",error,4) == 0)
     {
         return("Voce nao digitou o nome do arquivo");

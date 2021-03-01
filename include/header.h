@@ -168,6 +168,12 @@ typedef struct s_cameras
 	struct s_cameras *next;
 } t_cameras;
 
+typedef struct s_cv
+{
+	t_canvas	content;
+	struct s_cv *next;
+} t_cv;
+
 typedef struct s_world
 {
 	t_lights	*lights;
@@ -176,6 +182,27 @@ typedef struct s_world
 	bool		has_light;
 	int		num_objects;
 } t_world;
+
+
+typedef struct  s_data {
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+}               t_data;
+
+// typedef struct  s_vars {
+//         void    *mlx;
+//         void    *win;
+// }               t_vars;
+
+
+typedef struct s_imgg
+{
+	t_data	content;
+	struct s_imgg *next;
+} t_imgg;
 
 typedef struct s_config
 {
@@ -186,16 +213,35 @@ typedef struct s_config
 	t_cameras	*c_cameras;
 	t_lights	*l_lights;
 	t_objects	*o_objects;
-	t_canvas	*c_canvas;
+	t_cv		*c_canvas;
+	t_imgg		*img;
+	t_imgg		*img_init;
+	void    *mlx;
+    void    *win;
 } t_config;
 
-typedef struct  s_data {
-    void        *img;
-    char        *addr;
-    int         bits_per_pixel;
-    int         line_length;
-    int         endian;
-}               t_data;
+
+void 	ft_setImg(t_config *config);
+
+t_imgg	*ft_lstnew_img(t_data img);
+int	ft_lstsize_img(t_imgg *img);
+void	ft_lstclear_img(t_imgg **img);
+void n_img(t_imgg **l, t_data img);
+
+void ft_renderCamera(t_config config, bool save);
+
+t_cv	*ft_lstnew_cv(t_canvas cv);
+int	ft_lstsize_cv(t_cv *cv);
+void	ft_lstclear_cv(t_cv **cv);
+void cv(t_cv **l, t_canvas cv);
+
+void	ft_canvas(t_config *config,t_world w);
+
+void ft_init_world(t_world *w, t_config config);
+
+void ft_readfile(t_config *config,char *argv[]);
+bool	ft_checkSave(int argc);
+bool	ft_prevalidation(int argc, char *argv[]);
 
 int ft_resizeColor(float a);
 unsigned long createRGB(int r, int g, int b);
@@ -212,7 +258,7 @@ float	ft_atof(const char *nptr);
 t_matrix view_transform(t_tuple from,t_tuple forward,t_tuple up);
 
 char	*ft_error(char* error);
-void	ft_conf(t_config *config, char *line,int tag);
+void	ft_conf(t_config **config, char *line,int tag);
 void	ft_assign_R(t_config *config, char *R_x, char *R_y);
 void	ft_assign_A(t_config *config, char *A_ratio, char *A_light);
 void	ft_assign_l(t_config *config, char *position, char *brightness, char *cor);
@@ -282,7 +328,7 @@ t_color multicolorV(t_color c1, t_color c2);
 bool isColorEqual(t_color c1, t_color c2);
 t_canvas canvas(int w, int h);
 void writePixel(t_canvas *cv, int w, int h, t_color c);
-//char *canvas_to_ppm(t_canvas *cv);
+
 t_matrix matrix(int dim);
 void freeMatrix(t_matrix *A);
 void writeMatrix(t_matrix *m, int i, int j, float e);
@@ -315,7 +361,7 @@ t_light point_light(t_tuple position, t_color intensity);
 t_material material();
 t_color lighting(t_color a,t_material material,t_light light,t_tuple position,t_tuple eyev, t_tuple normalv, bool in_shadow);
 t_comps prepare_computations(t_intersection i, t_ray r);
-//t_matrix view_transform(t_tuple from,t_tuple to,t_tuple up);
+
 t_camera camera(int hsize,int vsize,float field_of_view);
 t_ray ray_for_pixel(t_camera camera,float px,float py);
 t_canvas render(t_camera camera,t_world world);
