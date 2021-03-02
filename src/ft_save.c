@@ -49,8 +49,7 @@ static	int create_file(char *name)
 	return (fd);
 }
 
-
-void	ft_save(t_config config, t_data mlx, int tag)
+static void	ft_saves(t_config config, t_data mlx, int tag)
 {
 	char		*name;
 	t_bmpheader	header;
@@ -69,4 +68,20 @@ void	ft_save(t_config config, t_data mlx, int tag)
 	}
 	close(fd);
 	free(name);
+}
+
+void	ft_save(t_config configs)
+{
+	int	tag;
+	
+	t_imgg	*temp;
+	tag = 1;
+	temp = configs.img;
+	while(temp->next)
+	{
+		ft_saves(configs,temp->content,tag);
+		tag++;
+		temp = temp->next;
+	}
+	ft_saves(configs,temp->content,tag);
 }

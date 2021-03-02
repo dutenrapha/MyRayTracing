@@ -220,6 +220,26 @@ typedef struct s_config
     void    *win;
 } t_config;
 
+bool is_normal(char *s);
+bool is_num(char *s);
+bool is_coordenada(char *s);
+bool is_color(char *s);
+int	ft_strDlen(char **s);
+
+ bool	ft_validate_R(char **line_t);
+ bool	ft_validate_A(char **line_t);
+ bool	ft_validate_c(char **line_t);
+ bool	ft_validate_l(char **line_t);
+ bool	ft_validate_pl(char **line_t);
+ bool	ft_validate_sp(char **line_t);
+ bool	ft_validate_sq(char **line_t);
+ bool	ft_validate_cy(char **line_t);
+ bool	ft_validate_tr(char **line_t);
+
+
+bool	is_valid(char *line);
+
+bool 	is_rt_file(char *file);
 
 void 	ft_setImg(t_config *config);
 
@@ -239,14 +259,15 @@ void	ft_canvas(t_config *config,t_world w);
 
 void ft_init_world(t_world *w, t_config config);
 
-void ft_readfile(t_config *config,char *argv[]);
+bool ft_readfile(t_config *config,char *argv[]);
 bool	ft_checkSave(int argc);
 bool	ft_prevalidation(int argc, char *argv[]);
 
 int ft_resizeColor(float a);
 unsigned long createRGB(int r, int g, int b);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	ft_save(t_config	config, t_data mlx, int tag);
+
+void	ft_save(t_config config);
 
 t_matrix rotation(t_tuple normal);
 t_object square(int id);

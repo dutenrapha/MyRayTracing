@@ -38,23 +38,18 @@ static int		expose_hook(t_config *config)
 
 void ft_renderCamera(t_config config, bool save)
 {
-
-    t_data  img;
-
-
     config.mlx = mlx_init();
     config.win = mlx_new_window(config.mlx, config.R_x, config.R_y, "miniRT");
 	ft_setImg(&config);
 	if (save)
 	{ 
-	    ft_save(config,img, 42);
+		ft_save(config);
 	}
 	else
 	{
         mlx_hook(config.win, 33, 1L << 17, closew, &config);
 		mlx_hook(config.win, 2, 1, next_cam, &config);
-        // mlx_put_image_to_window(config.mlx, config.win, config.img->content.img, 0, 0);
-        mlx_expose_hook(config.mlx , expose_hook, &config);
+        mlx_expose_hook(config.win , expose_hook, &config);
 		mlx_loop(config.mlx);
 	}
 }

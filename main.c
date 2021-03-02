@@ -10,8 +10,10 @@ int main(int argc, char *argv[])
 		return (0);
 	}
 	config.save = ft_checkSave(argc);
-
-	ft_readfile(&config,argv);
+	if(!ft_readfile(&config,argv))
+	{
+		return (0);
+	}
 	ft_init_world(&w,config);
 	ft_canvas(&config,w);
 	ft_renderCamera(config, config.save);

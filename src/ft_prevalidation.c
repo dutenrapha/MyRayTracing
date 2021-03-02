@@ -16,9 +16,15 @@ bool ft_prevalidation(int argc, char *argv[])
 		ft_printf("%s\n", erro);
 		return (true);
 	}
-	if (argc == 3 && ft_memcmp("--save",argv[2],4) != 0)
+	if (!is_rt_file(argv[1]))
 	{
 		erro = ft_error("003");
+		ft_printf("%s\n", erro);
+		return (true);
+	}
+	if (argc == 3 && ft_memcmp("--save",argv[2],7) != 0)
+	{
+		erro = ft_error("004");
 		ft_printf("%s\n", erro);
 		return (true);
 	}

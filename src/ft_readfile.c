@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-void ft_readfile(t_config *config,char *argv[])
+bool ft_readfile(t_config *config,char *argv[])
 {
     int			fd;
 	int			ii;
@@ -22,8 +22,12 @@ void ft_readfile(t_config *config,char *argv[])
 	tag = 0;
 	while ((ii = get_next_line(fd, &line)) > 0)
 	{	
-		if (line != NULL && *line != '\0')
+		if (line != NULL && *line != '\0' && *line != '#')
 		{
+			if(!is_valid(line))
+			{
+				return(false);
+			}
 			ft_conf(&config,line,tag);
 			free(line);
 		}
@@ -32,7 +36,12 @@ void ft_readfile(t_config *config,char *argv[])
 	tag++;
 	if (line != NULL && *line != '\0')
 	{
+		if(!is_valid(line))
+		{
+			return(false);
+		}
 		ft_conf(&config,line,tag);
 		free(line);
 	}
+	return (true);
 }
