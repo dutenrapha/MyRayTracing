@@ -14,7 +14,10 @@ int main(int argc, char *argv[])
 	{
 		return (0);
 	}
-	ft_init_world(&w,config);
+	if (config.o_objects != NULL)
+	{
+		ft_init_world(&w,config);
+	}
 	ft_canvas(&config,w);
 	ft_renderCamera(config, config.save);
 

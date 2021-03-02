@@ -2,7 +2,7 @@
 
 static bool is_unit(float x, float y, float z)
 {
-    if ( sqrt(x*x + y*y + z*z) - 1 < EPSILON)
+    if ( fabs(sqrt(x*x + y*y + z*z) - 1) < EPSILON)
     {
         return (true);
     }
@@ -22,7 +22,7 @@ bool is_normal(char *s)
         ft_split_free(&temp);
         return(false);
     }    
-    if ( !(is_num(temp[0]) || is_num(temp[1]) || is_num(temp[2]) )  )
+    if (!(is_num(temp[0]) || is_num(temp[1]) || is_num(temp[2])))
     {
         ft_split_free(&temp);
         return (false);

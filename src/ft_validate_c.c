@@ -14,7 +14,7 @@ bool	ft_validate_c(char **line_t)
     }
     if(!is_normal(line_t[2]))
     {
-       ft_printf("Error\nDigite um vetor normal para a camera\n");
+       ft_printf("Error\nDigite um vetor normal valido para a camera\n");
        return(false);
     }
     if (!is_num(line_t[3]))

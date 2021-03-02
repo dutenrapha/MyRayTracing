@@ -13,7 +13,7 @@ bool is_color(char *s)
         ft_split_free(&temp);
         return(false);
     }
-    if (!ft_isdigit(*temp[0]) || !ft_isdigit(*temp[1]) || !ft_isdigit(*temp[2]))
+    if (!is_num(temp[0]) || !is_num(temp[1]) || !is_num(temp[2]))
     {
         ft_split_free(&temp);
         return(false);

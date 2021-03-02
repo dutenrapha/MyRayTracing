@@ -40,6 +40,14 @@ void ft_renderCamera(t_config config, bool save)
 {
     config.mlx = mlx_init();
     config.win = mlx_new_window(config.mlx, config.R_x, config.R_y, "miniRT");
+	if (config.c_cameras == NULL)
+	{
+		ft_printf("Voce nao definiou nenhuma camera!\n");
+	}
+	if (config.o_objects == NULL)
+	{
+		ft_printf("Voce nao definiou nenhum objeto!\n");
+	}
 	ft_setImg(&config);
 	if (save)
 	{ 
