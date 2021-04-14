@@ -15,7 +15,7 @@ t_matrix view_transform(t_tuple from,t_tuple to,t_tuple up)
 	left = cross(forward,upn);
  	true_up = cross(left,forward);
 
-	orientation = matrix(4);	
+	orientation = matrix(4);
 	writeMatrix(&orientation,0,0,left.x);
 	writeMatrix(&orientation,0,1,left.y);
 	writeMatrix(&orientation,0,2,left.z);
@@ -35,10 +35,10 @@ t_matrix view_transform(t_tuple from,t_tuple to,t_tuple up)
 	writeMatrix(&orientation,3,1,0.0);
 	writeMatrix(&orientation,3,2,0.0);
 	writeMatrix(&orientation,3,3,1.0);
-	
+
 	t = translation(-from.x, -from.y, -from.z);
 	resp = matrixMulti(orientation,t);
-	freeMatrix(&orientation);
-	freeMatrix(&t);
+	free_matrix(&orientation);
+	free_matrix(&t);
 	return (resp);
 }

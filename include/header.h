@@ -105,7 +105,7 @@ typedef struct s_object
 typedef struct s_intersection
 {
 	float		t;
-	t_object	object;	
+	t_object	object;
 	bool		valid;
 } t_intersection;
 
@@ -220,6 +220,16 @@ typedef struct s_config
     void    *win;
 } t_config;
 
+typedef struct s_iter
+{
+	int		i;
+	int		j;
+	bool	swapped;
+	int		n;
+} t_iter;
+
+void	init_iter(t_iter *p,t_list *xs);
+
 bool is_normal(char *s);
 bool is_num(char *s);
 bool is_coordenada(char *s);
@@ -264,7 +274,7 @@ bool	ft_checkSave(int argc);
 bool	ft_prevalidation(int argc, char *argv[]);
 
 int ft_resizeColor(float a);
-unsigned long createRGB(int r, int g, int b);
+unsigned long create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 void	ft_save(t_config config);
@@ -310,7 +320,7 @@ t_color  color_at(t_world world, t_ray ray);
 t_list	*intersect_world(t_world w, t_ray r);
 t_list	*intersect(t_object s, t_ray ray);
 t_list	*intersect_caps(t_object cyl, t_ray r);
-void bubbleSort(t_list **xs);
+void bubblesort(t_list **xs);
 t_color shade_hit(t_world world,t_comps comps);
 
 t_objects	*ft_lstnew_w(t_object content);
@@ -351,7 +361,7 @@ t_canvas canvas(int w, int h);
 void writePixel(t_canvas *cv, int w, int h, t_color c);
 
 t_matrix matrix(int dim);
-void freeMatrix(t_matrix *A);
+void free_matrix(t_matrix *A);
 void writeMatrix(t_matrix *m, int i, int j, float e);
 bool isMatrixEqual(t_matrix A, t_matrix B);
 t_matrix matrixMulti(t_matrix A, t_matrix B);
@@ -360,8 +370,8 @@ t_matrix identity();
 t_matrix transpose(t_matrix A);
 t_matrix submatrix(t_matrix A, int i, int j);
 float minor_op(t_matrix A, int i, int j);
-float cofactor(t_matrix A, int i, int j);
-float det(t_matrix A);
+float cofactor(t_matrix a, int i, int j);
+float det(t_matrix a);
 bool isInvertible(t_matrix A);
 t_matrix inverse(t_matrix A);
 t_matrix translation(float x, float y, float z);
@@ -386,7 +396,7 @@ t_comps prepare_computations(t_intersection i, t_ray r);
 t_camera camera(int hsize,int vsize,float field_of_view);
 t_ray ray_for_pixel(t_camera camera,float px,float py);
 t_canvas render(t_camera camera,t_world world);
-void copyMatrix(t_matrix *d, t_matrix o);
+void copy_matrix(t_matrix *d, t_matrix o);
 t_shape	test_shape();
 void    set_transform_2(t_shape *s,t_matrix m);
 void	intersect_2(t_shape *s,t_ray ray);

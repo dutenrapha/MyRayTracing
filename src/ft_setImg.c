@@ -9,7 +9,7 @@ static void ft_set(int YY, int XX, t_canvas c, t_imgg **img,t_config *config)
 	int B;
     t_color cor;
     t_data im;
-    
+
     im.img = mlx_new_image(config->mlx, XX, YY);
     im.addr = mlx_get_data_addr(im.img, &im.bits_per_pixel, &im.line_length,
                                  &im.endian);
@@ -25,7 +25,7 @@ static void ft_set(int YY, int XX, t_canvas c, t_imgg **img,t_config *config)
             R = ft_resizeColor(cor.red);
             G = ft_resizeColor(cor.green);
             B = ft_resizeColor(cor.blue);
-            my_mlx_pixel_put(&im, x, y, createRGB(R,G,B));
+            my_mlx_pixel_put(&im, x, y, create_rgb(R,G,B));
             x++;
         }
         y++;

@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   divide.c                                           :+:      :+:    :+:   */
+/*   createRGB.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 20:45:26 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:46:01 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/14 20:31:29 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/14 20:32:25 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_tuple	divide(t_tuple v1, float a)
+unsigned long	create_rgb(int r, int g, int b)
 {
-	t_tuple v2;
-
-	v2.x = v1.x / a;
-	v2.y = v1.y / a;
-	v2.z = v1.z / a;
-	v2.w = v1.w / a;
-	return (v2);
+	return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 }

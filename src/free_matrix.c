@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   divide.c                                           :+:      :+:    :+:   */
+/*   freeMatrix.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 20:45:26 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:46:01 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/14 20:47:32 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/14 20:48:28 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_tuple	divide(t_tuple v1, float a)
+void	free_matrix(t_matrix *a)
 {
-	t_tuple v2;
+	int	i;
 
-	v2.x = v1.x / a;
-	v2.y = v1.y / a;
-	v2.z = v1.z / a;
-	v2.w = v1.w / a;
-	return (v2);
+	i = 0;
+	while (i < a->dim)
+	{
+		free(a->element[i]);
+		i++;
+	}
+	free(a->element);
 }

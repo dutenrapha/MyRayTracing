@@ -11,7 +11,7 @@ t_intersection hit(t_list *xs)
 	temp = xs;
     lenght = ft_lstsize(xs);
 	it.valid = false;
-	bubbleSort(&xs);
+	bubblesort(&xs);
 	while (i < lenght)
 	{
         if (temp->content.t > 0)

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dot.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/14 20:46:35 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/14 20:47:11 by rdutenke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-float dot(t_tuple v1, t_tuple v2)
+float	dot(t_tuple v1, t_tuple v2)
 {
-	return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z + v1.w*v2.w;
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w);
 }

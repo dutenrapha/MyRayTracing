@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   divide.c                                           :+:      :+:    :+:   */
+/*   iter_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 20:45:26 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:46:01 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/14 19:43:34 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/14 19:56:19 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_tuple	divide(t_tuple v1, float a)
+void	init_iter(t_iter *p,t_list *xs)
 {
-	t_tuple v2;
-
-	v2.x = v1.x / a;
-	v2.y = v1.y / a;
-	v2.z = v1.z / a;
-	v2.w = v1.w / a;
-	return (v2);
+	p->i = 0;
+	p->j = -1;
+	p->swapped = 0;
+	p->n = ft_lstsize(xs);
 }

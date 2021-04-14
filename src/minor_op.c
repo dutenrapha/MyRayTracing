@@ -7,6 +7,6 @@ float minor_op(t_matrix A, int i, int j)
 
 	B = submatrix(A,i,j);
 	d = det(B);
-	freeMatrix(&B);
-	return (d);	
+	free_matrix(&B);
+	return (d);
 }

@@ -37,6 +37,6 @@ t_list  *intersect_world(t_world w, t_ray r)
             ft_lstadd_back(&xs, init);
         }
     }
-    bubbleSort(&xs);
+    bubblesort(&xs);
 	return (xs);
 }

@@ -24,7 +24,7 @@ void	ft_assign_sq(t_config *config, char *position, char *normal, char *size, ch
     o.center = point(x,y,z);
 
     o.side = ft_atof(size);
-    
+
     C = translation(x,y,z);
 
     temp2 = ft_split(cor,',');
@@ -43,10 +43,10 @@ void	ft_assign_sq(t_config *config, char *position, char *normal, char *size, ch
     o.normal = vector(x,y,z);
     A = rotation(vector(x,y,z));
     D = matrixMulti(A,C);
-    copyMatrix(&o.transform,D);
-    freeMatrix(&A);
-    freeMatrix(&C);
-    freeMatrix(&D);
+    copy_matrix(&o.transform,D);
+    free_matrix(&A);
+    free_matrix(&C);
+    free_matrix(&D);
 
 
     objects(&config->o_objects, o);

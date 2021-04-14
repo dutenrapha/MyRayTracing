@@ -21,12 +21,12 @@ void	ft_assign_pl(t_config *config, char *position, char *normal, char *cor,int 
     y = ft_atof(temp[1]);
     z = ft_atof(temp[2]);
     ft_split_free(&temp);
-    
+
     temp2 = ft_split(cor, ',');
     R = (float)ft_atoi(temp2[0]);
     G = (float)ft_atoi(temp2[1]);
     B = (float)ft_atoi(temp2[2]);
-    
+
    	C = translation(x,y,z);
 
     ft_split_free(&temp2);
@@ -40,10 +40,10 @@ void	ft_assign_pl(t_config *config, char *position, char *normal, char *cor,int 
     ft_split_free(&temp2);
     A = rotation(vector(x,y,z));
     D = matrixMulti(A,C);
-    copyMatrix(&o.transform,D);
-    freeMatrix(&A);
-    freeMatrix(&C);
-    freeMatrix(&D);
+    copy_matrix(&o.transform,D);
+    free_matrix(&A);
+    free_matrix(&C);
+    free_matrix(&D);
 
     objects(&config->o_objects, o);
 }

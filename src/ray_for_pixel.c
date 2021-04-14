@@ -17,12 +17,12 @@ t_ray ray_for_pixel(t_camera camera,float px,float py)
 
 	world_x = camera.half_width - xoffset;
 	world_y = camera.half_height - yoffset;
-	
-	
+
+
 	A = inverse(camera.transform);
 	pixel = matrixMultiVec(A,point(world_x, world_y, -1));
  	origin =  matrixMultiVec(A, point(0, 0, 0));
-	freeMatrix(&A);
+	free_matrix(&A);
 	direction = normalize(sub(pixel,origin));
 	r = ray(origin,direction);
 	return (r);

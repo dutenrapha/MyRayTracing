@@ -17,7 +17,7 @@ static t_list *intersect_sphere(t_object s, t_ray ray)
         xs = NULL;
         INV = inverse(s.transform);
         ray_t = transform(ray, INV);
-        freeMatrix(&INV);
+        free_matrix(&INV);
         sphere_to_ray = sub(ray_t.origin,s.center);
         a =  dot(ray_t.direction, ray_t.direction);
         b =  2 * dot(ray_t.direction, sphere_to_ray);
@@ -44,14 +44,14 @@ static t_list *intersect_plan(t_object p, t_ray ray)
 {
 	t_list *xs;
 	t_intersection i1;
-	float		t;	
+	float		t;
 
     xs = NULL;
 	if (fabs(ray.direction.y) < EPSILON)
 	{
 		return (xs);
 	}
-    
+
 	t = -ray.origin.y / ray.direction.y;
 	i1 = intersection(t, p);
     xs = ft_lstnew(i1);
@@ -94,25 +94,25 @@ static t_list *intersect_cube(t_object c, t_ray ray)
     float   xtmin;
 	float   xtmax;
 	float   ytmin;
-	float   ytmax; 
+	float   ytmax;
 	float   ztmin;
 	float   ztmax;
 	float	*p_xtmin;
     float   *p_xtmax;
 	float   *p_ytmin;
-	float   *p_ytmax; 
+	float   *p_ytmax;
 	float   *p_ztmin;
 	float   *p_ztmax;
     float   tmin;
-    float   tmax; 
+    float   tmax;
     t_list *xs;
     t_list *ii;
-    t_intersection  i1;    
+    t_intersection  i1;
 
     p_xtmin =&xtmin;
     p_xtmax =&xtmax;
 	p_ytmin =&ytmin;
-	p_ytmax =&ytmax; 
+	p_ytmax =&ytmax;
 	p_ztmin =&ztmin;
 	p_ztmax =&ztmax;
 
@@ -130,7 +130,7 @@ static t_list *intersect_cube(t_object c, t_ray ray)
         xs = ft_lstnew(i1);
         i1 = intersection(tmax, c);
         ii = ft_lstnew(i1);
-        ft_lstadd_back(&xs, ii);      
+        ft_lstadd_back(&xs, ii);
     }
     return (xs);
 }
@@ -224,7 +224,7 @@ static t_list *intersect_cylinder(t_object cyl, t_ray ray)
             ft_lstclear(&xs_cap);
             xs_cap = NULL;
         }
-        return (xs);  
+        return (xs);
     }
     else
     {
@@ -258,13 +258,13 @@ static  t_list *intersect_triangle(t_object triangle, t_ray ray)
     u = f * dot(p1_to_origin, dir_cross_e2);
     if (u < 0 || u > 1)
     {
-        return(xs);     
+        return(xs);
     }
     origin_cross_e1 = cross(p1_to_origin, triangle.e1);
     v = f * dot(ray.direction, origin_cross_e1);
     if (v < 0 || (u + v) > 1)
     {
-        return(xs);       
+        return(xs);
     }
     t = f * dot(triangle.e2, origin_cross_e1);
     i1 = intersection(t, triangle);
@@ -287,35 +287,35 @@ t_list *intersect(t_object s, t_ray ray)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);
-        freeMatrix(&A);
+        free_matrix(&A);
         xs = intersect_plan(s,local_ray);
 	}
     else if (ft_memcmp("square",s.type,7) == 0)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);
-        freeMatrix(&A);
+        free_matrix(&A);
         xs = intersect_square(s,local_ray);
 	}
     else if (ft_memcmp("cylinder",s.type,9) == 0)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);
-        freeMatrix(&A);
+        free_matrix(&A);
         xs = intersect_cylinder(s,local_ray);
 	}
     else if (ft_memcmp("cube",s.type,5) == 0)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);
-        freeMatrix(&A);
+        free_matrix(&A);
         xs  = intersect_cube(s,local_ray);
     }
     else if (ft_memcmp("triangle",s.type,9) == 0)
     {
         A = inverse(s.transform);
         local_ray = transform(ray,A);
-        freeMatrix(&A);
+        free_matrix(&A);
         xs = intersect_triangle(s,local_ray);
     }
 	return (xs);

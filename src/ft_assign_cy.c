@@ -26,8 +26,8 @@ void	ft_assign_cy(t_config *config, char *position, char *normal, char *diameter
 	A = translation(x,y,z);
 	D = scaling(s,1,s);
 	C = matrixMulti(A,D);
-	freeMatrix(&A);
-	freeMatrix(&D);
+	free_matrix(&A);
+	free_matrix(&D);
 
 
     temp2 = ft_split(cor,',');
@@ -46,10 +46,10 @@ void	ft_assign_cy(t_config *config, char *position, char *normal, char *diameter
 
     A = rotation(vector(x,y,z));
 	D = matrixMulti(A,C);
-    copyMatrix(&o.transform,D);
-    freeMatrix(&A);
-    freeMatrix(&C);
-    freeMatrix(&D);
+    copy_matrix(&o.transform,D);
+    free_matrix(&A);
+    free_matrix(&C);
+    free_matrix(&D);
 
     o.normal = vector(x,y,z);
 
@@ -60,5 +60,5 @@ void	ft_assign_cy(t_config *config, char *position, char *normal, char *diameter
     o.closed = true;
     objects(&config->o_objects, o);
     ft_split_free(&temp);
-    ft_split_free(&temp2);   
+    ft_split_free(&temp2);
 }

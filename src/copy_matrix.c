@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   divide.c                                           :+:      :+:    :+:   */
+/*   copy_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 20:45:26 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:46:01 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/14 20:26:13 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/14 20:26:15 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_tuple	divide(t_tuple v1, float a)
+void	copy_matrix(t_matrix *d, t_matrix o)
 {
-	t_tuple v2;
+	int	i;
+	int	j;
 
-	v2.x = v1.x / a;
-	v2.y = v1.y / a;
-	v2.z = v1.z / a;
-	v2.w = v1.w / a;
-	return (v2);
+	i = 0;
+	while (i < o.dim)
+	{
+		j = 0;
+		while (j < o.dim)
+		{
+			writeMatrix(d, i, j, o.element[i][j]);
+			j++;
+		}
+		i++;
+	}
 }

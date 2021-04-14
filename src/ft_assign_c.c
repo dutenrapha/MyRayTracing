@@ -25,9 +25,9 @@ void	ft_assign_c(t_config *config, char *position, char *normal, char *FOV)
     y2 = ft_atof(temp2[1]);
     z2 = ft_atof(temp2[2]);
     C = view_transform(point(x1,y1,z1),point(x2,y2,z2),vector(0,1,0));
-	copyMatrix(&c.transform,C);
+	copy_matrix(&c.transform,C);
     cameras(&config->c_cameras,c);
-	freeMatrix(&C);
+	free_matrix(&C);
     ft_split_free(&temp);
     ft_split_free(&temp2);
 }

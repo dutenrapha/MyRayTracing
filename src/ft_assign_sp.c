@@ -21,7 +21,7 @@ void	ft_assign_sp(t_config *config, char *position, char *diameter, char *cor, i
     x = ft_atof(temp[0]);
     y = ft_atof(temp[1]);
     z = ft_atof(temp[2]);
-    
+
     temp2 = ft_split(cor, ',');
     R = (float)ft_atoi(temp2[0]);
     G = (float)ft_atoi(temp2[1]);
@@ -31,10 +31,10 @@ void	ft_assign_sp(t_config *config, char *position, char *diameter, char *cor, i
 	A = translation(x,y,z);
 	D = scaling(d,d,d);
 	C = matrixMulti(A,D);
-	copyMatrix(&o.transform,C);
-	freeMatrix(&A);
-	freeMatrix(&D);
-	freeMatrix(&C);
+	copy_matrix(&o.transform,C);
+	free_matrix(&A);
+	free_matrix(&D);
+	free_matrix(&C);
 
 
 	o.material = material();
