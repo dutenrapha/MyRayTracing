@@ -1,10 +1,10 @@
 #include "../include/header.h"
 
-t_object plan(int id)
+t_object plan()
 {
         t_object p;
 
-        p.id = id;
+        p.id = 2;
         p.type = "plan";
         p.center = point(0,0,0);
         p.transform = identity();

@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 	{
 		return (0);
 	}
-	config.save = ft_checkSave(argc);
+	config.save = ft_checksave(argc);
 	if(!ft_readfile(&config,argv))
 	{
 		return (0);
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 		ft_init_world(&w,config);
 	}
 	ft_canvas(&config,w);
-	ft_renderCamera(config, config.save);
+	ft_render_camera(config, config.save);
 
 //void ft_freeCanvas(t_canvas *canvas)
 	// int i;

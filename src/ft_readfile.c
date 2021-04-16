@@ -4,7 +4,6 @@ bool ft_readfile(t_config *config,char *argv[])
 {
     int			fd;
 	int			ii;
-	int			tag;
 	char    	*line;
 
 	config->c_cameras = NULL;
@@ -19,28 +18,25 @@ bool ft_readfile(t_config *config,char *argv[])
 		ft_printf("%s\n", ft_error("000"));
         exit(0);
 	}
-	tag = 0;
 	while ((ii = get_next_line(fd, &line)) > 0)
-	{	
+	{
 		if (line != NULL && *line != '\0' && *line != '#')
 		{
 			if(!is_valid(line))
 			{
 				return(false);
 			}
-			ft_conf(&config,line,tag);
+			ft_conf(&config,line);
 			free(line);
 		}
-		tag++;
 	}
-	tag++;
 	if (line != NULL && *line != '\0')
 	{
 		if(!is_valid(line))
 		{
 			return(false);
 		}
-		ft_conf(&config,line,tag);
+		ft_conf(&config,line);
 		free(line);
 	}
 	return (true);

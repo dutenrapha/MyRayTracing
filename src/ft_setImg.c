@@ -22,9 +22,9 @@ static void ft_set(int YY, int XX, t_canvas c, t_imgg **img,t_config *config)
         while (x < XX - 1)
         {
             cor = c.pixel[y][x];
-            R = ft_resizeColor(cor.red);
-            G = ft_resizeColor(cor.green);
-            B = ft_resizeColor(cor.blue);
+            R = ft_resize_color(cor.red);
+            G = ft_resize_color(cor.green);
+            B = ft_resize_color(cor.blue);
             my_mlx_pixel_put(&im, x, y, create_rgb(R,G,B));
             x++;
         }

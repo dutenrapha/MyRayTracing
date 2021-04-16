@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_c.c                                      :+:      :+:    :+:   */
+/*   ft_resize_color.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 01:01:16 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 01:01:20 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/17 01:23:52 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/17 01:26:46 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_cameras	*ft_lstnew_c(t_camera content)
+int	ft_resize_color(float a)
 {
-	t_cameras	*new;
-
-	if (!(new = (t_cameras *)malloc(sizeof(t_cameras))))
-		return (NULL);
-	if (new)
-		new->content = content;
-	new->next = NULL;
-	return (new);
+	if (a >= 1)
+	{
+		return (255);
+	}
+	else if (a <= 0)
+	{
+		return (0);
+	}
+	else
+	{
+		return (ceil(255 * a));
+	}
 }

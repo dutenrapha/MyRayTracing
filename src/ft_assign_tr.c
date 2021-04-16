@@ -1,49 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_assign_tr.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 19:26:21 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/16 19:43:13 by rdutenke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-void	ft_assign_tr(t_config *config, char *p1, char *p2, char *p3, char *cor)
+static t_object	ft_points(char *p1, char *p2, char *p3)
 {
-    t_object o;
-    char **temp;
-    float x1;
-    float y1;
-    float z1;
-    float x2;
-    float y2;
-    float z2;
-    float x3;
-    float y3;
-    float z3;
-    float R;
-    float G;
-    float B;
+	char		**temp;
+	t_tuple		x1;
+	t_tuple		x2;
+	t_tuple		x3;
+	t_object	o;
 
-    temp = ft_split(p1, ',');
-    x1 = ft_atof(temp[0]);
-    y1 = ft_atof(temp[1]);
-    z1 = ft_atof(temp[2]);
-    ft_split_free(&temp);
+	temp = ft_split(p1, ',');
+	x1.x = ft_atof(temp[0]);
+	x1.y = ft_atof(temp[1]);
+	x1.z = ft_atof(temp[2]);
+	ft_split_free(&temp);
+	temp = ft_split(p2, ',');
+	x2.x = ft_atof(temp[0]);
+	x2.y = ft_atof(temp[1]);
+	x2.z = ft_atof(temp[2]);
+	ft_split_free(&temp);
+	temp = ft_split(p3, ',');
+	x3.x = ft_atof(temp[0]);
+	x3.y = ft_atof(temp[1]);
+	x3.z = ft_atof(temp[2]);
+	ft_split_free(&temp);
+	o = triangle(5, point(x1.x, x1.y, x1.z),
+	point(x2.x, x2.y, x2.z),
+	point(x3.x, x3.y, x3.z));
+	return (o);
+}
 
-    temp = ft_split(p2, ',');
-    x2 = ft_atof(temp[0]);
-    y2 = ft_atof(temp[1]);
-    z2 = ft_atof(temp[2]);
-    ft_split_free(&temp);
-        
-    temp = ft_split(p3, ',');
-    x3 = ft_atof(temp[0]);
-    y3 = ft_atof(temp[1]);
-    z3 = ft_atof(temp[2]);
-    ft_split_free(&temp);
+void			ft_assign_tr(t_config *config, t_par3 po, char *cor)
+{
+	t_object	o;
+	t_color		cc;
+	char		**temp;
 
-    o = triangle(5,point(x1,y1,z1),point(x2,y2,z2),point(x3,y3,z3));
-    
-    temp = ft_split(cor,',');
-    R = (float)ft_atoi(temp[0]);
-    G = (float)ft_atoi(temp[1]);
-    B = (float)ft_atoi(temp[2]);
+	o = ft_points(po.p1, po.p2, po.p3);
+	temp = ft_split(cor, ',');
+	cc.red = (float)ft_atoi(temp[0]);
+	cc.green = (float)ft_atoi(temp[1]);
+	cc.blue = (float)ft_atoi(temp[2]);
 	o.material = material();
-	o.material.color = color(R/255, G/255, B/255);
+	o.material.color = color(cc.red / 255, cc.green / 255, cc.blue / 255);
 	o.material.specular = 0;
-    objects(&config->o_objects, o);
-    ft_split_free(&temp);
+	objects(&config->o_objects, o);
+	ft_split_free(&temp);
 }

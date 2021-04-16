@@ -6,17 +6,17 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 20:41:07 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:41:08 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/15 22:36:13 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_object	cylinder(int id)
+t_object	cylinder()
 {
 	t_object	p;
 
-	p.id = id;
+	p.id = 1;
 	p.type = "cylinder";
 	p.center = point(0, 0, 0);
 	p.transform = identity();

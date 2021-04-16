@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_c.c                                      :+:      :+:    :+:   */
+/*   ft_checksave.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 01:01:16 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 01:01:20 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/17 00:36:10 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/17 00:36:25 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_cameras	*ft_lstnew_c(t_camera content)
+bool	ft_checksave(int argc)
 {
-	t_cameras	*new;
+	bool	resp;
 
-	if (!(new = (t_cameras *)malloc(sizeof(t_cameras))))
-		return (NULL);
-	if (new)
-		new->content = content;
-	new->next = NULL;
-	return (new);
+	resp = false;
+	if (argc == 3)
+	{
+		resp = true;
+	}
+	return (resp);
 }

@@ -183,7 +183,6 @@ typedef struct s_world
 	int		num_objects;
 } t_world;
 
-
 typedef struct  s_data {
     void        *img;
     char        *addr;
@@ -191,12 +190,6 @@ typedef struct  s_data {
     int         line_length;
     int         endian;
 }               t_data;
-
-// typedef struct  s_vars {
-//         void    *mlx;
-//         void    *win;
-// }               t_vars;
-
 
 typedef struct s_imgg
 {
@@ -228,6 +221,34 @@ typedef struct s_iter
 	int		n;
 } t_iter;
 
+typedef struct s_par
+{
+	char	*position;
+	char	*normal;
+	char	*diameter;
+	char	*height;
+	char	*cor;
+} t_par;
+
+typedef struct s_par2
+{
+	char	*size;
+	char	*cor;
+} t_par2;
+
+typedef struct s_par3
+{
+	char	*p1;
+	char	*p2;
+	char	*p3;
+} t_par3;
+
+typedef struct s_par4
+{
+	double	val;
+	int		flag;
+} t_par4;
+
 void	init_iter(t_iter *p,t_list *xs);
 
 bool is_normal(char *s);
@@ -258,7 +279,7 @@ int	ft_lstsize_img(t_imgg *img);
 void	ft_lstclear_img(t_imgg **img);
 void n_img(t_imgg **l, t_data img);
 
-void ft_renderCamera(t_config config, bool save);
+void ft_render_camera(t_config config, bool save);
 
 t_cv	*ft_lstnew_cv(t_canvas cv);
 int	ft_lstsize_cv(t_cv *cv);
@@ -270,17 +291,17 @@ void	ft_canvas(t_config *config,t_world w);
 void ft_init_world(t_world *w, t_config config);
 
 bool ft_readfile(t_config *config,char *argv[]);
-bool	ft_checkSave(int argc);
+bool	ft_checksave(int argc);
 bool	ft_prevalidation(int argc, char *argv[]);
 
-int ft_resizeColor(float a);
+int ft_resize_color(float a);
 unsigned long create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 void	ft_save(t_config config);
 
 t_matrix rotation(t_tuple normal);
-t_object square(int id);
+t_object square();
 void light_a(t_world *w, t_light light);
 
 
@@ -289,16 +310,16 @@ float	ft_atof(const char *nptr);
 t_matrix view_transform(t_tuple from,t_tuple forward,t_tuple up);
 
 char	*ft_error(char* error);
-void	ft_conf(t_config **config, char *line,int tag);
-void	ft_assign_R(t_config *config, char *R_x, char *R_y);
-void	ft_assign_A(t_config *config, char *A_ratio, char *A_light);
-void	ft_assign_l(t_config *config, char *position, char *brightness, char *cor);
-void	ft_assign_c(t_config *config, char *position, char *normal, char *FOV);
-void	ft_assign_pl(t_config *config, char *position, char *normal, char *cor,int tag);
-void	ft_assign_sp(t_config *config, char *position, char *diameter, char *cor,int tag);
-void	ft_assign_sq(t_config *config, char *position, char *normal, char *size, char *cor,int tag);
-void	ft_assign_cy(t_config *config, char *position, char *normal, char *diameter, char *height, char *cor,int tag);
-void	ft_assign_tr(t_config *config, char *p1, char *p2, char *p3, char *cor);
+void	ft_conf(t_config **config, char *line);
+void	ft_assign_r(t_config *config, char *r_x, char *r_y);
+void	ft_assign_a(t_config *config, char *a_ratio, char *a_light);
+void	ft_assign_l(t_config *config, char *ps, char *brightness, char *cor);
+void	ft_assign_c(t_config *config, char *position, char *normal, char *fov);
+void	ft_assign_pl(t_config *config, char *ps, char *n, char *cor);
+void	ft_assign_sp(t_config *config, char *p, char *d, char *cor);
+void	ft_assign_sq(t_config *config, char *ps, char *n, t_par2 p);
+void	ft_assign_cy(t_config *config, t_par p);
+void	ft_assign_tr(t_config *config, t_par3 po, char *cor);
 
 t_objects	*ft_lstnew_o(t_object content);
 int	ft_lstsize_o(t_objects *lst);
@@ -382,7 +403,7 @@ t_matrix rotation_z(float r);
 t_matrix shearing(float xy, float xz, float yx,float yz, float zx, float zy);
 t_ray ray(t_tuple origin, t_tuple direction);
 t_tuple position(t_ray ray,float t);
-t_object sphere(int id);
+t_object sphere();
 t_intersection intersection(float t, t_object o);
 t_ray	transform(t_ray r,t_matrix m);
 void	set_transform(t_object *s,t_matrix m);
@@ -405,7 +426,7 @@ t_tuple local_normal_at(t_object o,t_tuple local_point);
 t_object plan();
 t_object cube(int id);
 void	check_axis(float origin, float direction, float *tmin,float *tmax);
-t_object cylinder(int id);
+t_object cylinder();
 t_object	triangle(int id, t_tuple p1,t_tuple p2,t_tuple p3);
 
 void    ft_split_free(char ***split);

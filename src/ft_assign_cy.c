@@ -1,64 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_assign_cy.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/15 22:58:12 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/15 22:58:14 by rdutenke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-void	ft_assign_cy(t_config *config, char *position, char *normal, char *diameter, char *height, char *cor, int tag)
+static	t_matrix	ft_posi(char *position, char *diameter)
 {
-    t_object o;
-    t_matrix A;
-    t_matrix D;
-    t_matrix C;
-    char **temp;
-    char **temp2;
-    float x;
-    float y;
-    float z;
-    float R;
-    float G;
-    float B;
-    float s;
+	t_matrix	a;
+	t_matrix	d;
+	t_matrix	c;
+	char		**temp;
+	t_tuple		p;
 
-    o = cylinder(tag);
-    temp = ft_split(position, ',');
-    x = ft_atof(temp[0]);
-    y = ft_atof(temp[1]);
-    z = ft_atof(temp[2]);
+	temp = ft_split(position, ',');
+	p.x = ft_atof(temp[0]);
+	p.y = ft_atof(temp[1]);
+	p.z = ft_atof(temp[2]);
+	a = translation(p.x, p.y, p.z);
+	d = scaling(ft_atof(diameter) / 2, 1, ft_atof(diameter) / 2);
+	c = matrixMulti(a, d);
+	ft_split_free(&temp);
+	free_matrix(&a);
+	free_matrix(&d);
+	return (c);
+}
 
-    s = ft_atof(diameter)/2;
-	A = translation(x,y,z);
-	D = scaling(s,1,s);
-	C = matrixMulti(A,D);
-	free_matrix(&A);
-	free_matrix(&D);
+static	t_matrix	ft_cor_normal(t_object *o, char *cor, char *normal)
+{
+	char		**temp;
+	t_color		cc;
+	t_tuple		p;
+	t_matrix	a;
 
+	temp = ft_split(cor, ',');
+	cc.red = (float)ft_atoi(temp[0]);
+	cc.green = (float)ft_atoi(temp[1]);
+	cc.blue = (float)ft_atoi(temp[2]);
+	o->material = material();
+	o->material.color = color(cc.red / 255, cc.green / 255, cc.blue / 255);
+	o->material.specular = 0;
+	ft_split_free(&temp);
+	temp = ft_split(normal, ',');
+	p.x = ft_atof(temp[0]);
+	p.y = ft_atof(temp[1]);
+	p.z = ft_atof(temp[2]);
+	o->normal = vector(p.x, p.y, p.z);
+	o->minimum = 0;
+	ft_split_free(&temp);
+	a = rotation(vector(p.x, p.y, p.z));
+	return (a);
+}
 
-    temp2 = ft_split(cor,',');
-    R = (float)ft_atoi(temp2[0]);
-    G = (float)ft_atoi(temp2[1]);
-    B = (float)ft_atoi(temp2[2]);
-	o.material = material();
-	o.material.color = color(R/255, G/255, B/255);
-	o.material.specular = 0;
+void				ft_assign_cy(t_config *config, t_par p)
+{
+	t_object	o;
+	t_matrix	a;
+	t_matrix	d;
+	t_matrix	c;
+	float		s;
 
-    ft_split_free(&temp);
-    temp = ft_split(normal, ',');
-    x = ft_atof(temp[0]);
-    y = ft_atof(temp[1]);
-    z = ft_atof(temp[2]);
-
-    A = rotation(vector(x,y,z));
-	D = matrixMulti(A,C);
-    copy_matrix(&o.transform,D);
-    free_matrix(&A);
-    free_matrix(&C);
-    free_matrix(&D);
-
-    o.normal = vector(x,y,z);
-
-
-    o.minimum = 0;
-    s = ft_atof(height);
-    o.maximum = s;
-    o.closed = true;
-    objects(&config->o_objects, o);
-    ft_split_free(&temp);
-    ft_split_free(&temp2);
+	o = cylinder();
+	c = ft_posi(p.position, p.diameter);
+	a = ft_cor_normal(&o, p.cor, p.normal);
+	d = matrixMulti(a, c);
+	copy_matrix(&o.transform, d);
+	free_matrix(&a);
+	free_matrix(&c);
+	free_matrix(&d);
+	s = ft_atof(p.height);
+	o.maximum = s;
+	o.closed = true;
+	objects(&config->o_objects, o);
 }

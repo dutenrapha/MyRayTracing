@@ -1,47 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_assign_sp.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 17:26:48 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/16 17:59:45 by rdutenke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-void	ft_assign_sp(t_config *config, char *position, char *diameter, char *cor, int tag)
+static void		ft_cor(t_object *o, char *cor)
 {
-    t_object o;
-    t_matrix A;
-    t_matrix D;
-    t_matrix C;
-    char **temp;
-    char **temp2;
-    float x;
-    float y;
-    float z;
-    float R;
-    float G;
-    float B;
-    float d;
+	char	**temp;
+	t_color	cc;
 
-    o = sphere(tag);
-    temp = ft_split(position, ',');
-    x = ft_atof(temp[0]);
-    y = ft_atof(temp[1]);
-    z = ft_atof(temp[2]);
+	temp = ft_split(cor, ',');
+	cc.red = (float)ft_atoi(temp[0]);
+	cc.green = (float)ft_atoi(temp[1]);
+	cc.blue = (float)ft_atoi(temp[2]);
+	o->material = material();
+	o->material.color = color(cc.red / 255, cc.green / 255, cc.blue / 255);
+	o->material.specular = 0;
+	ft_split_free(&temp);
+}
 
-    temp2 = ft_split(cor, ',');
-    R = (float)ft_atoi(temp2[0]);
-    G = (float)ft_atoi(temp2[1]);
-    B = (float)ft_atoi(temp2[2]);
+static t_matrix	ft_posi(char *position, float r)
+{
+	t_matrix	a;
+	t_matrix	d;
+	t_matrix	c;
+	char		**temp;
+	t_tuple		p;
 
-    d = ft_atof(diameter)/2;
-	A = translation(x,y,z);
-	D = scaling(d,d,d);
-	C = matrixMulti(A,D);
-	copy_matrix(&o.transform,C);
-	free_matrix(&A);
-	free_matrix(&D);
-	free_matrix(&C);
+	temp = ft_split(position, ',');
+	p.x = ft_atof(temp[0]);
+	p.y = ft_atof(temp[1]);
+	p.z = ft_atof(temp[2]);
+	ft_split_free(&temp);
+	a = translation(p.x, p.y, p.z);
+	d = scaling(r, r, r);
+	c = matrixMulti(a, d);
+	free_matrix(&a);
+	free_matrix(&d);
+	return (c);
+}
 
+void			ft_assign_sp(t_config *config, char *p, char *d, char *cor)
+{
+	t_object	o;
+	t_matrix	c;
+	float		r;
 
-	o.material = material();
-	o.material.color = color(R/255, G/255, B/255);
-	o.material.specular = 0;
-
-    objects(&config->o_objects, o);
-    ft_split_free(&temp);
-    ft_split_free(&temp2);
+	o = sphere();
+	r = ft_atof(d) / 2;
+	c = ft_posi(p, r);
+	free_matrix(&c);
+	ft_cor(&o, cor);
+	objects(&config->o_objects, o);
 }
