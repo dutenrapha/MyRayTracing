@@ -8,7 +8,7 @@ bool is_color(char *s)
     float B;
 
     temp = ft_split(s,',');
-    if (ft_strDlen(temp) !=3)
+    if (ft_str_dlen(temp) !=3)
     {
         ft_split_free(&temp);
         return(false);

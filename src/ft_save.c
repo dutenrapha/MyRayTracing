@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 01:27:21 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 01:32:19 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/17 01:51:29 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ static void		ft_saves(t_config config, t_data mlx, int tag)
 
 void			ft_save(t_config configs)
 {
-	int	tag;
-
+	int		tag;
 	t_imgg	*temp;
+
 	tag = 1;
 	temp = configs.img;
-	while(temp->next)
+	while (temp->next)
 	{
-		ft_saves(configs,temp->content,tag);
+		ft_saves(configs, temp->content, tag);
 		tag++;
 		temp = temp->next;
 	}
-	ft_saves(configs,temp->content,tag);
+	ft_saves(configs, temp->content, tag);
 }

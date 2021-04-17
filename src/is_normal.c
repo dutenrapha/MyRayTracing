@@ -17,11 +17,11 @@ bool is_normal(char *s)
     float z;
 
     temp = ft_split(s,',');
-    if (ft_strDlen(temp) !=3)
+    if (ft_str_dlen(temp) !=3)
     {
         ft_split_free(&temp);
         return(false);
-    }    
+    }
     if (!(is_num(temp[0]) || is_num(temp[1]) || is_num(temp[2])))
     {
         ft_split_free(&temp);

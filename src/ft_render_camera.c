@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 01:20:53 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 01:22:53 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/17 01:58:57 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			ft_render_camera(t_config config, bool save)
 	{
 		ft_printf("Voce nao definiou nenhum objeto!\n");
 	}
-	ft_setImg(&config);
+	ft_set_img(&config);
 	if (save)
 	{
 		ft_save(config);

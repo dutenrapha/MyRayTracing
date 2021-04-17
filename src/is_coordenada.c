@@ -5,7 +5,7 @@ bool is_coordenada(char *s)
     char **temp;
 
     temp = ft_split(s,',');
-    if (ft_strDlen(temp) !=3)
+    if (ft_str_dlen(temp) !=3)
     {
         ft_split_free(&temp);
         return(false);

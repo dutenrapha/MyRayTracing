@@ -8,9 +8,9 @@ bool	is_valid(char *line)
     resp = false;
     line_t	= ft_split(line,' ');
     if (ft_memcmp("R",line_t[0],2) == 0)
-        resp = ft_validate_R(line_t);
+        resp = ft_validate_r(line_t);
     else if (ft_memcmp("A",line_t[0],2) == 0)
-        resp = ft_validate_A(line_t);
+        resp = ft_validate_a(line_t);
     else if (ft_memcmp("c",line_t[0],2) == 0)
         resp = ft_validate_c(line_t);
     else if (ft_memcmp("l",line_t[0],2) == 0)
