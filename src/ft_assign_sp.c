@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:26:48 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/16 17:59:45 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 00:07:57 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_matrix	ft_posi(char *position, float r)
 	ft_split_free(&temp);
 	a = translation(p.x, p.y, p.z);
 	d = scaling(r, r, r);
-	c = matrixMulti(a, d);
+	c = matrix_multi(a, d);
 	free_matrix(&a);
 	free_matrix(&d);
 	return (c);

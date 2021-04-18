@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   is_color_equal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 00:02:30 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/18 00:02:53 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/17 23:36:35 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/17 23:40:09 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_matrix	matrix(int dim)
+bool	is_color_equal(t_color c1, t_color c2)
 {
-	t_matrix	m;
-	int			i;
-
-	m.dim = dim;
-	m.element = (float **)malloc(sizeof(float*) * dim);
-	i = 0;
-	while (i < dim)
+	if (fabs(c1.red - c2.red) > EPSILON)
 	{
-		m.element[i] = (float *)malloc(sizeof(float) * dim);
-		i++;
+		return (false);
 	}
-	return (m);
+	else if (fabs(c1.green - c2.green) > EPSILON)
+	{
+		return (false);
+	}
+	else if (fabs(c1.blue - c2.blue) > EPSILON)
+	{
+		return (false);
+	}
+	else
+	{
+		return (true);
+	}
 }

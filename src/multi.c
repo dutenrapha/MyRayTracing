@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   multi.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/18 00:27:24 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/18 00:28:01 by rdutenke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-t_tuple multi(t_tuple v1, float a)
+t_tuple	multi(t_tuple v1, float a)
 {
-	t_tuple v2;
+	t_tuple	v2;
 
 	v2.x = v1.x * a;
 	v2.y = v1.y * a;
 	v2.z = v1.z * a;
 	v2.w = v1.w * a;
-	
-	return v2;
+	return (v2);
 }

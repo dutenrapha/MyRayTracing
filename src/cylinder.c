@@ -6,13 +6,13 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 20:41:07 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/15 22:36:13 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 19:44:11 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_object	cylinder()
+t_object	cylinder(void)
 {
 	t_object	p;
 

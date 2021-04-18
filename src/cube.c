@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 20:37:08 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:38:27 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 19:46:48 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_object	cube(int id)
 
 	p.id = id;
 	p.type = "cube";
-	p.center = point(0 , 0, 0);
+	p.center = point(0, 0, 0);
 	p.transform = identity();
 	p.material.color = color(1, 1, 1);
 	p.material.ambient = 0.1;

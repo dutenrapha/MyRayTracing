@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/18 19:15:22 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/18 19:15:55 by rdutenke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-t_object sphere()
+t_object	sphere(void)
 {
 	t_object p;
 
@@ -22,5 +34,5 @@ t_object sphere()
 	p.e1 = point(0, 0, 0);
 	p.e2 = point(0, 0, 0);
 	p.normal = point(0, 0, 0);
-	return p;
+	return (p);
 }

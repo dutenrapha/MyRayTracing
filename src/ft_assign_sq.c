@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 18:07:40 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/16 19:21:54 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 00:07:20 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			ft_assign_sq(t_config *config, char *ps, char *n, t_par2 p)
 	c = ft_posi(&o, ps, p.cor, p.size);
 	po = ft_normal(&o, n);
 	a = rotation(vector(po.x, po.y, po.z));
-	d = matrixMulti(a, c);
+	d = matrix_multi(a, c);
 	copy_matrix(&o.transform, d);
 	free_matrix(&a);
 	free_matrix(&c);

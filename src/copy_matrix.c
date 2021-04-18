@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 20:26:13 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:26:15 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 19:40:42 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	copy_matrix(t_matrix *d, t_matrix o)
 		j = 0;
 		while (j < o.dim)
 		{
-			writeMatrix(d, i, j, o.element[i][j]);
+			write_matrix(d, i, j, o.element[i][j]);
 			j++;
 		}
 		i++;

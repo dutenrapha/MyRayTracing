@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:25:30 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/16 00:01:05 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 00:08:12 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			ft_assign_pl(t_config *config, char *ps, char *n, char *cor)
 	o = plan();
 	c = ft_posi(&o, ps, cor);
 	a = ft_normal(n);
-	d = matrixMulti(a, c);
+	d = matrix_multi(a, c);
 	copy_matrix(&o.transform, d);
 	free_matrix(&a);
 	free_matrix(&c);

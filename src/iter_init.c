@@ -6,13 +6,13 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 19:43:34 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 19:56:19 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/17 23:54:15 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-void	init_iter(t_iter *p,t_list *xs)
+void	init_iter(t_iter *p, t_list *xs)
 {
 	p->i = 0;
 	p->j = -1;

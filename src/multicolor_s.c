@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   multicolorS.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 00:02:30 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/18 00:02:53 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/18 00:29:20 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/18 00:29:24 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_matrix	matrix(int dim)
+t_color	multicolor_s(t_color c1, float a)
 {
-	t_matrix	m;
-	int			i;
+	t_color	c;
 
-	m.dim = dim;
-	m.element = (float **)malloc(sizeof(float*) * dim);
-	i = 0;
-	while (i < dim)
-	{
-		m.element[i] = (float *)malloc(sizeof(float) * dim);
-		i++;
-	}
-	return (m);
+	c.red = c1.red * a;
+	c.green = c1.green * a;
+	c.blue = c1.blue * a;
+	return (c);
 }

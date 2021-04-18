@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 22:58:12 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/15 22:58:14 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 00:06:06 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static	t_matrix	ft_posi(char *position, char *diameter)
 	p.z = ft_atof(temp[2]);
 	a = translation(p.x, p.y, p.z);
 	d = scaling(ft_atof(diameter) / 2, 1, ft_atof(diameter) / 2);
-	c = matrixMulti(a, d);
+	c = matrix_multi(a, d);
 	ft_split_free(&temp);
 	free_matrix(&a);
 	free_matrix(&d);
@@ -70,7 +70,7 @@ void				ft_assign_cy(t_config *config, t_par p)
 	o = cylinder();
 	c = ft_posi(p.position, p.diameter);
 	a = ft_cor_normal(&o, p.cor, p.normal);
-	d = matrixMulti(a, c);
+	d = matrix_multi(a, c);
 	copy_matrix(&o.transform, d);
 	free_matrix(&a);
 	free_matrix(&c);

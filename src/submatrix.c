@@ -1,32 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   submatrix.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/18 19:19:04 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/18 19:24:45 by rdutenke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/header.h"
 
-t_matrix submatrix(t_matrix A, int i, int j)
+t_matrix	submatrix(t_matrix a, int i, int j)
 {
-	t_matrix B;
-	int l;
-	int m;	
-	int ii;
-	int jj;	
+	t_matrix	b;
+	int			l;
+	int			m;
+	int			ii;
+	int			jj;
 
-	B = matrix(A.dim - 1);
-	l = 0;
+	b = matrix(a.dim - 1);
+	l = -1;
 	ii = 0;
-	while (l < A.dim)
-        {
-		m = 0;
+	while (++l < a.dim)
+	{
+		m = -1;
 		jj = 0;
-		while (m < A.dim)
+		while (++m < a.dim)
 		{
 			if ((l != i) && (m != j))
 			{
-				B.element[ii][jj] = A.element[l][m];
+				b.element[ii][jj] = a.element[l][m];
 				jj++;
 			}
-			m++;
 		}
-	        if ((l != i) && (m != j))
+		if ((l != i) && (m != j))
 			ii++;
-		l++;
-	}		
-	return (B);
+	}
+	return (b);
 }

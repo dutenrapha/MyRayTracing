@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   is_equal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 00:02:30 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/18 00:02:53 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/17 23:41:51 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/17 23:44:45 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_matrix	matrix(int dim)
+bool	is_equal(t_tuple v1, t_tuple v2)
 {
-	t_matrix	m;
-	int			i;
-
-	m.dim = dim;
-	m.element = (float **)malloc(sizeof(float*) * dim);
-	i = 0;
-	while (i < dim)
+	if (fabs(v1.x - v2.x) > EPSILON)
 	{
-		m.element[i] = (float *)malloc(sizeof(float) * dim);
-		i++;
+		return (false);
 	}
-	return (m);
+	else if (fabs(v1.y - v2.y) > EPSILON)
+	{
+		return (false);
+	}
+	else if (fabs(v1.z - v2.z) > EPSILON)
+	{
+		return (false);
+	}
+	else if (fabs(v1.w - v2.w) > EPSILON)
+	{
+		return (false);
+	}
+	else
+	{
+		return (true);
+	}
 }

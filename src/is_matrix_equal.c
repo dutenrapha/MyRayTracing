@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   is_matrix_equal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 00:02:30 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/18 00:02:53 by rdutenke         ###   ########.fr       */
+/*   Created: 2021/04/17 23:50:15 by rdutenke          #+#    #+#             */
+/*   Updated: 2021/04/18 19:46:08 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-t_matrix	matrix(int dim)
+bool	is_matrix_equal(t_matrix a, t_matrix b)
 {
-	t_matrix	m;
-	int			i;
+	int	i;
+	int	j;
 
-	m.dim = dim;
-	m.element = (float **)malloc(sizeof(float*) * dim);
 	i = 0;
-	while (i < dim)
+	j = 0;
+	while (i < a.dim)
 	{
-		m.element[i] = (float *)malloc(sizeof(float) * dim);
+		while (j < a.dim)
+		{
+			if (fabs(a.element[i][j] - b.element[i][j]) > EPSILON)
+			{
+				return (false);
+			}
+			j++;
+		}
 		i++;
 	}
-	return (m);
+	return (true);
 }
