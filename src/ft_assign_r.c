@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 23:58:06 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/16 00:01:24 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:25:35 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	ft_assign_r(t_config *config, char *r_x, char *r_y)
 	x = ft_atoi(r_x);
 	y = ft_atoi(r_y);
 	if (x > sizex)
-		config->R_x = sizex;
+		config->r_x = sizex;
 	else
-		config->R_x = x;
+		config->r_x = x;
 	if (y > sizey)
-		config->R_y = sizey;
+		config->r_y = sizey;
 	else
-		config->R_y = y;
+		config->r_y = y;
 }

@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 19:29:23 by rdutenke          #+#    #+#             */
-/*   Updated: 2020/04/29 20:38:00 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/18 23:39:05 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void			ft_lstclear_(t_listt **lst, void (*del)(void*));
 void			ft_lstiter(t_listt *lst, void (*f)(void *));
 t_listt			*ft_lstmap(t_listt *lst, void *(*f)(void *),
 void (*del)(void *));
-
 int				ft_printf(const char *str, ...);
 void			ft_check_flag(t_ptf *parms);
 int				ft_int_len(intmax_t d);
@@ -138,13 +137,6 @@ char			*ft_itoa(int n);
 char			*ft_strrchr(const char *s, int c);
 int				ft_isdigit(int c);
 void			ft_print_padding(int size, char c);
-
-int		get_next_line(int fd, char **line);
-int	ft_memcmp(const void *str1, const void *str2, size_t n);
-
-//void    ft_split_free(char ***split);
+int				get_next_line(int fd, char **line);
+int				ft_memcmp(const void *str1, const void *str2, size_t n);
 #endif
-
-
-
-

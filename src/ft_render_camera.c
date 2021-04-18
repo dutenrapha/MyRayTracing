@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 01:20:53 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 01:58:57 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:24:10 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int		expose_hook(t_config *config)
 void			ft_render_camera(t_config config, bool save)
 {
 	config.mlx = mlx_init();
-	config.win = mlx_new_window(config.mlx, config.R_x, config.R_y, "miniRT");
+	config.win = mlx_new_window(config.mlx, config.r_x, config.r_y, "miniRT");
 	if (config.c_cameras == NULL)
 	{
 		ft_printf("Voce nao definiou nenhuma camera!\n");

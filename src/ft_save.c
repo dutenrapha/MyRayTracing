@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 01:27:21 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 01:51:29 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:19:50 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ static void		init_bmpheader(int fd, t_bmpheader header)
 static void		create_header(t_config config, t_bmpheader *header)
 {
 	header->type = 0x4D42;
-	header->size = ((config.R_x + config.R_y) * 4) + 54;
+	header->size = ((config.r_x + config.r_y) * 4) + 54;
 	header->reserved = 0x0;
 	header->offset = 54;
 	header->dib_header_size = 40;
-	header->width_px = config.R_x;
-	header->height_px = config.R_y;
+	header->width_px = config.r_x;
+	header->height_px = config.r_y;
 	header->num_planes = 1;
 	header->bpp = 32;
 	header->compression = 0;
-	header->img_size_bytes = ((config.R_x + config.R_y) * 4);
+	header->img_size_bytes = ((config.r_x + config.r_y) * 4);
 	header->x_resolution_ppm = 2000;
 	header->y_resolution_ppm = 2000;
 	header->num_colors = 0;
@@ -68,7 +68,7 @@ static void		ft_saves(t_config config, t_data mlx, int tag)
 	int			fd;
 	int			y;
 
-	y = config.R_y;
+	y = config.r_y;
 	name = ft_strjoin("camera_", ft_itoa(tag));
 	fd = create_file(name);
 	create_header(config, &header);

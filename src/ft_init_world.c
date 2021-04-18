@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 19:44:29 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/18 19:45:15 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:20:54 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	ft_init_world(t_world *w, t_config config)
 		}
 		light_a(w, temp_l->content);
 	}
-	w->ambient = config.A_color;
+	w->ambient = config.a_color;
 }

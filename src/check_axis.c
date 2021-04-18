@@ -6,13 +6,13 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 20:15:11 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/14 20:16:25 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:17:51 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-void	check_axis(float origin, float direction, float *tmin, float *tmax)
+void	check_axis(float origin, float d, float *tmin, float *tmax)
 {
 	float	tmin_numerator;
 	float	tmax_numerator;
@@ -20,10 +20,10 @@ void	check_axis(float origin, float direction, float *tmin, float *tmax)
 
 	tmin_numerator = (-1 - origin);
 	tmax_numerator = (1 - origin);
-	if (fabs(direction) >= EPSILON)
+	if (fabs(d) >= EPSILON)
 	{
-		*tmin = tmin_numerator / direction;
-		*tmax = tmax_numerator / direction;
+		*tmin = tmin_numerator / d;
+		*tmax = tmax_numerator / d;
 	}
 	else
 	{

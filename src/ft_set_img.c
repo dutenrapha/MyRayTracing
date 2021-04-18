@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 01:53:34 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 02:03:26 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:20:23 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void		ft_set_img(t_config *config)
 	t_cv	*temp;
 	t_par5	p;
 
-	p.xx = config->R_x;
-	p.yy = config->R_y;
+	p.xx = config->r_x;
+	p.yy = config->r_y;
 	temp = config->c_canvas;
 	while (temp->next)
 	{

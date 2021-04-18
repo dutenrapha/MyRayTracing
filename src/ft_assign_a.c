@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 21:40:14 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/15 21:44:25 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:26:12 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_assign_a(t_config *config, char *a_ratio, char *a_color)
 	r = (float)ft_atoi(temp[0]);
 	g = (float)ft_atoi(temp[1]);
 	b = (float)ft_atoi(temp[2]);
-	config->A_color =
+	config->a_color =
 	color((r / 255) * ratio, (g / 255) * ratio, (b / 255) * ratio);
 	ft_split_free(&temp);
 }

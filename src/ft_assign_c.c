@@ -6,13 +6,13 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 21:55:27 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/15 21:55:59 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:26:57 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-void	ft_assign_c(t_config *config, char *position, char *normal, char *fov)
+void	ft_assign_c(t_config *config, char *ps, char *n, char *fov)
 {
 	t_camera	c;
 	t_matrix	cc;
@@ -20,13 +20,13 @@ void	ft_assign_c(t_config *config, char *position, char *normal, char *fov)
 	t_tuple		p1;
 	t_tuple		p2;
 
-	c = camera(config->R_x, config->R_y, ft_atof(fov) * (M_PI / 180.0));
-	temp = ft_split(position, ',');
+	c = camera(config->r_x, config->r_y, ft_atof(fov) * (M_PI / 180.0));
+	temp = ft_split(ps, ',');
 	p1.x = ft_atof(temp[0]);
 	p1.y = ft_atof(temp[1]);
 	p1.z = ft_atof(temp[2]);
 	ft_split_free(&temp);
-	temp = ft_split(normal, ',');
+	temp = ft_split(n, ',');
 	p2.x = ft_atof(temp[0]);
 	p2.y = ft_atof(temp[1]);
 	p2.z = ft_atof(temp[2]);

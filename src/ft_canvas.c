@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 00:32:18 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/17 00:32:40 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:18:51 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_canvas(t_config *config, t_world w)
 
 	if (config->c_cameras == NULL)
 	{
-		c = canvas(config->R_x, config->R_y);
+		c = canvas(config->r_x, config->r_y);
 		cv(&config->c_canvas, c);
 	}
 	else

@@ -6,13 +6,13 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 22:59:10 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/15 23:10:50 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 00:15:56 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/header.h"
 
-void	ft_assign_l(t_config *config, char *ps, char *brightness, char *cor)
+void	ft_assign_l(t_config *config, char *ps, char *bb, char *cor)
 {
 	char		**temp;
 	char		**temp2;
@@ -24,7 +24,7 @@ void	ft_assign_l(t_config *config, char *ps, char *brightness, char *cor)
 	p.x = ft_atof(temp[0]);
 	p.y = ft_atof(temp[1]);
 	p.z = ft_atof(temp[2]);
-	b = ft_atof(brightness);
+	b = ft_atof(bb);
 	temp2 = ft_split(cor, ',');
 	c.red = (float)ft_atoi(temp2[0]);
 	c.green = (float)ft_atoi(temp2[1]);
