@@ -6,7 +6,7 @@
 /*   By: rdutenke <rdutenke@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:26:48 by rdutenke          #+#    #+#             */
-/*   Updated: 2021/04/18 00:07:57 by rdutenke         ###   ########.fr       */
+/*   Updated: 2021/04/19 04:27:24 by rdutenke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void			ft_assign_sp(t_config *config, char *p, char *d, char *cor)
 	o = sphere();
 	r = ft_atof(d) / 2;
 	c = ft_posi(p, r);
+	copy_matrix(&o.transform,c);
 	free_matrix(&c);
 	ft_cor(&o, cor);
 	objects(&config->o_objects, o);
